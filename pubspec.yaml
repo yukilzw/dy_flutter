@@ -23,7 +23,6 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
-  english_words: ^3.1.0
   flutter_screenutil: ^0.5.3
   flutter_swiper: ^1.0.6
 
@@ -51,6 +50,7 @@ flutter:
     - lib/images/next.png
     - lib/images/hot.png
     - lib/images/member.png
+    - lib/images/play.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
