@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -14,10 +17,42 @@ class DyIndexPage extends StatefulWidget {
 }
 
 class _DyIndexPageState extends State<DyIndexPage> with DYBase {
+  /*---- 实例属性 State ----*/
   int _navIndex = 0;
+  List navList = config.navListData;
 
+  /*---- 生命周期钩子 ----*/
+  @override
+  void initState() {
+    _getNav();
+  }
+
+  /*---- 网络请求 ----*/
+  void _getNav() async {
+      var url = 'http://10.113.22.82:1236/dy/flutter/Nav';
+      var httpClient = new HttpClient();
+
+      List result;
+      try {
+        var request = await httpClient.getUrl(Uri.parse(url));
+        var response = await request.close();
+        if (response.statusCode == HttpStatus.OK) {
+          var json = await response.transform(utf8.decoder).join();
+          var data = jsonDecode(json);
+          result = data['data'];
+
+          if (!mounted || data['error'] != 0) return;
+          setState(() {
+            navList = result;
+          });
+        }
+      } catch (exception) {}
+  }
+
+  /*---- 事件对应方法 ----*/
+  // 点击悬浮标
   void _incrementCounter() {
-    
+    Navigator.pushNamed(context, '/demo');
   }
   // 选择导航tab
   void _chooseTabNav(i) {
@@ -30,6 +65,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     Navigator.pushNamed(context, '/room', arguments: item);
   }
 
+  /*---- 部件buid函数入口 ----*/
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
@@ -61,9 +97,11 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
         tooltip: 'Increment',
         child: new Icon(Icons.add),
       ),
+      resizeToAvoidBottomPadding: false,
     );
   }
 
+  /*---- 组件化拆分 ----*/
   // Header容器
   Widget _header() {
     return new Container(
@@ -170,7 +208,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   List<Container> _creatNavList() {
     var navWidgetList = new List<Container>();
 
-    for (var i = 0; i < config.navListData.length; i++) {
+    for (var i = 0; i < navList.length; i++) {
       var border, style;
       Color actColor = Color(0xffff5d23);
 
@@ -195,7 +233,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
               _chooseTabNav(i);
             },
             child: new Text(
-              '${config.navListData[i]}',
+              '${navList[i]}',
               style: style,
             ),
           ),

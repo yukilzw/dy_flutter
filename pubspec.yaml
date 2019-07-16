@@ -51,6 +51,12 @@ flutter:
     - lib/images/hot.png
     - lib/images/member.png
     - lib/images/play.png
+    - lib/images/gift.png
+
+    - lib/images/lv/3.png
+    - lib/images/lv/30.png
+    - lib/images/lv/50.png
+    - lib/images/lv/80.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

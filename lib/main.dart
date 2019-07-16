@@ -10,8 +10,8 @@ class DyApp extends StatefulWidget {
 class DyAppState extends State<DyApp> {
   Route<dynamic> _getRoute(RouteSettings settings) {
     Map<String, WidgetBuilder> routes = {
-      '/':     (BuildContext context) => DyIndexPage(key: UniqueKey(), arguments: settings.arguments),
-      '/room': (BuildContext context) => DyRoomPage(key: UniqueKey(), arguments: settings.arguments),
+      '/':     (BuildContext context) => DyIndexPage(),
+      '/room': (BuildContext context) => DyRoomPage(arguments: settings.arguments),
     };
     var route = routes[settings.name];
 
@@ -33,7 +33,6 @@ class DyAppState extends State<DyApp> {
         scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
         primarySwatch: Colors.orange,
       ),
-      /* routes: routes,*/
       onGenerateRoute: _getRoute,
     );
   }
