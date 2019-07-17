@@ -1,7 +1,5 @@
 library config;
 
-final List<String> navListData = ['冒险岛', '泡泡堂', '跑跑卡丁车'];
-
 final List<String> swiperPic = [
   'https://sta-op.douyucdn.cn/douyu-vrp-admin/2019/07/13/c26c2b10bf04ade5e21fab65c7708f27.jpg',
   'https://sta-op.douyucdn.cn/douyu-vrp-admin/2019/07/04/307548887efc180ccce5dc014a6d90e7.png',

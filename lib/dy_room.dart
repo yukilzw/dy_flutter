@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'bloc.dart';
 import 'base.dart' show DYBase;
 import 'config.dart' as config;
 
@@ -10,7 +12,7 @@ class DyRoomPage extends StatefulWidget {
 
   @override
   _DyRoomPageState createState() {
-    return new _DyRoomPageState(arguments);
+    return _DyRoomPageState(arguments);
   }
 }
 
@@ -18,38 +20,46 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   final routeProp;
   _DyRoomPageState(this.routeProp);
 
+  CounterBloc counterBloc;
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
+    counterBloc = BlocProvider.of<CounterBloc>(context);
 
     return Scaffold(
-      body: new Column(
-        children: <Widget>[
-          _livePlayer(),
-          _nav(),
-          _chat(),
-          _bottom(),
-        ],
+       body: BlocBuilder<CounterEvent, int>(
+        bloc: counterBloc,
+        builder: (BuildContext context, int count) {
+          return Column(
+            children: <Widget>[
+              _livePlayer(),
+              _nav(count),
+              _chat(),
+              _bottom(),
+            ],
+          );
+        },
       ),
     );
   }
 
   Widget _livePlayer() {
-    return new Container(
+    return Container(
       width: MediaQuery.of(context).size.width,
       height: dp(206),
       color: Color(0xff333333),
-      child: new Stack(
+      child: Stack(
         alignment: AlignmentDirectional.center,
         children: <Widget>[
-          new Positioned(
-            child: new Image.network(
+          Positioned(
+            child: Image.network(
               routeProp['roomSrc'],
               height: dp(206),
             ),
           ),
-          new Positioned(
-            child: new Image.asset(
+          Positioned(
+            child: Image.asset(
               'lib/images/play.png',
               height: dp(60),
             ),
@@ -59,31 +69,31 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
     );
   }
 
-  Widget _nav() {
-    return new Row(
+  Widget _nav(count) {
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
-        new Container(
+        Container(
           height: dp(40),
           padding: EdgeInsets.only(top: dp(12)),
           width: dp(60),
           decoration: BoxDecoration(
             border: Border(bottom: BorderSide(color: Color(0xffff5d23), width: dp(3))),
           ),
-          child: new Text(
+          child: Text(
             '弹幕',
             textAlign: TextAlign.center,
-            style: new TextStyle(
+            style: TextStyle(
               color: Color(0xffff5d23),
             ),
           ),
         ),
-        new Container(
+        Container(
           height: dp(40),
           padding: EdgeInsets.only(top: dp(12)),
           width: dp(60),
-          child: new Text(
-            '主播',
+          child: Text(
+            '主播$count',
             textAlign: TextAlign.center,
           ),
         )
@@ -92,16 +102,16 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   }
 
   Widget _chat() {
-    return new Expanded(
+    return Expanded(
       flex: 1,
-      child: new Container(
+      child: Container(
         decoration: BoxDecoration(
           border: Border(
             top: BorderSide(color: Color(0xffeeeeee), width: dp(1)),
             bottom: BorderSide(color: Color(0xffeeeeee), width: dp(1))
           ),
         ),
-        child: new ListView(
+        child: ListView(
           padding: EdgeInsets.all(dp(10)),
           children: _chatMsg(),
         ),
@@ -110,7 +120,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   }
 
   _chatMsg () {
-    var msgList = new List<Widget>();
+    var msgList = List<Widget>();
 
     config.msgData.forEach((item) {
       var isAdmin = item['lv'] > 0;
@@ -119,13 +129,13 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
           text: TextSpan(
             style: TextStyle(color: Color(0xff666666), fontSize: 16.0),
             children: [
-              new TextSpan(
+              TextSpan(
                 text: '''${isAdmin ? '''          ''' : ''}${item['name']}: ''',
                 style: TextStyle(
                   color: !isAdmin ? Colors.red : Color(0xff999999)
                 ),
               ),
-              new TextSpan(
+              TextSpan(
                 text: item['text'],
               ),
             ]
@@ -134,8 +144,8 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
       ];
 
       if (item['lv'] > 0) {
-        msgBoart.insert(0, new Positioned(
-          child: new Image.asset(
+        msgBoart.insert(0, Positioned(
+          child: Image.asset(
             'lib/images/lv/${item['lv']}.png',
             height: dp(18),
           ),
@@ -143,7 +153,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
       }
 
       msgList.addAll([
-        new Stack(
+        Stack(
           children: msgBoart,
         ),
         Padding(padding: EdgeInsets.only(bottom: dp(5)))
@@ -154,13 +164,13 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   }
 
   Widget _bottom() {
-    return new SizedBox(
+    return SizedBox(
       height: dp(50),
-      child: new Row(
+      child: Row(
         children: <Widget>[
-          new Expanded(
+          Expanded(
             flex: 1,
-            child: new Container(
+            child: Container(
               margin: EdgeInsets.only(left: dp(12), right: dp(12)),
               padding: EdgeInsets.only(left: dp(10), right: dp(10)),
               height: dp(36),
@@ -170,11 +180,11 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
                   Radius.circular(dp(8)),
                 ),
               ),
-              child: new Row(
+              child: Row(
                 children: <Widget>[
-                  new Expanded(
+                  Expanded(
                     flex: 1,
-                    child: new TextField(
+                    child: TextField(
                       cursorColor: Color(0xffff5d23),
                       cursorWidth: 1.5,
                       style: TextStyle(
@@ -188,7 +198,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
                       ),
                     ),
                   ),
-                  new Container(
+                  Container(
                     width: dp(40),
                     height: dp(26),
                     padding: EdgeInsets.only(top: dp(5)),
@@ -196,17 +206,17 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(Radius.circular(dp(4))),
                       gradient: LinearGradient(
-                        begin: const Alignment(-1.2, 0.0),
-                        end: const Alignment(0.2, 0.0),
+                        begin: Alignment(-1.2, 0.0),
+                        end: Alignment(0.2, 0.0),
                         colors: <Color>[
-                          const Color(0xffff4e00),
-                          const Color(0xffff8b00),
+                          Color(0xffff4e00),
+                          Color(0xffff8b00),
                         ],
                       ),
                     ),
-                    child: new Text(
+                    child: Text(
                       '发送',
-                      style: new TextStyle(
+                      style: TextStyle(
                         color: Colors.white,
                       ),
                       textAlign: TextAlign.center,
@@ -216,7 +226,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
               ),
             ),
           ),
-          new Image.asset(
+          Image.asset(
             'lib/images/gift.png',
             height: dp(36),
           ),

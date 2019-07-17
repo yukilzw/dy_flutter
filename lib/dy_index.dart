@@ -2,9 +2,12 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
+import 'bloc.dart';
 import 'base.dart' show DYBase;
 import 'config.dart' as config;
 
@@ -13,46 +16,83 @@ class DyIndexPage extends StatefulWidget {
   DyIndexPage({Key key, this.arguments}) : super(key: key);
 
   @override
-  _DyIndexPageState createState() => _DyIndexPageState();
+  _DyIndexPageState createState() {
+    return _DyIndexPageState(arguments);
+  }
 }
 
 class _DyIndexPageState extends State<DyIndexPage> with DYBase {
+  // 路由传入的数据
+  final routeProp;
+  _DyIndexPageState(this.routeProp);
+
+  CounterBloc counterBloc;
+
   /*---- 实例属性 State ----*/
   int _navIndex = 0;
-  List navList = config.navListData;
+  List navList = [];
 
-  /*---- 生命周期钩子 ----*/
+  /*---- 生命周期 ----*/
   @override
   void initState() {
-    _getNav();
+    _getTempFile('navList').then((dynamic data) {
+      setState(() {
+        navList = data['data'];
+      });
+    });
+    _getNav('navList');
   }
 
   /*---- 网络请求 ----*/
-  void _getNav() async {
-      var url = 'http://10.113.22.82:1236/dy/flutter/Nav';
-      var httpClient = new HttpClient();
+  void _getNav(name) async {
+    var url = 'http://10.113.22.82:1236/dy/flutter/Nav';
+    var httpClient = HttpClient();
 
-      List result;
-      try {
-        var request = await httpClient.getUrl(Uri.parse(url));
-        var response = await request.close();
-        if (response.statusCode == HttpStatus.OK) {
-          var json = await response.transform(utf8.decoder).join();
-          var data = jsonDecode(json);
-          result = data['data'];
+    List result;
+    try {
+      var request = await httpClient.getUrl(Uri.parse(url));
+      var response = await request.close();
+      if (response.statusCode == HttpStatus.OK) {
+        var json = await response.transform(utf8.decoder).join();
+        var data = jsonDecode(json);
+        result = data['data'];
 
-          if (!mounted || data['error'] != 0) return;
-          setState(() {
-            navList = result;
-          });
-        }
-      } catch (exception) {}
+        if (!mounted || data['error'] != 0) return;
+        setState(() {
+          navList = result;
+        });
+        _setTempFile(name, json);
+      }
+    } catch (exception) {}
+  }
+
+  /*---- IO缓存读写 ----*/
+  // 获取缓存目录
+  Future<String> _getTempPath() async {
+    var tempDir = await getTemporaryDirectory();
+    return tempDir.path;
+  }
+  // 设置缓存
+  void _setTempFile(fileName, [str = '']) async {
+    String tempPath = await _getTempPath();
+    await File('$tempPath/$fileName.txt').writeAsString(str);
+    print(str);
+  }
+  // 读取缓存
+  Future<dynamic> _getTempFile(fileName) async {
+    String tempPath = await _getTempPath();
+    try {
+      String contents = await File('$tempPath/$fileName.txt').readAsString();
+      return jsonDecode(contents);
+    } on FileSystemException {
+      print('$fileName:缓存不存在');
+    }
   }
 
   /*---- 事件对应方法 ----*/
   // 点击悬浮标
   void _incrementCounter() {
-    Navigator.pushNamed(context, '/demo');
+    counterBloc.dispatch(CounterEvent.increment);
   }
   // 选择导航tab
   void _chooseTabNav(i) {
@@ -69,33 +109,39 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
+    counterBloc = BlocProvider.of<CounterBloc>(context);
 
     return Scaffold(
-      body: new Container(
-        child: new Column(
-          children: [
-            _header(),
-            _nav(),
-            new Container( // 页面整体滚动容器
-              height: MediaQuery.of(context).size.height - dp(80.0 + 40.0),
-              child: new ListView(
-                padding: EdgeInsets.only(top: 0),
-                children: [
-                  _swiper(),
-                  _liveTable(),
-                ],
-              ),
+      body: BlocBuilder<CounterEvent, int>(
+        bloc: counterBloc,
+        builder: (BuildContext context, int count) {
+          return Container(
+            child: Column(
+              children: [
+                _header(),
+                _nav(),
+                Expanded(
+                  flex: 1,
+                  child: ListView(
+                    padding: EdgeInsets.only(top: 0),
+                    children: [
+                      _swiper(),
+                      _liveTable(count),
+                    ],
+                  ),
+                ),
+              ],
             ),
-          ]
-        ),
+          );
+        },
       ),
-      // 右下角悬浮按钮
-      floatingActionButton: new FloatingActionButton(
+      // 右下角悬浮按钮(清缓存)
+      floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         foregroundColor: Color(0xffff5d23),
         backgroundColor: Colors.white,
         tooltip: 'Increment',
-        child: new Icon(Icons.add),
+        child: Icon(Icons.favorite),
       ),
       resizeToAvoidBottomPadding: false,
     );
@@ -104,34 +150,33 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   /*---- 组件化拆分 ----*/
   // Header容器
   Widget _header() {
-    return new Container(
+    return Container(
       width: dp(375),
       height: dp(80),
       padding: EdgeInsets.fromLTRB(dp(10), dp(24), dp(20), 0),
       decoration: BoxDecoration(
-        // 背景渐变
         gradient: LinearGradient(
-          begin: const Alignment(-1.0, 0.0),
-          end: const Alignment(0.6, 0.0),
+          begin: Alignment(-1.0, 0.0),
+          end: Alignment(0.6, 0.0),
           colors: <Color>[
-            const Color(0xffffffff),
-            const Color(0xffff9b7a)
+            Color(0xffffffff),
+            Color(0xffff9b7a)
           ],
         ),
       ),
-      child: new Row(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           // 斗鱼LOGO
-          new Image(
+          Image(
             image: AssetImage('lib/images/dylogo.png'),
             width: dp(76),
             height: dp(34),
           ),
           // 搜索区域容器
-          new Expanded(
+          Expanded(
             flex: 1,
-            child: new Container(
+            child: Container(
               width: dp(150),
               height: dp(30),
               margin: EdgeInsets.only(left: dp(15)),
@@ -142,18 +187,18 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
                   Radius.circular(dp(15)),
                 ), 
               ),
-              child: new Row(
+              child: Row(
                 children: <Widget>[
                   // 搜索ICON
-                  new Image.asset(
+                  Image.asset(
                     'lib/images/search.png',
                     width: dp(25),
                     height: dp(15),
                   ),
                   // 搜索输入框
-                  new Expanded(
+                  Expanded(
                     flex: 1,
-                    child: new TextField(
+                    child: TextField(
                       cursorColor: Color(0xffff5d23),
                       cursorWidth: 1.5,
                       style: TextStyle(
@@ -181,21 +226,21 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     return SizedBox(
       height: dp(40),
       // 导航滚动列表视图
-      child: new ListView(
+      child: ListView(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.all(10),
         children: _creatNavList(),
       ),
       // 滚动视图的另一种快捷API实现 
-      /* child: new ListView.builder(
+      /* child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.all(10),
         itemCount: config.navListData.length,
         itemBuilder: (context, i) {
-          return new Container(
+          return Container(
             color: Colors.orange,
             margin: EdgeInsets.only(right: dp(10)),
-            child: new Text(
+            child: Text(
               '${config.navListData[i]}',
             ),
           );
@@ -206,7 +251,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
 
   // 创建导航子项
   List<Container> _creatNavList() {
-    var navWidgetList = new List<Container>();
+    var navWidgetList = List<Container>();
 
     for (var i = 0; i < navList.length; i++) {
       var border, style;
@@ -214,16 +259,16 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
 
       if (i == _navIndex) {
         border = Border(bottom: BorderSide(color: actColor, width: dp(2)));
-        style = new TextStyle(
+        style = TextStyle(
           color: actColor,
         );
       } else {
-        style = new TextStyle(
+        style = TextStyle(
           color: Color(0xff3f3f3f),
         );
       }
       navWidgetList.add(
-        new Container(
+        Container(
           decoration: BoxDecoration(
             border: border
           ),
@@ -232,7 +277,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
             onTap: () {
               _chooseTabNav(i);
             },
-            child: new Text(
+            child: Text(
               '${navList[i]}',
               style: style,
             ),
@@ -245,18 +290,18 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
 
   // 轮播图
   Widget _swiper() {
-    return new Container(
+    return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.width / 1.7686,
-      child: new Swiper(
+      child: Swiper(
         itemBuilder: _swiperBuilder,
         itemCount: 3,
-        pagination: new SwiperPagination(
+        pagination: SwiperPagination(
             builder: DotSwiperPaginationBuilder(
           color: Color.fromRGBO(0, 0, 0, .2),
           activeColor: Color(0xfffa7122),
         )),
-        control: new SwiperControl(),
+        control: SwiperControl(),
         scrollDirection: Axis.horizontal,
         autoplay: true,
         onTap: (index) => print('this is $index click'),
@@ -272,22 +317,22 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   }
 
   // 直播列表
-  Widget _liveTable() {
-    return new Column(
+  Widget _liveTable(count) {
+    return Column(
       children: <Widget>[
-        _listTableHeader(),
+        _listTableHeader(count),
         _listTableInfo(),
       ]
     );
   }
 
   // 直播列表头部
-  Widget _listTableHeader() {
+  Widget _listTableHeader(count) {
     return Padding(
       padding: EdgeInsets.only(left: dp(6), right: dp(6)),
-      child: new Row(
+      child: Row(
         children: <Widget>[
-          new Container(
+          Container(
             width: dp(20),
             height: dp(30),
             margin: EdgeInsets.only(right: dp(5)),
@@ -298,29 +343,29 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
               ),
             ),
           ),
-          new Expanded(
-            child: new Text('正在直播'),
+          Expanded(
+            child: Text('正在直播'),
           ),
-          new Row(
+          Row(
             children: <Widget>[
-              new Text('当前',
-                style: new TextStyle(
+              Text('当前',
+                style: TextStyle(
                   color: Color(0xff999999),
                 ),
               ),
-              new Text('28346',
-                style: new TextStyle(
+              Text('$count',
+                style: TextStyle(
                   color: Color(0xffff7700),
                 ),
               ),
-              new Text('个直播',
-                style: new TextStyle(
+              Text('个直播',
+                style: TextStyle(
                   color: Color(0xff999999),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: dp(5)),
-                child: new Image.asset(
+                child: Image.asset(
                   'lib/images/next.png',
                   height: dp(14),
                 ),
@@ -334,8 +379,8 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
 
   // 直播列表详情
   Widget _listTableInfo() {
-    final liveList = new List<Widget>();
-    var fontStyle = new TextStyle(
+    final liveList = List<Widget>();
+    var fontStyle = TextStyle(
       color: Colors.white,
       fontSize: 12.0
     );
@@ -349,10 +394,10 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
           child: Padding(
           key: ObjectKey(item['rid']),
           padding: EdgeInsets.all(dp(5)),
-            child: new Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                new Container(
+                Container(
                   width: dp(175),
                   height: dp(101.25),
                   decoration: BoxDecoration(
@@ -364,33 +409,33 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
                       fit: BoxFit.fill,
                     ),
                   ),
-                  child: new Stack(
+                  child: Stack(
                     children: <Widget>[
-                      new Positioned(
-                        child: new Container(
+                      Positioned(
+                        child: Container(
                           width: dp(120),
                           height: dp(18),
                           padding: EdgeInsets.only(right: dp(5)),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(topRight: Radius.circular(dp(4))),
                             gradient: LinearGradient(
-                              begin: const Alignment(-.4, 0.0),
-                              end: const Alignment(1, 0.0),
+                              begin: Alignment(-.4, 0.0),
+                              end: Alignment(1, 0.0),
                               colors: <Color>[
-                                const Color.fromRGBO(0, 0, 0, 0),
-                                const Color.fromRGBO(0, 0, 0, .6),
+                                Color.fromRGBO(0, 0, 0, 0),
+                                Color.fromRGBO(0, 0, 0, .6),
                               ],
                             ),
                           ),
-                          child: new Row(
+                          child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
-                              new Image.asset(
+                              Image.asset(
                                 'lib/images/hot.png',
                                 height: dp(14),
                               ),
                               Padding(padding: EdgeInsets.only(right: dp(3))),
-                              new Text(
+                              Text(
                                 item['hn'],
                                 style: fontStyle,
                               ),
@@ -400,8 +445,8 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
                         top: 0,
                         right: 0,
                       ),
-                      new Positioned(
-                        child: new Container(
+                      Positioned(
+                        child: Container(
                           width: dp(175),
                           height: dp(18),
                           padding: EdgeInsets.only(right: dp(5)),
@@ -411,23 +456,23 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
                               bottomRight: Radius.circular(dp(4)),
                             ),
                             gradient: LinearGradient(
-                              begin: const Alignment(0, -.5),
-                              end: const Alignment(0, 1.3),
+                              begin: Alignment(0, -.5),
+                              end: Alignment(0, 1.3),
                               colors: <Color>[
-                                const Color.fromRGBO(0, 0, 0, 0),
-                                const Color.fromRGBO(0, 0, 0, .6),
+                                Color.fromRGBO(0, 0, 0, 0),
+                                Color.fromRGBO(0, 0, 0, .6),
                               ],
                             ),
                           ),
-                          child: new Row(
+                          child: Row(
                             children: <Widget>[
                               Padding(padding: EdgeInsets.only(left: dp(3))),
-                              new Image.asset(
+                              Image.asset(
                                 'lib/images/member.png',
                                 height: dp(14),
                               ),
                               Padding(padding: EdgeInsets.only(right: dp(3))),
-                              new Text(
+                              Text(
                                 item['nickname'],
                                 style: fontStyle,
                               ),
@@ -440,14 +485,14 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
                     ],
                   ),
                 ),
-                new Container(
+                Container(
                   width: dp(175),
                   padding: EdgeInsets.fromLTRB(dp(1), dp(4), 0, 0),
-                  child: new Text(
+                  child: Text(
                     item['roomName'],
                     textAlign: TextAlign.start,
                     overflow: TextOverflow.ellipsis,
-                    style: new TextStyle(
+                    style: TextStyle(
                       fontSize: 13.0,
                     ),
                   ),
@@ -459,7 +504,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
       );
     });
 
-    return new Wrap(
+    return Wrap(
       children: liveList,
     );
   }
