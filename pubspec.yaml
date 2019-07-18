@@ -27,6 +27,7 @@ dependencies:
   flutter_screenutil: ^0.5.3
   flutter_swiper: ^1.0.6
   flutter_bloc: ^0.19.1
+  http: ^0.12.0+2
 
 
 dev_dependencies:

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
