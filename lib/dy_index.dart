@@ -1,16 +1,10 @@
-import 'dart:io';
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 import 'bloc.dart';
-import 'base.dart' show DYBase;
-import 'config.dart' as config;
+import 'base.dart' show DYBase, DYhttp, DYio;
 
 class DyIndexPage extends StatefulWidget {
   final arguments;
@@ -32,62 +26,56 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   /*---- 实例属性 State ----*/
   int _navIndex = 0;
   List navList = [];
+  List swiperPic = [];
+  List liveData = [];
 
   /*---- 生命周期 ----*/
   @override
   void initState() {
-    _getTempFile('navList').then((dynamic data) {
+    DYio.getTempFile('navList').then((dynamic data) {
+      if (data == null) return;
       setState(() {
         navList = data['data'];
+        _getLiveData(navList[0]);
       });
     });
-    _getNav('navList');
+    _getNav();
+    _getSwiperPic();
   }
 
   /*---- 网络请求 ----*/
-  void _getNav(name) async {
-    var url = 'http://10.113.22.82:1236/dy/flutter/Nav';
-    var httpClient = HttpClient();
-
-    List result;
-    try {
-      var request = await httpClient.getUrl(Uri.parse(url));
-      var response = await request.close();
-      if (response.statusCode == HttpStatus.OK) {
-        var json = await response.transform(utf8.decoder).join();
-        var data = jsonDecode(json);
-        result = data['data'];
-
-        if (!mounted || data['error'] != 0) return;
-        setState(() {
-          navList = result;
-        });
-        _setTempFile(name, json);
+  // 获取导航列表
+  void _getNav() {
+    DYhttp.get(
+      '/dy/flutter/nav',
+      cacheName: 'navList',
+    ).then((res) {
+      setState(() {
+        navList = res['data']; 
+      });
+      _getLiveData(navList[0]);
+    });
+  }
+  // 获取轮播图数据
+  void _getSwiperPic() {
+    DYhttp.post('/dy/flutter/swiper').then((res) {
+      setState(() {
+        swiperPic = res['data']; 
+      });
+    });
+  }
+  // 获取正在直播列表数据
+  void _getLiveData(String i) {
+    DYhttp.post(
+      '/dy/flutter/liveData',
+      param: {
+        'typeName': i
       }
-    } catch (exception) {}
-  }
-
-  /*---- IO缓存读写 ----*/
-  // 获取缓存目录
-  Future<String> _getTempPath() async {
-    var tempDir = await getTemporaryDirectory();
-    return tempDir.path;
-  }
-  // 设置缓存
-  void _setTempFile(fileName, [str = '']) async {
-    String tempPath = await _getTempPath();
-    await File('$tempPath/$fileName.txt').writeAsString(str);
-    print(str);
-  }
-  // 读取缓存
-  Future<dynamic> _getTempFile(fileName) async {
-    String tempPath = await _getTempPath();
-    try {
-      String contents = await File('$tempPath/$fileName.txt').readAsString();
-      return jsonDecode(contents);
-    } on FileSystemException {
-      print('$fileName:缓存不存在');
-    }
+    ).then((res) {
+      setState(() {
+       liveData = res['data']; 
+      });
+    });
   }
 
   /*---- 事件对应方法 ----*/
@@ -136,7 +124,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
           );
         },
       ),
-      // 右下角悬浮按钮(清缓存)
+      // 右下角悬浮按钮(Bloc计数状态演示)
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         foregroundColor: Color(0xffff5d23),
@@ -169,10 +157,13 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
           // 斗鱼LOGO
-          Image(
-            image: AssetImage('lib/images/dylogo.png'),
-            width: dp(76),
-            height: dp(34),
+          GestureDetector(
+            onTap: DYio.clearCache,
+            child: Image(
+              image: AssetImage('lib/images/dylogo.png'),
+              width: dp(76),
+              height: dp(34),
+            ),
           ),
           // 搜索区域容器
           Expanded(
@@ -294,9 +285,9 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     return Container(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.width / 1.7686,
-      child: Swiper(
+      child: swiperPic.length < 1 ? null : Swiper(
         itemBuilder: _swiperBuilder,
-        itemCount: 3,
+        itemCount: swiperPic.length,
         pagination: SwiperPagination(
             builder: DotSwiperPaginationBuilder(
           color: Color.fromRGBO(0, 0, 0, .2),
@@ -312,7 +303,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
 
   Widget _swiperBuilder(BuildContext context, int index) {
     return (Image.network(
-      config.swiperPic[index],
+      swiperPic[index],
       fit: BoxFit.fill,
     ));
   }
@@ -386,7 +377,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
       fontSize: 12.0
     );
 
-    config.liveData.forEach((item) {
+    liveData.forEach((item) {
       liveList.add(
         GestureDetector(
           onTap: () {
