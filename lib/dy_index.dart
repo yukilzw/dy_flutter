@@ -30,8 +30,8 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   List liveData = [];
 
   /*---- 生命周期 ----*/
-  @override
   void initState() {
+    super.initState();
     DYio.getTempFile('navList').then((dynamic data) {
       if (data == null) return;
       setState(() {

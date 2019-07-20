@@ -55,6 +55,9 @@ flutter:
     - lib/images/member.png
     - lib/images/play.png
     - lib/images/gift.png
+    - lib/images/gift-banner.png
+    - lib/images/gift-x.png
+    - lib/images/gift-1.png
 
     - lib/images/lv/3.png
     - lib/images/lv/30.png
