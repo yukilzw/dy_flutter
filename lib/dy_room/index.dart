@@ -1,10 +1,16 @@
+/**
+ * @discripe: 直播间弹幕
+ */
+import 'dart:async';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'bloc.dart';
-import 'base.dart' show DYBase, DYhttp;
+import '../bloc.dart';
+import '../base.dart' show DYBase, DYhttp;
+import 'animate.dart' show Gift;
 
 class DyRoomPage extends StatefulWidget {
   final arguments;
@@ -16,60 +22,65 @@ class DyRoomPage extends StatefulWidget {
   }
 }
 
-class _DyRoomPageState extends State<DyRoomPage> with DYBase, SingleTickerProviderStateMixin {
+class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   final routeProp;
   _DyRoomPageState(this.routeProp);
 
   CounterBloc counterBloc;
 
   List msgData = [];
+  List<Widget> giftBannerView = List<Widget>();
 
-  Animation<double> animationGiftNum_1, animationGiftNum_2;
-  AnimationController controllerGiftNum;
+  Timer giftTimer, msgTimer;
+
+  ScrollController _chatController = ScrollController();
 
   void initState() {
     super.initState();
     DYhttp.post('/dy/flutter/msgData').then((res) {
-      setState(() {
-        msgData = res['data']; 
+      var msgDataSource = res['data'];
+      var i = 0;
+      msgTimer = Timer.periodic(Duration(milliseconds: 200), (timer) {
+        if (i > 60) {
+          _chatController.jumpTo(_chatController.position.maxScrollExtent);
+          msgTimer.cancel();
+          return;
+        }
+        setState(() {
+          msgData.add(msgDataSource[Random().nextInt(msgDataSource.length)]);
+        });
+        _chatController.jumpTo(_chatController.position.maxScrollExtent);
+        i++;
       });
     });
 
-    controllerGiftNum = AnimationController(
-        duration: Duration(milliseconds: 800),
-        vsync: this
-    );
+    DYhttp.get('/dy/flutter/giftData').then((res) {
+      var giftData = res['data'];
+      giftTimer = Timer.periodic(Duration(seconds: 1), (timer) {
+        if (giftTimer.tick > giftData.length) {
+          giftTimer.cancel();
+          return;
+        }
+        Gift.add(giftData[giftTimer.tick - 1], () {
+          setState(() {
+            giftBannerView = Gift.bannerQueue;
+          });
+        });
+      });
+    });
+  }
 
-    animationGiftNum_1 = Tween(
-      begin: 0.0, end: 1.7,
-    ).animate(
-      CurvedAnimation(
-        parent: controllerGiftNum,
-        curve: Interval(
-          0.0, 0.6,
-          curve: Curves.easeOut
-        ),
-      )
-    );
-
-    animationGiftNum_2 = Tween(
-      begin: 1.7, end: 1.0,
-    ).animate(
-      CurvedAnimation(
-        parent: controllerGiftNum,
-        curve: Interval(
-          0.6, 1.0,
-          curve: Curves.easeIn
-        ),
-      )
-    );
-
-    controllerGiftNum.forward();
+  @override
+  void didUpdateWidget(oldWidget) {
+    print(oldWidget);
+    _chatController.jumpTo(_chatController.position.maxScrollExtent);
+    super.didUpdateWidget(oldWidget);
   }
 
   void dispose() {
-    //路由销毁时需要释放动画资源
-    controllerGiftNum.dispose();
+    Gift.bannerQueue = <Widget>[];
+    giftTimer?.cancel();
+    msgTimer?.cancel();
     super.dispose();
   }
 
@@ -165,109 +176,11 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase, SingleTickerProvid
         child: Stack(
           children: <Widget>[
             ListView(
+              controller: _chatController,
               padding: EdgeInsets.all(dp(10)),
               children: _chatMsg(),
             ),
-            Positioned(
-              left: dp(0),
-              top: dp(45),
-              child: Stack(
-                overflow: Overflow.visible,
-                children: <Widget>[
-                  Container(
-                    height: dp(48),
-                    width: dp(244),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: AssetImage('lib/images/gift-banner.png'),
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          width: dp(40),
-                          height: dp(40),
-                          margin: EdgeInsets.only(left: dp(4)),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            image: DecorationImage(
-                              image: NetworkImage(routeProp['avatar']),
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: dp(48),
-                          width: dp(105),
-                          child: Padding(
-                            padding: EdgeInsets.all(dp(5)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  routeProp['nickname'],
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    color: Colors.white
-                                  ),
-                                ),
-                                RichText(
-                                  text: TextSpan(
-                                    style: TextStyle(color: Colors.yellow),
-                                    children: [
-                                      TextSpan(
-                                        text: '送出',
-                                      ),
-                                      TextSpan(
-                                        text: '飞机',
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontStyle: FontStyle.italic
-                                        ),
-                                      ),
-                                    ]
-                                  ),       
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(padding: EdgeInsets.only(right: dp(50))),
-                        Padding(
-                          padding: EdgeInsets.only(top: dp(10)),
-                          child: GiftNumTransition(
-                            animationList: [animationGiftNum_1, animationGiftNum_2],
-                            controller: controllerGiftNum,
-                            child: Image.asset(
-                              'lib/images/gift-x.png',
-                              height: dp(10),
-                            ),
-                          ),
-                          ),
-                        GiftNumTransition(
-                          animationList: [animationGiftNum_1, animationGiftNum_2],
-                          controller: controllerGiftNum,
-                          child: Image.asset(
-                            'lib/images/gift-1.png',
-                            height: dp(30),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Positioned(
-                    left: dp(145),
-                    top: dp(-15),
-                    child: Image.network(
-                      'http://m.qpic.cn/psb?/V14dALyK4PrHuj/8WI1OXFOx1HnUQccFLNhp5lrP9pt.TMI0McJ9HJniKM!/b/dL8AAAAAAAAA',
-                      height: dp(50),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            ...giftBannerView,
           ],
         ),
       ),
@@ -387,44 +300,6 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase, SingleTickerProvid
           ),
           Padding(padding: EdgeInsets.only(right: dp(12)))
         ],
-      ),
-    );
-  }
-}
-
-class AnimatedImage extends AnimatedWidget {
-  AnimatedImage({Key key, Animation animation, this.child})
-      : super(key: key, listenable: animation);
-
-  final Widget child;
-
-  Widget build(BuildContext context) {
-    final Animation animation = listenable;
-    return Transform.translate(
-      offset: Offset(animation.value, 0),
-      child: child,
-    );
-  }
-}
-
-class GiftNumTransition extends StatelessWidget with DYBase {
-  GiftNumTransition({this.child, this.animationList, this.controller});
-
-  final Widget child;
-  final List<Animation<double>> animationList;
-  final AnimationController controller;
-
-  Widget build(BuildContext context) {
-    return new Center(
-      child: new AnimatedBuilder(
-        animation: controller,
-        builder: (BuildContext context, Widget child) {
-          return Transform.scale(
-            scale: animationList[0].value >= 1.7 ? animationList[1].value : animationList[0].value,
-            child: child,
-          );
-        },
-        child: child,
       ),
     );
   }

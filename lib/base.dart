@@ -1,4 +1,7 @@
 library base;
+/**
+ * @discripe: 抽象类与通用封装
+ */
 
 import 'dart:io';
 import 'dart:convert';
@@ -18,7 +21,6 @@ abstract class DYBase {
   num dp(double dessignValue) => ScreenUtil.getInstance().setWidth(dessignValue);
 }
 
-// http封装
 class DYhttp {
   static final scheme = 'http';
   static final host = '192.168.0.100';

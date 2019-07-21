@@ -1,3 +1,6 @@
+/**
+ * @discripe: bloc全局状态管理
+ */
 import 'package:bloc/bloc.dart';
 
 enum CounterEvent { increment, decrement }

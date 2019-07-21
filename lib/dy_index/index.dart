@@ -1,10 +1,13 @@
+/**
+ * @discripe: 首页轮播图、视频列表
+ */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
-import 'bloc.dart';
-import 'base.dart' show DYBase, DYhttp, DYio;
+import '../bloc.dart';
+import '../base.dart' show DYBase, DYhttp, DYio;
 
 class DyIndexPage extends StatefulWidget {
   final arguments;
@@ -223,21 +226,6 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
         padding: EdgeInsets.all(10),
         children: _creatNavList(),
       ),
-      // 滚动视图的另一种快捷API实现 
-      /* child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.all(10),
-        itemCount: config.navListData.length,
-        itemBuilder: (context, i) {
-          return Container(
-            color: Colors.orange,
-            margin: EdgeInsets.only(right: dp(10)),
-            child: Text(
-              '${config.navListData[i]}',
-            ),
-          );
-        },
-      ), */
     );
   }
 
