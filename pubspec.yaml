@@ -27,8 +27,7 @@ dependencies:
   flutter_swiper: ^1.0.6
   flutter_bloc: ^0.19.1
   http: ^0.12.0+2
-  #chewie: ^0.9.7
-  video_player: ^0.6.4
+  chewie: ^0.9.7
 
 
 dev_dependencies:
