@@ -1,5 +1,4 @@
 /**
- * @author: liuzhanwei<334652479@qq.com>
  * @discripe: 斗鱼APP
  */
 import 'package:flutter/material.dart';
