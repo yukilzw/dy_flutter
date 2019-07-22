@@ -7,6 +7,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:video_player/video_player.dart';
+// import 'package:chewie/chewie.dart';
 
 import '../bloc.dart';
 import '../base.dart' show DYBase, DYhttp;
@@ -34,10 +36,23 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   Timer giftTimer, msgTimer;
 
   ScrollController _chatController = ScrollController();
+  // ChewieController _videoController;
+  VideoPlayerController _videoController;
 
   void initState() {
     super.initState();
-    DYhttp.post('/dy/flutter/msgData').then((res) {
+    /*_videoController = ChewieController(
+      videoPlayerController: VideoPlayerController.network('http://upos-hz-mirrorkodou.acgvideo.com/upgcxcode/26/42/90164226/90164226-1-6.mp4?e=ig8euxZM2rNcNbRMhwdVhoM17wdVhwdEto8g5X10ugNcXBB_&deadline=1563805472&gen=playurl&nbs=1&oi=976319861&os=kodou&platform=html5&trid=638d7e35c08248009c338425136b0454&uipk=5&upsig=367ae057d12f04dd8f72e67e631a23f0&uparams=e,deadline,gen,nbs,oi,os,platform,trid,uipk&mid=0'),
+      aspectRatio: 3 / 2,
+      autoPlay: true,
+      looping: true,
+    );*/
+    _videoController = VideoPlayerController.network('http://vfx.mtime.cn/Video/2019/02/04/mp4/190204084208765161.mp4')
+    ..initialize().then((_) {
+      // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
+      setState(() {});
+    });
+    /* DYhttp.post('/dy/flutter/msgData').then((res) {
       var msgDataSource = res['data'];
       var i = 0;
       msgTimer = Timer.periodic(Duration(milliseconds: 200), (timer) {
@@ -67,7 +82,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
           });
         });
       });
-    });
+    }); */
   }
 
   @override
@@ -103,6 +118,14 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
           );
         },
       ),
+      floatingActionButton: new FloatingActionButton(
+          onPressed: _videoController.value.isPlaying
+              ? _videoController.pause
+              : _videoController.play,
+          child: new Icon(
+              _videoController.value.isPlaying ? Icons.pause : Icons.play_arrow,
+          ),
+      ),
     );
   }
 
@@ -111,7 +134,14 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
       width: MediaQuery.of(context).size.width,
       height: dp(206),
       color: Color(0xff333333),
-      child: Stack(
+      child: /*Chewie(
+        controller: _videoController,
+      ),*/
+      !_videoController.value.initialized ? null : AspectRatio(
+          aspectRatio: _videoController.value.aspectRatio,
+          child: VideoPlayer(_videoController),
+      )
+      /* Stack(
         alignment: AlignmentDirectional.center,
         children: <Widget>[
           Positioned(
@@ -127,7 +157,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
             ),
           ),
         ],
-      )
+      )*/
     );
   }
 
