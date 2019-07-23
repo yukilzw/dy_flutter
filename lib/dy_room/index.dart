@@ -41,18 +41,17 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
 
   void initState() {
     super.initState();
-    _videoPlayerController = VideoPlayerController.network('http://vqzone.gtimg.com/1006_ec206ebfc3e04289a89a09346988dbbb.f20.mp4?ptype=http&vkey=424DFF27E8BA5DD35950FF1EB456EB188EC11E50D83C1862671BA8FA3601FFA68EFD9FE4ED5886EC2E9C39AA947041F579C53773FBDB9083&sdtfrom=v1000&owner=334652479');
-    _videoController = ChewieController(
-      videoPlayerController: _videoPlayerController,
-      aspectRatio: 960 / 540,
-      autoPlay: true,
-      looping: true,
-    );
-    /* _videoController = VideoPlayerController.network('http://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4')
-    ..initialize().then((_) {
-      // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-      setState(() {});
-    }); */
+
+    DYhttp.get('/dy/flutter/video').then((res) {
+      _videoPlayerController = VideoPlayerController.network(res['data']);
+      _videoController = ChewieController(
+        videoPlayerController: _videoPlayerController,
+        aspectRatio: 960 / 540,
+        autoPlay: true,
+        looping: true,
+      );
+    });
+
     DYhttp.post('/dy/flutter/msgData').then((res) {
       var msgDataSource = res['data'];
       var i = 0;
@@ -73,7 +72,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
     DYhttp.get('/dy/flutter/giftData').then((res) {
       var giftData = res['data'];
       giftTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-        if (giftTimer.tick > 3) {
+        if (giftTimer.tick > giftData.length) {
           giftTimer.cancel();
           return;
         }
@@ -122,29 +121,18 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
           );
         },
       ),
-      /*floatingActionButton: new FloatingActionButton(
-          onPressed: _videoController.value.isPlaying
-              ? _videoController.pause
-              : _videoController.play,
-          child: new Icon(
-              _videoController.value.isPlaying ? Icons.pause : Icons.play_arrow,
-          ),
-      ),*/
     );
   }
 
   Widget _livePlayer() {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Container(
-      width: MediaQuery.of(context).size.width,
-      height: dp(210),
+      width: screenWidth,
+      height: screenWidth * 540 / 960,
       color: Color(0xff333333),
       child: Chewie(
         controller: _videoController,
       ),
-      /* !_videoController.value.initialized ? null : AspectRatio(
-          aspectRatio: _videoController.value.aspectRatio,
-          child: VideoPlayer(_videoController),
-      ) */
       /* Stack(
         alignment: AlignmentDirectional.center,
         children: <Widget>[
