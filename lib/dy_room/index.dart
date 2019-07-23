@@ -42,15 +42,13 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   void initState() {
     super.initState();
 
-    DYhttp.get('/dy/flutter/video').then((res) {
-      _videoPlayerController = VideoPlayerController.network(res['data']);
-      _videoController = ChewieController(
-        videoPlayerController: _videoPlayerController,
-        aspectRatio: 960 / 540,
-        autoPlay: true,
-        looping: true,
-      );
-    });
+    _videoPlayerController = VideoPlayerController.network('${DYhttp.scheme}://${DYhttp.host}:${DYhttp.port}/static/suen.mp4');
+    _videoController = ChewieController(
+      videoPlayerController: _videoPlayerController,
+      aspectRatio: 960 / 540,
+      autoPlay: true,
+      looping: true,
+    );
 
     DYhttp.post('/dy/flutter/msgData').then((res) {
       var msgDataSource = res['data'];
@@ -126,20 +124,22 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
 
   Widget _livePlayer() {
     double screenWidth = MediaQuery.of(context).size.width;
+    double playerHeight = screenWidth * 540 / 960;
+
     return Container(
       width: screenWidth,
-      height: screenWidth * 540 / 960,
+      height: playerHeight,
       color: Color(0xff333333),
-      child: Chewie(
+      child: _videoController != null ? Chewie(
         controller: _videoController,
-      ),
-      /* Stack(
+      ) :
+      Stack(
         alignment: AlignmentDirectional.center,
         children: <Widget>[
           Positioned(
             child: Image.network(
               routeProp['roomSrc'],
-              height: dp(206),
+              height: playerHeight,
             ),
           ),
           Positioned(
@@ -149,7 +149,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
             ),
           ),
         ],
-      )*/
+      ),
     );
   }
 
