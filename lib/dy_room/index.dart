@@ -7,6 +7,8 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:video_player/video_player.dart';
+import 'package:chewie/chewie.dart';
 
 import '../bloc.dart';
 import '../base.dart' show DYBase, DYhttp;
@@ -34,9 +36,20 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   Timer giftTimer, msgTimer;
 
   ScrollController _chatController = ScrollController();
+  ChewieController _videoController;
+  VideoPlayerController _videoPlayerController;
 
   void initState() {
     super.initState();
+
+    _videoPlayerController = VideoPlayerController.network('${DYhttp.scheme}://${DYhttp.host}:${DYhttp.port}/static/suen.mp4');
+    _videoController = ChewieController(
+      videoPlayerController: _videoPlayerController,
+      aspectRatio: 960 / 540,
+      autoPlay: true,
+      looping: true,
+    );
+
     DYhttp.post('/dy/flutter/msgData').then((res) {
       var msgDataSource = res['data'];
       var i = 0;
@@ -81,6 +94,9 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
     Gift.bannerQueue = <Widget>[];
     giftTimer?.cancel();
     msgTimer?.cancel();
+
+    _videoPlayerController.dispose();
+    _videoController.dispose();
     super.dispose();
   }
 
@@ -107,17 +123,23 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   }
 
   Widget _livePlayer() {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double playerHeight = screenWidth * 540 / 960;
+
     return Container(
-      width: MediaQuery.of(context).size.width,
-      height: dp(206),
+      width: screenWidth,
+      height: playerHeight,
       color: Color(0xff333333),
-      child: Stack(
+      child: _videoController != null ? Chewie(
+        controller: _videoController,
+      ) :
+      Stack(
         alignment: AlignmentDirectional.center,
         children: <Widget>[
           Positioned(
             child: Image.network(
               routeProp['roomSrc'],
-              height: dp(206),
+              height: playerHeight,
             ),
           ),
           Positioned(
@@ -127,7 +149,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
             ),
           ),
         ],
-      )
+      ),
     );
   }
 
