@@ -23,7 +23,7 @@ abstract class DYBase {
 
 class DYhttp {
   static final scheme = 'http';
-  static final host = '127.0.0.1';
+  static final host = '10.113.22.82';
   static final port = 1236;
 
   static Future<dynamic> post(String url, {bool cache = false, Map param}) async {

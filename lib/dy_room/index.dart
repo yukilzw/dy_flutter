@@ -31,7 +31,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   CounterBloc counterBloc;
 
   List msgData = [];
-  List<Widget> giftBannerView = List<Widget>();
+  List<Map> giftBannerView = [];
 
   Timer giftTimer, msgTimer;
 
@@ -74,24 +74,21 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
           giftTimer.cancel();
           return;
         }
-        Gift.add(giftData[giftTimer.tick - 1], () {
+        var now = new DateTime.now();
+        var json = {
+          'stamp': now.millisecondsSinceEpoch,
+          'config': giftData[giftTimer.tick - 1]
+        };
+        Gift.add(giftBannerView, json, 6500, (giftBannerViewNew) {
           setState(() {
-            giftBannerView = Gift.bannerQueue;
+            giftBannerView = giftBannerViewNew;
           });
         });
       });
     });
   }
 
-  @override
-  void didUpdateWidget(oldWidget) {
-    print(oldWidget);
-    _chatController.jumpTo(_chatController.position.maxScrollExtent);
-    super.didUpdateWidget(oldWidget);
-  }
-
   void dispose() {
-    Gift.bannerQueue = <Widget>[];
     giftTimer?.cancel();
     msgTimer?.cancel();
 
@@ -202,11 +199,20 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
               padding: EdgeInsets.all(dp(10)),
               children: _chatMsg(),
             ),
-            ...giftBannerView,
+            ..._setGiftBannerView()
           ],
         ),
       ),
     );
+  }
+
+  List<Widget> _setGiftBannerView() {
+    List banner = <Widget>[];
+
+    giftBannerView.forEach((item) {
+      banner.add(item['widget']);
+    });
+    return banner;
   }
 
   List<Widget> _chatMsg() {
