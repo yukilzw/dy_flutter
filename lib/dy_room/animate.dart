@@ -9,21 +9,26 @@ import 'package:flutter/material.dart';
 import '../base.dart' show DYBase;
 
 class Gift extends DYBase {
-  static List bannerQueue = <Widget>[];
-
-  Gift.add(json, cb) {
-    int queueLength = Gift.bannerQueue.length;
-    bannerQueue.add(Positioned(
-        left: dp(0),
-        top: dp(45) + dp(80) * queueLength,
-        child: GiftBanner(
-          giftInfo: json,
-          queueLength: queueLength,
-          cb: cb
-        ),
-      )
+  Gift.add(giftBannerView, json, removeTime, cb) {
+    json['widget'] = Positioned(
+      left: dp(0),
+      top: dp(45) + dp(80) * giftBannerView.length,
+      child: GiftBanner(
+        giftInfo: json['config'],
+        queueLength: giftBannerView.length,
+      ),
     );
-    cb();
+    giftBannerView.add(json);
+    cb(giftBannerView);
+
+    Timer(Duration(milliseconds: removeTime), () {
+      for (int i = 0; i < giftBannerView.length; i++) {
+        if (json['stamp'] == giftBannerView[i]['stamp']) {
+          giftBannerView.removeAt(i);
+          cb(giftBannerView);
+        }
+      }
+    });
   }
 }
 
@@ -31,12 +36,11 @@ class GiftBanner extends StatefulWidget with DYBase {
   final Map giftInfo;
   final Widget child;
   final int queueLength;
-  final Function cb;
-  GiftBanner({this.giftInfo, this.child, this.queueLength, this.cb});
+  GiftBanner({this.giftInfo, this.child, this.queueLength});
 
   @override
   _GiftBannerState createState() => _GiftBannerState(
-    giftInfo: giftInfo, child: child, queueLength: queueLength, cb: cb
+    giftInfo: giftInfo, child: child, queueLength: queueLength
   );
 }
 
@@ -46,16 +50,13 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
 
   final Widget child;
   final Map giftInfo;
-  final Function cb;
 
-  dynamic timer;
   int queueLength;
 
   _GiftBannerState({
     this.child,
     @required this.giftInfo,
     @required this.queueLength,
-    this.cb
   }) {
     if (queueLength >= 4) return;
 
@@ -102,13 +103,6 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
     );
 
     controller.forward();
-
-    timer = Timer(Duration(milliseconds: 6500), () {
-        if (Gift.bannerQueue.length > 0) {
-          Gift.bannerQueue.removeLast();
-          cb();
-        }
-    });
   }
 
   void dispose() {
