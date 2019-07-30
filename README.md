@@ -20,6 +20,4 @@ flutter重构的斗鱼首页、直播间页，[展示数据](https://github.com/
 
 ![index](http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/CPfViSUz3ImxkEc2wRirxlUk0BskWCaYihpKFPl..7A!/r/dL8AAAAAAAAA) ![room](http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/EZdwlgw7YkLSA6D17k4SRRlIAFjOOS9c9.iMbJWBNU4!/r/dL8AAAAAAAAA)
 
-![demo](http://m.qpic.cn/psb?/V14dALyK4PrHuj/voQYn8uck8HBVn8JAYRS9nvsk*hkWvY15Me1umKTsrw!/b/dLgAAAAAAAAA)
-
-[GIF图挂了点这里喔](http://m.qpic.cn/psb?/V14dALyK4PrHuj/voQYn8uck8HBVn8JAYRS9nvsk*hkWvY15Me1umKTsrw!/b/dLgAAAAAAAAA)
+[GIF效果图在这里喔](http://m.qpic.cn/psb?/V14dALyK4PrHuj/voQYn8uck8HBVn8JAYRS9nvsk*hkWvY15Me1umKTsrw!/b/dLgAAAAAAAAA)
