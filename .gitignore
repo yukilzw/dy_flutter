@@ -11,6 +11,7 @@
 
 # IntelliJ related
 *.iml
+!dy_flutter.iml
 *.ipr
 *.iws
 .idea/
