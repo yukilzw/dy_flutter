@@ -74,7 +74,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
           giftTimer.cancel();
           return;
         }
-        var now = new DateTime.now();
+        var now = DateTime.now();
         var json = {
           'stamp': now.millisecondsSinceEpoch,
           'config': giftData[giftTimer.tick - 1]
@@ -159,25 +159,28 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
           padding: EdgeInsets.only(top: dp(12)),
           width: dp(60),
           decoration: BoxDecoration(
-            border: Border(bottom: BorderSide(color: Color(0xffff5d23), width: dp(3))),
+            border: Border(bottom: BorderSide(color: DYBase.defaultColor, width: dp(3))),
           ),
           child: Text(
-            '弹幕($count)',
+            '弹幕(${msgData.length})',
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Color(0xffff5d23),
+              color: DYBase.defaultColor,
             ),
           ),
         ),
-        Container(
-          height: dp(40),
-          padding: EdgeInsets.only(top: dp(12)),
-          width: dp(60),
-          child: Text(
-            '主播',
-            textAlign: TextAlign.center,
+        GestureDetector(
+          onTap: () => alert(context, text: '正在建设中~'),
+          child: Container(
+            height: dp(40),
+            padding: EdgeInsets.only(top: dp(12)),
+            width: dp(60),
+            child: Text(
+              '主播',
+              textAlign: TextAlign.center,
+            ),
           ),
-        )
+        ),
       ],
     );
   }
@@ -281,7 +284,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
                   Expanded(
                     flex: 1,
                     child: TextField(
-                      cursorColor: Color(0xffff5d23),
+                      cursorColor: DYBase.defaultColor,
                       cursorWidth: 1.5,
                       style: TextStyle(
                         color: Color(0xff333333),
@@ -294,37 +297,43 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
                       ),
                     ),
                   ),
-                  Container(
-                    width: dp(40),
-                    height: dp(26),
-                    padding: EdgeInsets.only(top: dp(5)),
-                    margin: EdgeInsets.only(left: dp(10)),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(dp(4))),
-                      gradient: LinearGradient(
-                        begin: Alignment(-1.2, 0.0),
-                        end: Alignment(0.2, 0.0),
-                        colors: <Color>[
-                          Color(0xffff4e00),
-                          Color(0xffff8b00),
-                        ],
+                  GestureDetector(
+                    onTap: () => alert(context, text: '正在建设中~'),
+                    child: Container(
+                      width: dp(40),
+                      height: dp(26),
+                      padding: EdgeInsets.only(top: dp(5)),
+                      margin: EdgeInsets.only(left: dp(10)),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(dp(4))),
+                        gradient: LinearGradient(
+                          begin: Alignment(-1.2, 0.0),
+                          end: Alignment(0.2, 0.0),
+                          colors: <Color>[
+                            Color(0xffff4e00),
+                            Color(0xffff8b00),
+                          ],
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      '发送',
-                      style: TextStyle(
-                        color: Colors.white,
+                      child: Text(
+                        '发送',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
                     ),
                   ),
                 ],
               ),
             ),
           ),
-          Image.asset(
-            'lib/images/gift.png',
-            height: dp(36),
+          GestureDetector(
+            onTap: () => alert(context, text: '正在建设中~'),
+            child: Image.asset(
+              'lib/images/gift.png',
+              height: dp(36),
+            ),
           ),
           Padding(padding: EdgeInsets.only(right: dp(12)))
         ],

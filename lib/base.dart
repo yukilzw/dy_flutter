@@ -6,6 +6,7 @@ library base;
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -13,12 +14,44 @@ import 'package:http/http.dart' as http;
 
 // 所有Widget继承的抽象类
 abstract class DYBase {
+  // 默认斗鱼主题色
+  static final defaultColor = Color(0xffff5d23);
   // 初始化设计稿尺寸
   static final double dessignWidth = 375.0;
   static final double dessignHeight = 1335.0;
 
   // flutter_screenutil px转dp
   num dp(double dessignValue) => ScreenUtil.getInstance().setWidth(dessignValue);
+
+  // 默认弹窗alert
+  void alert(context, {
+    String text = '', String title = '提示', String yes = '确定'
+  }) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+          return AlertDialog(
+              title: Text(title),
+              content: SingleChildScrollView(
+                  child: ListBody(
+                      children: <Widget>[
+                          Text(text),
+                      ],
+                  ),
+              ),
+              actions: <Widget>[
+                  FlatButton(
+                      child: Text(yes),
+                      onPressed: () {
+                          Navigator.of(context).pop();
+                      },
+                  ),
+              ],
+          );
+      },
+    ).then((val) {});
+  }
 }
 
 class DYhttp {

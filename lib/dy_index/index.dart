@@ -27,10 +27,12 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   CounterBloc counterBloc;
 
   /*---- 实例属性 State ----*/
-  int _navIndex = 0;
-  List navList = [];
-  List swiperPic = [];
-  List liveData = [];
+  int _currentIndex = 0;  // 底部导航当前页面
+  List _bottomNavList = ["推荐", "娱乐", "关注", "鱼吧", "发现"]; // 底部导航
+  int _navIndex = 0;  // 推荐头部导航
+  List navList = [];  // 推荐标题列表
+  List swiperPic = [];  // 轮播图地址
+  List liveData = []; // 推荐直播间列表
 
   /*---- 生命周期 ----*/
   void initState() {
@@ -104,33 +106,50 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     counterBloc = BlocProvider.of<CounterBloc>(context);
 
     return Scaffold(
-      body: BlocBuilder<CounterEvent, int>(
-        bloc: counterBloc,
-        builder: (BuildContext context, int count) {
-          return Container(
-            child: Column(
-              children: [
-                _header(),
-                _nav(),
-                Expanded(
-                  flex: 1,
-                  child: ListView(
-                    padding: EdgeInsets.only(top: 0),
-                    children: [
-                      _swiper(),
-                      _liveTable(count),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
-        },
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        currentIndex: _currentIndex,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: DYBase.defaultColor,
+        unselectedItemColor: Colors.black38,
+        selectedFontSize: 14,
+        unselectedFontSize: 14,
+        onTap: (index) => setState(() {
+          _currentIndex = index;
+        }),
+        items: [
+          BottomNavigationBarItem(
+              title: Text(_bottomNavList[0]),
+              icon: _currentIndex == 0
+                  ? Icon(Icons.done_all)
+                  : Icon(Icons.done)),
+          BottomNavigationBarItem(
+              title: Text(_bottomNavList[1]),
+              icon: _currentIndex == 1
+                  ? Icon(Icons.flight_takeoff)
+                  : Icon(Icons.flight_land)),
+          BottomNavigationBarItem(
+              title: Text(_bottomNavList[2]),
+              icon: _currentIndex == 2
+                  ? Icon(Icons.hourglass_full)
+                  : Icon(Icons.hourglass_empty)),
+          BottomNavigationBarItem(
+              title: Text(_bottomNavList[3]),
+              icon: _currentIndex == 3
+                  ? Icon(Icons.trending_up)
+                  : Icon(Icons.trending_down)),
+          BottomNavigationBarItem(
+              title: Text(_bottomNavList[4]),
+              icon: _currentIndex == 4
+                  ? Icon(Icons.thumb_up)
+                  : Icon(Icons.thumb_down)),
+        ]
       ),
+      body: _currentPage(),
       // 右下角悬浮按钮(Bloc计数状态演示)
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: _currentIndex != 0 ? null : FloatingActionButton(
         onPressed: _incrementCounter,
-        foregroundColor: Color(0xffff5d23),
+        foregroundColor: DYBase.defaultColor,
         backgroundColor: Colors.white,
         tooltip: 'Increment',
         child: Icon(Icons.favorite),
@@ -139,6 +158,56 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     );
   }
 
+  Widget _currentPage() {
+    Widget page;
+    switch (_currentIndex) {
+      case 0:
+        page = BlocBuilder<CounterEvent, int>(
+          bloc: counterBloc,
+          builder: (BuildContext context, int count) {
+            return Container(
+              child: Column(
+                children: [
+                  _header(),
+                  _nav(),
+                  Expanded(
+                    flex: 1,
+                    child: ListView(
+                      padding: EdgeInsets.only(top: 0),
+                      children: [
+                        _swiper(),
+                        _liveTable(count),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+        break;
+      default:
+        page = Scaffold(
+          appBar: AppBar(
+            title:Text(_bottomNavList[_currentIndex]),
+            backgroundColor: DYBase.defaultColor,
+            brightness: Brightness.dark,
+            textTheme: TextTheme(
+              title: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            )
+          ),
+          body: Center(child: Text(
+            "正在建设中...",
+            style: TextStyle(fontSize: 20, color: Colors.black45),
+          ),),
+        );
+        break;
+    }
+    return page;
+  }
   /*---- 组件化拆分 ----*/
   // Header容器
   Widget _header() {
@@ -194,10 +263,10 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
                   Expanded(
                     flex: 1,
                     child: TextField(
-                      cursorColor: Color(0xffff5d23),
+                      cursorColor: DYBase.defaultColor,
                       cursorWidth: 1.5,
                       style: TextStyle(
-                        color: Color(0xffff5d23),
+                        color: DYBase.defaultColor,
                         fontSize: 14.0,
                       ),
                       decoration: InputDecoration(
@@ -235,7 +304,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
 
     for (var i = 0; i < navList.length; i++) {
       var border, style;
-      Color actColor = Color(0xffff5d23);
+      Color actColor = DYBase.defaultColor;
 
       if (i == _navIndex) {
         border = Border(bottom: BorderSide(color: actColor, width: dp(2)));

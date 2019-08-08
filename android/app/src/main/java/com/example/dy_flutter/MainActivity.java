@@ -8,6 +8,7 @@ public class MainActivity extends FlutterActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    getWindow().setStatusBarColor(0); // 沉浸式状态栏
     GeneratedPluginRegistrant.registerWith(this);
   }
 }
