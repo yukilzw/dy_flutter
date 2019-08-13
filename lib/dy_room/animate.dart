@@ -2,7 +2,6 @@
  * @discripe: 弹幕区礼物横幅动画队列
  */
 import 'dart:async';
-import 'dart:core';
 
 import 'package:flutter/material.dart';
 
