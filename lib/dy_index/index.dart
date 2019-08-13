@@ -8,6 +8,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 
 import '../bloc.dart';
 import '../base.dart' show DYBase, DYhttp, DYio;
+import 'funny.dart';
 
 class DyIndexPage extends StatefulWidget {
   final arguments;
@@ -186,6 +187,9 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
           },
         );
         break;
+      case 1:
+        page = IndexPageFunny();
+        break;
       default:
         page = Scaffold(
           appBar: AppBar(
@@ -200,9 +204,10 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
             )
           ),
           body: Center(child: Text(
-            "正在建设中...",
-            style: TextStyle(fontSize: 20, color: Colors.black45),
-          ),),
+              "正在建设中...",
+              style: TextStyle(fontSize: 20, color: Colors.black45),
+            ),
+          ),
         );
         break;
     }
