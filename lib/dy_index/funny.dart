@@ -12,7 +12,7 @@ class IndexPageFunny extends StatefulWidget {
 }
 
 class _IndexPageFunny extends State<IndexPageFunny> with DYBase, SingleTickerProviderStateMixin {
-  List tabs = ["抽奖", "竞猜", "答题", "太空探险"];
+  List tabs = ['抽奖', '竞猜', '答题', '欲', '太空探险', '幻神降临', '幸运水晶'];
 
   TabController tabController;
 
@@ -70,7 +70,7 @@ class _IndexPageFunny extends State<IndexPageFunny> with DYBase, SingleTickerPro
     Widget tabBar = TabBar(
         //tabs 的长度超出屏幕宽度后，TabBar，是否可滚动
         //设置为false tab 将平分宽度，为true tab 将会自适应宽度
-        isScrollable: false,
+        isScrollable: true,
         //设置tab文字得类型
         labelStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
         //设置tab选中得颜色
@@ -79,8 +79,8 @@ class _IndexPageFunny extends State<IndexPageFunny> with DYBase, SingleTickerPro
         unselectedLabelColor: Colors.white70,
         //设置自定义tab的指示器，CustomUnderlineTabIndicator
         //若不需要自定义，可直接通过
-        //indicatorColor 设置指示器颜色
-        //indicatorWight 设置指示器厚度
+        indicatorColor: Colors.white,  // 设置指示器颜色
+        indicatorWeight: 3.0,  // 设置指示器厚度
         //indicatorPadding
         //indicatorSize  设置指示器大小计算方式
         ///指示器大小计算方式，TabBarIndicatorSize.label跟文字等宽,TabBarIndicatorSize.tab跟每个tab等宽
