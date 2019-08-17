@@ -5,12 +5,10 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 
-import '../bloc.dart';
 import '../base.dart';
 import 'animate.dart' show Gift;
 
@@ -25,8 +23,6 @@ class DyRoomPage extends StatefulWidget {
 class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   final routeProp;
   _DyRoomPageState(this.routeProp);
-
-  CounterBloc counterBloc;
 
   List msgData = [];
   List<Map> giftBannerView = [];
@@ -98,21 +94,15 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
-    counterBloc = BlocProvider.of<CounterBloc>(context);
 
     return Scaffold(
-       body: BlocBuilder<CounterEvent, int>(
-        bloc: counterBloc,
-        builder: (BuildContext context, int count) {
-          return Column(
-            children: <Widget>[
-              _livePlayer(),
-              _nav(count),
-              _chat(),
-              _bottom(),
-            ],
-          );
-        },
+       body: Column(
+        children: <Widget>[
+          _livePlayer(),
+          _nav(),
+          _chat(),
+          _bottom(),
+        ],
       ),
     );
   }
@@ -148,7 +138,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
     );
   }
 
-  Widget _nav(count) {
+  Widget _nav() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
