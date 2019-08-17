@@ -1,5 +1,5 @@
 /**
- * @discripe: 首页轮播图、视频列表
+ * @discripe: 首页轮播图、视频列表、底部导航更多功能
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -9,6 +9,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import '../bloc.dart';
 import '../base.dart';
 import 'funny.dart';
+import 'focus.dart';
 
 class DyIndexPage extends StatefulWidget {
   final arguments;
@@ -22,8 +23,6 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   // 路由传入的数据
   final routeProp;
   _DyIndexPageState(this.routeProp);
-
-  CounterBloc counterBloc;
 
   /*---- 实例属性 State ----*/
   int _currentIndex = 0;  // 底部导航当前页面
@@ -85,6 +84,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   /*---- 事件对应方法 ----*/
   // 点击悬浮标
   void _incrementCounter() {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
     counterBloc.dispatch(CounterEvent.increment);
   }
   // 选择导航tab
@@ -102,8 +102,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
-    counterBloc = BlocProvider.of<CounterBloc>(context);
-
+    final tabBloc = BlocProvider.of<TabBloc>(context);
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
@@ -113,9 +112,12 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
         unselectedItemColor: Colors.black38,
         selectedFontSize: 14,
         unselectedFontSize: 14,
-        onTap: (index) => setState(() {
-          _currentIndex = index;
-        }),
+        onTap: (index) {
+          tabBloc.dispatch(UpdateTab(navList));
+          setState(() {
+            _currentIndex = index;
+          });
+        },
         items: [
           BottomNavigationBarItem(
               title: Text(_bottomNavList[0]),
@@ -145,7 +147,6 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
         ]
       ),
       body: _currentPage(),
-      // 右下角悬浮按钮(Bloc计数状态演示)
       floatingActionButton: _currentIndex != 0 ? null : FloatingActionButton(
         onPressed: _incrementCounter,
         foregroundColor: DYBase.defaultColor,
@@ -161,8 +162,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     Widget page;
     switch (_currentIndex) {
       case 0:
-        page = BlocBuilder<CounterEvent, int>(
-          bloc: counterBloc,
+        page = BlocBuilder<CounterBloc, int>(
           builder: (BuildContext context, int count) {
             return Container(
               child: Column(
@@ -188,6 +188,9 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
       case 1:
         page = IndexPageFunny();
         break;
+      case 2:
+        page = IndexPageFocus();
+        break;
       default:
         page = Scaffold(
           appBar: AppBar(
@@ -202,7 +205,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
             )
           ),
           body: Center(child: Text(
-              "正在建设中...",
+              '正在建设中...',
               style: TextStyle(fontSize: 20, color: Colors.black45),
             ),
           ),

@@ -30,9 +30,16 @@ class DyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<CounterBloc>(
-        builder: (context) => CounterBloc(),
-        child: MaterialApp(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CounterBloc>(
+          builder: (context) => CounterBloc(),
+        ),
+        BlocProvider<TabBloc>(
+          builder: (context) => TabBloc(),
+        ),
+      ],
+      child: MaterialApp(
           title: 'DYFlutter',
           theme: ThemeData(
             scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
