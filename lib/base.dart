@@ -14,6 +14,10 @@ import 'package:http/http.dart' as http;
 
 // 所有Widget继承的抽象类
 abstract class DYBase {
+  // 网络环境配置
+  static final scheme = 'http';
+  static final host = '192.168.0.100';
+  static final port = 1236;
   // 默认斗鱼主题色
   static final defaultColor = Color(0xffff5d23);
   // 初始化设计稿尺寸
@@ -54,17 +58,14 @@ abstract class DYBase {
   }
 }
 
+// http请求
 class DYhttp {
-  static final scheme = 'http';
-  static final host = '10.113.22.82';
-  static final port = 1236;
-
   static Future<dynamic> post(String url, {bool cache = false, Map param}) async {
     var client = http.Client();
     var totalUrl = Uri(
-      scheme: scheme,
-      host: host,
-      port: port,
+      scheme: DYBase.scheme,
+      host: DYBase.host,
+      port: DYBase.port,
       path: url,
     );
     try {
@@ -81,9 +82,9 @@ class DYhttp {
   static Future<dynamic> get(String url, {dynamic cacheName, Map param}) async {
     var client = http.Client();
     var totalUrl = Uri(
-      scheme: scheme,
-      host: host,
-      port: port,
+      scheme: DYBase.scheme,
+      host: DYBase.host,
+      port: DYBase.port,
       path: url,
       queryParameters: param
     );
@@ -101,6 +102,7 @@ class DYhttp {
   }
 }
 
+// 缓存读写清
 class DYio {
   // 获取缓存目录
   static Future<String> getTempPath() async {
@@ -151,4 +153,40 @@ class DYio {
       print(e);
     }
   }
+}
+
+// 禁用点击水波纹
+class NoSplashFactory extends InteractiveInkFeatureFactory {
+  @override
+  InteractiveInkFeature create({
+    MaterialInkController controller,
+    RenderBox referenceBox,
+    Offset position,
+    Color color,
+    TextDirection textDirection,
+    bool containedInkWell = false,
+    rectCallback,
+    BorderRadius borderRadius,
+    ShapeBorder customBorder,
+    double radius,
+    onRemoved
+  }) {
+    return NoSplash(
+      controller: controller,
+      referenceBox: referenceBox,
+    );
+  }
+}
+
+class NoSplash extends InteractiveInkFeature {
+  NoSplash({
+    @required MaterialInkController controller,
+    @required RenderBox referenceBox,
+  }) : super(
+    controller: controller,
+    referenceBox: referenceBox,
+  );
+
+  @override
+  void paintFeature(Canvas canvas, Matrix4 transform) {}
 }

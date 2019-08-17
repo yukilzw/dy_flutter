@@ -7,7 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
 import '../bloc.dart';
-import '../base.dart' show DYBase, DYhttp, DYio;
+import '../base.dart';
 import 'funny.dart';
 
 class DyIndexPage extends StatefulWidget {
@@ -15,9 +15,7 @@ class DyIndexPage extends StatefulWidget {
   DyIndexPage({Key key, this.arguments}) : super(key: key);
 
   @override
-  _DyIndexPageState createState() {
-    return _DyIndexPageState(arguments);
-  }
+  _DyIndexPageState createState() => _DyIndexPageState(arguments);
 }
 
 class _DyIndexPageState extends State<DyIndexPage> with DYBase {

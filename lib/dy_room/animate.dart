@@ -5,7 +5,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../base.dart' show DYBase;
+import '../base.dart';
 
 class Gift extends DYBase {
   Gift.add(giftBannerView, json, removeTime, cb) {

@@ -1,3 +1,6 @@
+/**
+ * @discripe: 娱乐
+ */
 import 'package:flutter/material.dart';
 
 import '../base.dart';
@@ -6,9 +9,7 @@ class IndexPageFunny extends StatefulWidget {
   IndexPageFunny({Key key}) : super(key: key);
 
   @override
-  _IndexPageFunny createState() {
-    return _IndexPageFunny();
-  }
+  _IndexPageFunny createState() => _IndexPageFunny();
 }
 
 class _IndexPageFunny extends State<IndexPageFunny> with DYBase, SingleTickerProviderStateMixin {
@@ -18,9 +19,8 @@ class _IndexPageFunny extends State<IndexPageFunny> with DYBase, SingleTickerPro
 
   @override
   void initState() {
-    ///初始化，这个函数在生命周期中只调用一次
     super.initState();
-    tabController = TabController(initialIndex: 1, length: tabs.length, vsync: this);
+    tabController = TabController(initialIndex: 0, length: tabs.length, vsync: this);
   }
 
   @override

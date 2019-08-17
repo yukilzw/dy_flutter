@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'base.dart';
 import 'bloc.dart';
 import 'dy_index/index.dart';
 import 'dy_room/index.dart';
@@ -36,6 +37,7 @@ class DyApp extends StatelessWidget {
           theme: ThemeData(
             scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
             primarySwatch: Colors.orange,
+            splashFactory: NoSplashFactory()
           ),
           onGenerateRoute: _getRoute,
         ),

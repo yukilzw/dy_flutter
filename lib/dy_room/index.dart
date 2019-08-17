@@ -11,7 +11,7 @@ import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
 
 import '../bloc.dart';
-import '../base.dart' show DYBase, DYhttp;
+import '../base.dart';
 import 'animate.dart' show Gift;
 
 class DyRoomPage extends StatefulWidget {
@@ -19,9 +19,7 @@ class DyRoomPage extends StatefulWidget {
   DyRoomPage({Key key, this.arguments}) : super(key: key);
 
   @override
-  _DyRoomPageState createState() {
-    return _DyRoomPageState(arguments);
-  }
+  _DyRoomPageState createState() => _DyRoomPageState(arguments);
 }
 
 class _DyRoomPageState extends State<DyRoomPage> with DYBase {
@@ -42,7 +40,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   void initState() {
     super.initState();
 
-    _videoPlayerController = VideoPlayerController.network('${DYhttp.scheme}://${DYhttp.host}:${DYhttp.port}/static/suen.mp4');
+    _videoPlayerController = VideoPlayerController.network('${DYBase.scheme}://${DYBase.host}:${DYBase.port}/static/suen.mp4');
     _videoController = ChewieController(
       videoPlayerController: _videoPlayerController,
       aspectRatio: 960 / 540,
