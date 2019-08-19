@@ -16,7 +16,7 @@ import 'package:http/http.dart' as http;
 abstract class DYBase {
   // 网络环境配置
   static final scheme = 'http';
-  static final host = '192.168.0.100';
+  static final host = '10.113.22.82';
   static final port = 1236;
   // 默认斗鱼主题色
   static final defaultColor = Color(0xffff5d23);

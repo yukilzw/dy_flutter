@@ -238,7 +238,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
           GestureDetector(
             onTap: DYio.clearCache,
             child: Image(
-              image: AssetImage('lib/images/dylogo.png'),
+              image: AssetImage('images/dylogo.png'),
               width: dp(76),
               height: dp(34),
             ),
@@ -261,7 +261,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
                 children: <Widget>[
                   // 搜索ICON
                   Image.asset(
-                    'lib/images/search.png',
+                    'images/search.png',
                     width: dp(25),
                     height: dp(15),
                   ),
@@ -393,7 +393,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
             margin: EdgeInsets.only(right: dp(5)),
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('lib/images/isLive.png'),
+                image: AssetImage('images/isLive.png'),
                 fit: BoxFit.fitWidth,
               ),
             ),
@@ -421,7 +421,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
               Padding(
                 padding: EdgeInsets.only(left: dp(5)),
                 child: Image.asset(
-                  'lib/images/next.png',
+                  'images/next.png',
                   height: dp(14),
                 ),
               )
@@ -486,7 +486,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
                               Image.asset(
-                                'lib/images/hot.png',
+                                'images/hot.png',
                                 height: dp(14),
                               ),
                               Padding(padding: EdgeInsets.only(right: dp(3))),
@@ -523,7 +523,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
                             children: <Widget>[
                               Padding(padding: EdgeInsets.only(left: dp(3))),
                               Image.asset(
-                                'lib/images/member.png',
+                                'images/member.png',
                                 height: dp(14),
                               ),
                               Padding(padding: EdgeInsets.only(right: dp(3))),

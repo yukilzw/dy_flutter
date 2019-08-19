@@ -111,7 +111,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    return new Center(
+    return Center(
       child: AnimatedBuilder(
       animation: controller,
       builder: (BuildContext context, Widget child) {
@@ -125,7 +125,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
                 width: dp(244),
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('lib/images/gift-banner.png'),
+                    image: AssetImage('images/gift-banner.png'),
                     fit: BoxFit.fill,
                   ),
                 ),
@@ -187,7 +187,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
                       child: Transform.scale(
                         scale: animationGiftNum_1.value >= 1.7 ? animationGiftNum_2.value : animationGiftNum_1.value,
                         child: Image.asset(
-                          'lib/images/gift-x.png',
+                          'images/gift-x.png',
                           height: dp(10),
                         ),
                       ),
@@ -195,7 +195,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
                     Transform.scale(
                       scale: animationGiftNum_1.value >= 1.7 ? animationGiftNum_2.value : animationGiftNum_1.value,
                       child: Image.asset(
-                        'lib/images/gift-1.png',
+                        'images/gift-1.png',
                         height: dp(30),
                       ),
                     ),

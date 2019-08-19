@@ -129,7 +129,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
           ),
           Positioned(
             child: Image.asset(
-              'lib/images/play.png',
+              'images/play.png',
               height: dp(60),
             ),
           ),
@@ -233,7 +233,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
       if (item['lv'] > 0) {
         msgBoart.insert(0, Positioned(
           child: Image.asset(
-            'lib/images/lv/${item['lv']}.png',
+            'images/lv/${item['lv']}.png',
             height: dp(18),
           ),
         ));
@@ -319,7 +319,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
           GestureDetector(
             onTap: () => alert(context, text: '正在建设中~'),
             child: Image.asset(
-              'lib/images/gift.png',
+              'images/gift.png',
               height: dp(36),
             ),
           ),

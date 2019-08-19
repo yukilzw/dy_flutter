@@ -49,22 +49,22 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - lib/images/dylogo.png
-    - lib/images/search.png
-    - lib/images/isLive.png
-    - lib/images/next.png
-    - lib/images/hot.png
-    - lib/images/member.png
-    - lib/images/play.png
-    - lib/images/gift.png
-    - lib/images/gift-banner.png
-    - lib/images/gift-x.png
-    - lib/images/gift-1.png
+    - images/dylogo.png
+    - images/search.png
+    - images/isLive.png
+    - images/next.png
+    - images/hot.png
+    - images/member.png
+    - images/play.png
+    - images/gift.png
+    - images/gift-banner.png
+    - images/gift-x.png
+    - images/gift-1.png
 
-    - lib/images/lv/3.png
-    - lib/images/lv/30.png
-    - lib/images/lv/50.png
-    - lib/images/lv/80.png
+    - images/lv/3.png
+    - images/lv/30.png
+    - images/lv/50.png
+    - images/lv/80.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
