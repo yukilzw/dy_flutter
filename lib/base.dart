@@ -12,6 +12,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
+import 'dialog.dart';
+
 // 所有Widget继承的抽象类
 abstract class DYBase {
   // 网络环境配置
@@ -29,32 +31,46 @@ abstract class DYBase {
 
   // 默认弹窗alert
   void alert(context, {
-    String text = '', String title = '提示', String yes = '确定'
+    @required String text, String title = '提示', String yes = '确定'
   }) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-          return AlertDialog(
-              title: Text(title),
-              content: SingleChildScrollView(
-                  child: ListBody(
-                      children: <Widget>[
-                          Text(text),
-                      ],
-                  ),
-              ),
-              actions: <Widget>[
-                  FlatButton(
-                      child: Text(yes),
-                      onPressed: () {
-                          Navigator.of(context).pop();
-                      },
-                  ),
+        return AlertDialog(
+          title: Text(title),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(text),
               ],
-          );
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text(yes),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
       },
     ).then((val) {});
+  }
+
+  // loadingDialog
+  void showLoading(context, {
+    String title = '正在加载...'
+  }) {
+    showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return LoadingDialog(
+        text: title,
+      );
+    });
   }
 }
 

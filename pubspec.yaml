@@ -29,6 +29,7 @@ dependencies:
   equatable: ^0.3.0
   http: ^0.12.0+2
   chewie: ^0.9.7
+  image_picker: ^0.6.1
 
 
 dev_dependencies:

@@ -1,14 +1,34 @@
 /**
  * @discripe: 关注
  */
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../bloc.dart';
 import '../base.dart';
 
-class IndexPageFocus extends StatelessWidget with DYBase {
+class IndexPageFocus extends StatefulWidget {
+  @override
+  _IndexPageFocus createState() => _IndexPageFocus();
+}
+class _IndexPageFocus extends State<IndexPageFocus> with DYBase {
+  File _image;
+
+  Future _getImage() async {
+    var image = await ImagePicker.pickImage(
+      source: ImageSource.camera,
+      maxHeight: dp(200),
+      maxWidth: dp(350),
+    );
+
+    setState(() {
+      _image = image;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +53,22 @@ class IndexPageFocus extends StatelessWidget with DYBase {
               child: Column(
               children: <Widget>[
                 Text('TabBloc 全局状态同步：\n${navList.toString()}'),
+                RaisedButton(
+                  textColor: Colors.white,
+                  color: DYBase.defaultColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Text('拍照'),
+                  onPressed: _getImage,
+                ),
+                _image == null ? SizedBox() : Image.file(_image),
+                RaisedButton(
+                  textColor: Colors.white,
+                  color: DYBase.defaultColor,
+                  child: Text('自定义loading弹框'),
+                  onPressed: () => showLoading(context),
+                ),
               ],
             ),
           ),
