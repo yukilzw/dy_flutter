@@ -37,7 +37,7 @@ class _IndexPageFocus extends State<IndexPageFocus> with DYBase {
       builder: (context, navList) {
         return Scaffold(
           appBar: AppBar(
-            title:Text('（功能测试页面）'),
+            title:Text('关注（现为新加功能测试页面）'),
             centerTitle: true,
             backgroundColor: DYBase.defaultColor,
             brightness: Brightness.dark,
@@ -66,7 +66,7 @@ class _IndexPageFocus extends State<IndexPageFocus> with DYBase {
                 RaisedButton(
                   textColor: Colors.white,
                   color: DYBase.defaultColor,
-                  child: Text('自定义loading弹框'),
+                  child: Text('正在加载弹框'),
                   onPressed: () => showLoading(context),
                 ),
               ],

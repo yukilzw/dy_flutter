@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 
 import '../base.dart';
+import 'lottery.dart';
 
 class IndexPageFunny extends StatefulWidget {
   IndexPageFunny({Key key}) : super(key: key);
@@ -13,7 +14,7 @@ class IndexPageFunny extends StatefulWidget {
 }
 
 class _IndexPageFunny extends State<IndexPageFunny> with DYBase, SingleTickerProviderStateMixin {
-  List tabs = ['抽奖', '竞猜', '答题', '欲', '太空探险', '幻神降临', '幸运水晶'];
+  List tabs = ['抽奖', '竞猜', '答题', '充能', '太空探险', '幻神降临', '幸运水晶'];
 
   TabController tabController;
 
@@ -55,12 +56,15 @@ class _IndexPageFunny extends State<IndexPageFunny> with DYBase, SingleTickerPro
     Widget tabBarBodyView = TabBarView(
       controller: tabController,
       //创建Tab页
-      children: tabs.map((e) {
-        return Container(
+      children: tabs.asMap().map((i, e) {
+        if (i == 0) {
+          return MapEntry(i, Lottery());
+        }
+        return MapEntry(i, Container(
           alignment: Alignment.center,
           child: Text(e, textScaleFactor: 1),
-        );
-      }).toList(),
+        ));
+      }).values.toList(),
     );
     return tabBarBodyView;
   }
