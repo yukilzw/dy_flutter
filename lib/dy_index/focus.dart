@@ -16,8 +16,9 @@ class IndexPageFocus extends StatefulWidget {
   _IndexPageFocus createState() => _IndexPageFocus();
 }
 class _IndexPageFocus extends State<IndexPageFocus> with DYBase {
-  File _image;
+  File _image;  // 拍照（从照片选择）后的文件
 
+  // 点击拍照
   Future _getImage() async {
     var image = await ImagePicker.pickImage(
       source: ImageSource.camera,

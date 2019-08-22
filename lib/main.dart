@@ -10,11 +10,11 @@ import 'dy_index/index.dart';
 import 'dy_room/index.dart';
 
 class DyApp extends StatelessWidget {
-  // 动态路由传递参数
+  // string匹配路由
   Route<dynamic> _getRoute(RouteSettings settings) {
     Map<String, WidgetBuilder> routes = {
       '/':     (BuildContext context) => DyIndexPage(),
-      '/room': (BuildContext context) => DyRoomPage(arguments: settings.arguments),
+      '/room': (BuildContext context) => DyRoomPage(arguments: settings.arguments),   // 路由传参
     };
     var route = routes[settings.name];
 
@@ -30,7 +30,7 @@ class DyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiBlocProvider(     // 多个Bloc注册
       providers: [
         BlocProvider<CounterBloc>(
           builder: (context) => CounterBloc(),

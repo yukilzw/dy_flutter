@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 
 enum CounterEvent { increment, decrement }
 
+// 点击悬浮球增加当前直播数量
 class CounterBloc extends Bloc<CounterEvent, int> {
   @override
   int get initialState => 21567;
@@ -23,7 +24,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
   }
 }
 
-
+// 保存首页navList信息
 abstract class TabEvent extends Equatable {
   TabEvent([List props = const []]) : super(props);
 }

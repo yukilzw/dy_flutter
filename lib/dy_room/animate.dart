@@ -7,7 +7,9 @@ import 'package:flutter/material.dart';
 
 import '../base.dart';
 
+// 暴露给直播间调用的礼物横幅类
 class Gift extends DYBase {
+  // 在礼物横幅队列中增加
   Gift.add(giftBannerView, json, removeTime, cb) {
     json['widget'] = Positioned(
       left: dp(0),
@@ -18,8 +20,9 @@ class Gift extends DYBase {
       ),
     );
     giftBannerView.add(json);
-    cb(giftBannerView);
+    cb(giftBannerView); // 将重新生成的礼物横幅队列Widget返回给直播间setState
 
+    // 给定时间后从队列中将礼物移除
     Timer(Duration(milliseconds: removeTime), () {
       for (int i = 0; i < giftBannerView.length; i++) {
         if (json['stamp'] == giftBannerView[i]['stamp']) {
@@ -39,21 +42,19 @@ class GiftBanner extends StatefulWidget with DYBase {
 
   @override
   _GiftBannerState createState() => _GiftBannerState(
-    giftInfo: giftInfo, child: child, queueLength: queueLength
+    giftInfo: giftInfo, queueLength: queueLength
   );
 }
 
+// 单个礼物横幅的动画Widget
 class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProviderStateMixin {
   Animation<double> animationGiftNum_1, animationGiftNum_2, animationGiftNum_3;
   AnimationController controller;
 
-  final Widget child;
   final Map giftInfo;
-
-  int queueLength;
+  final int queueLength;
 
   _GiftBannerState({
-    this.child,
     @required this.giftInfo,
     @required this.queueLength,
   }) {
@@ -64,6 +65,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
         vsync: this
     );
 
+    // 礼物数量图片变大
     animationGiftNum_1 = Tween(
       begin: 0.0, end: 1.7,
     ).animate(
@@ -76,6 +78,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
       )
     );
 
+    // 礼物数量图片变小
     animationGiftNum_2 = Tween(
       begin: 1.7, end: 1.0,
     ).animate(
@@ -88,6 +91,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
       )
     );
 
+    // 横幅从屏幕外滑入
     double an3Begin = -dp(244);
     animationGiftNum_3 = Tween(
       begin: an3Begin, end: 0.0,
@@ -214,7 +218,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
           ),
         );
       },
-      child: child,
+      child: widget.child,
     ),
     );
   }

@@ -31,7 +31,8 @@ abstract class DYBase {
 
   // 默认弹窗alert
   void alert(context, {
-    @required String text, String title = '提示', String yes = '确定'
+    @required String text, String title = '提示', String yes = '确定',
+    Function yesCallBack
   }) {
     showDialog(
       context: context,
@@ -50,6 +51,7 @@ abstract class DYBase {
             FlatButton(
               child: Text(yes),
               onPressed: () {
+                if (yesCallBack != null) yesCallBack();
                 Navigator.of(context).pop();
               },
             ),

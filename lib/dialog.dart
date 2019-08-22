@@ -10,7 +10,7 @@ class LoadingDialog extends Dialog with DYBase {
   @override
   Widget build(BuildContext context) {
     return Material(
-      type: MaterialType.transparency, //透明类型
+      type: MaterialType.transparency,
       child: Center(
         child: SizedBox(
           width: dp(120),

@@ -35,6 +35,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   /*---- 生命周期 ----*/
   void initState() {
     super.initState();
+    // 优先从缓存中拿navList
     DYio.getTempFile('navList').then((dynamic data) {
       if (data == null) return;
       setState(() {
@@ -87,7 +88,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     final counterBloc = BlocProvider.of<CounterBloc>(context);
     counterBloc.dispatch(CounterEvent.increment);
   }
-  // 选择导航tab
+  // 选择顶部导航tab
   void _chooseTabNav(i) {
     setState(() {
       _navIndex = i;
@@ -104,6 +105,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
     final tabBloc = BlocProvider.of<TabBloc>(context);
     return Scaffold(
+      // 底部导航栏
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         currentIndex: _currentIndex,
@@ -158,6 +160,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     );
   }
 
+  // 底部导航对应的页面
   Widget _currentPage() {
     Widget page;
     switch (_currentIndex) {
@@ -359,7 +362,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
         control: SwiperControl(),
         scrollDirection: Axis.horizontal,
         autoplay: true,
-        onTap: (index) => print('this is $index click'),
+        onTap: (index) => print('Swiper pic $index click'),
       ),
     );
   }

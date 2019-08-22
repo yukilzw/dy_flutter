@@ -21,21 +21,22 @@ class DyRoomPage extends StatefulWidget {
 }
 
 class _DyRoomPageState extends State<DyRoomPage> with DYBase {
-  final routeProp;
+  final routeProp;    // 首页路由跳转传递的参数
   _DyRoomPageState(this.routeProp);
 
-  List msgData = [];
-  List<Map> giftBannerView = [];
+  List msgData = [];  // 弹幕消息列表
+  List<Map> giftBannerView = [];  // 礼物横幅列表JSON
 
-  Timer giftTimer, msgTimer;
+  Timer giftTimer;  // 礼物横幅模拟每s循环出现动画
+  Timer msgTimer;  // 弹幕消息模拟200ms收到弹幕
 
-  ScrollController _chatController = ScrollController();
-  ChewieController _videoController;
-  VideoPlayerController _videoPlayerController;
+  ScrollController _chatController = ScrollController();  // 弹幕区滚动Controller
+  ChewieController _videoController;    // 播放器Controller : chewie
+  VideoPlayerController _videoPlayerController;   // 播放器Controller : video_player
 
   void initState() {
     super.initState();
-
+    // 初始化播放器设置
     _videoPlayerController = VideoPlayerController.network('${DYBase.scheme}://${DYBase.host}:${DYBase.port}/static/suen.mp4');
     _videoController = ChewieController(
       videoPlayerController: _videoPlayerController,
@@ -43,7 +44,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
       autoPlay: true,
       looping: true,
     );
-
+    // 请求弹幕数据，模拟弹幕消息
     DYhttp.post('/dy/flutter/msgData').then((res) {
       var msgDataSource = res['data'];
       var i = 0;
@@ -60,7 +61,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
         i++;
       });
     });
-
+    // 请求礼物横幅数据，模拟礼物赠送动画
     DYhttp.get('/dy/flutter/giftData').then((res) {
       var giftData = res['data'];
       giftTimer = Timer.periodic(Duration(seconds: 1), (timer) {

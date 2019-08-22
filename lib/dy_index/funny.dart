@@ -14,9 +14,9 @@ class IndexPageFunny extends StatefulWidget {
 }
 
 class _IndexPageFunny extends State<IndexPageFunny> with DYBase, SingleTickerProviderStateMixin {
-  List tabs = ['抽奖', '竞猜', '答题', '充能', '太空探险', '幻神降临', '幸运水晶'];
+  List tabs = ['抽奖', '竞猜', '答题', '充能', '太空探险', '幻神降临', '幸运水晶']; // 顶部导航栏
 
-  TabController tabController;
+  TabController tabController;  // 导航栏切换Controller
 
   @override
   void initState() {
@@ -44,7 +44,6 @@ class _IndexPageFunny extends State<IndexPageFunny> with DYBase, SingleTickerPro
     );
   }
 
-  //当整个页面dispose时，记得把控制器也dispose掉，释放内存
   @override
   void dispose() {
     tabController.dispose();
@@ -57,7 +56,7 @@ class _IndexPageFunny extends State<IndexPageFunny> with DYBase, SingleTickerPro
       controller: tabController,
       //创建Tab页
       children: tabs.asMap().map((i, e) {
-        if (i == 0) {
+        if (i == 0) { // 九宫格抽奖
           return MapEntry(i, Lottery());
         }
         return MapEntry(i, Container(
