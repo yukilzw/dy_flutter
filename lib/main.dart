@@ -3,6 +3,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 import 'base.dart';
 import 'bloc.dart';
@@ -10,18 +11,36 @@ import 'dy_index/index.dart';
 import 'dy_room/index.dart';
 
 class DyApp extends StatelessWidget {
-  // string匹配路由
+  // 路由路径匹配
   Route<dynamic> _getRoute(RouteSettings settings) {
     Map<String, WidgetBuilder> routes = {
       '/':     (BuildContext context) => DyIndexPage(),
-      '/room': (BuildContext context) => DyRoomPage(arguments: settings.arguments),   // 路由传参
+      '/room': (BuildContext context) => DyRoomPage(arguments: settings.arguments),
+      '/webView': (BuildContext context) {  // webView全屏容器
+        Map arg = settings.arguments;
+        return WebviewScaffold(
+          url: arg['url'],
+          appBar: AppBar(
+            iconTheme: IconThemeData(color: Colors.white),
+            backgroundColor: DYBase.defaultColor,
+            brightness: Brightness.dark,
+            textTheme: TextTheme(
+              title: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ),
+            title: Text(arg['title']),
+          ),
+        );
+        }
     };
-    var route = routes[settings.name];
+    var widget = routes[settings.name];
 
-    if (route != null) {
+    if (widget != null) {
       return MaterialPageRoute<void>(
         settings: settings,
-        builder: route,
+        builder: widget,
       );
     }
 

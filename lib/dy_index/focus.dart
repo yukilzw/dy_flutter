@@ -21,7 +21,7 @@ class _IndexPageFocus extends State<IndexPageFocus> with DYBase {
   // 点击拍照
   Future _getImage() async {
     var image = await ImagePicker.pickImage(
-      source: ImageSource.camera,
+      source: ImageSource.gallery,
       maxHeight: dp(200),
       maxWidth: dp(350),
     );
@@ -69,6 +69,18 @@ class _IndexPageFocus extends State<IndexPageFocus> with DYBase {
                   color: DYBase.defaultColor,
                   child: Text('正在加载弹框'),
                   onPressed: () => showLoading(context),
+                ),
+                RaisedButton(
+                  textColor: Colors.white,
+                  color: DYBase.defaultColor,
+                  child: Text('webView'),
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/webView',
+                      arguments: {
+                        'url': 'https://m.douyu.com',
+                        'title': '斗鱼直播 - H5'
+                      });
+                  },
                 ),
               ],
             ),
