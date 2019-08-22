@@ -45,6 +45,12 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>image usage</string>
+    <key>NSCameraUsageDescription</key>
+    <string>camera usage</string>
+	<key>NSMicrophoneUsageDescription</key>
+    <string>microphone usage</string>
 	<false/>
 </dict>
 </plist>
