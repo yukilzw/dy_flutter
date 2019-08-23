@@ -3,6 +3,7 @@
  */
 import 'dart:async';
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,8 +22,8 @@ class DyRoomPage extends StatefulWidget {
 }
 
 class _DyRoomPageState extends State<DyRoomPage> with DYBase {
-  final routeProp;    // 首页路由跳转传递的参数
-  _DyRoomPageState(this.routeProp);
+  final _routeProp;    // 首页路由跳转传递的参数
+  _DyRoomPageState(this._routeProp);
 
   List msgData = [];  // 弹幕消息列表
   List<Map> giftBannerView = [];  // 礼物横幅列表JSON
@@ -99,6 +100,10 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
     return Scaffold(
        body: Column(
         children: <Widget>[
+          Container(
+            color: Colors.black,
+            height: MediaQueryData.fromWindow(window).padding.top,
+          ),
           _livePlayer(),
           _nav(),
           _chat(),
@@ -124,7 +129,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
         children: <Widget>[
           Positioned(
             child: Image.network(
-              routeProp['roomSrc'],
+              _routeProp['roomSrc'],
               height: playerHeight,
             ),
           ),

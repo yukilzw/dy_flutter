@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'base.dart';
 
 class LoadingDialog extends Dialog with DYBase {
-  String text;
+  final String text;
 
   LoadingDialog({Key key, @required this.text}) : super(key: key);
 

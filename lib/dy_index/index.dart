@@ -16,48 +16,46 @@ class DyIndexPage extends StatefulWidget {
   DyIndexPage({Key key, this.arguments}) : super(key: key);
 
   @override
-  _DyIndexPageState createState() => _DyIndexPageState(arguments);
+  _DyIndexPageState createState() => _DyIndexPageState();
 }
 
-class _DyIndexPageState extends State<DyIndexPage> with DYBase {
-  // 路由传入的数据
-  final routeProp;
-  _DyIndexPageState(this.routeProp);
+class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProviderStateMixin {
+  final _bottomNavList = ["推荐", "娱乐", "关注", "鱼吧", "发现"]; // 底部导航
 
-  /*---- 实例属性 State ----*/
   int _currentIndex = 0;  // 底部导航当前页面
-  List _bottomNavList = ["推荐", "娱乐", "关注", "鱼吧", "发现"]; // 底部导航
-  int _navIndex = 0;  // 推荐头部导航
-  List navList = [];  // 推荐标题列表
+  List _navList;  // 推荐标题列表
   List swiperPic = [];  // 轮播图地址
   List liveData = []; // 推荐直播间列表
 
-  /*---- 生命周期 ----*/
   void initState() {
     super.initState();
     // 优先从缓存中拿navList
-    DYio.getTempFile('navList').then((dynamic data) {
+    DYio.getTempFile('_navList').then((dynamic data) {
       if (data == null) return;
       setState(() {
-        navList = data['data'];
-        _getLiveData(navList[0]);
+        _navList = data['data'];
+        _getLiveData(_navList[0]);
       });
     });
     _getNav();
     _getSwiperPic();
   }
 
-  /*---- 网络请求 ----*/
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   // 获取导航列表
   void _getNav() {
     DYhttp.get(
       '/dy/flutter/nav',
-      cacheName: 'navList',
+      cacheName: '_navList',
     ).then((res) {
       setState(() {
-        navList = res['data']; 
+        _navList = res['data'];
       });
-      _getLiveData(navList[0]);
+      _getLiveData(_navList[0]);
     });
   }
   // 获取轮播图数据
@@ -88,12 +86,6 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     final counterBloc = BlocProvider.of<CounterBloc>(context);
     counterBloc.dispatch(CounterEvent.increment);
   }
-  // 选择顶部导航tab
-  void _chooseTabNav(i) {
-    setState(() {
-      _navIndex = i;
-    });
-  }
   // 跳转直播间
   void _goToLiveRoom(item) {
     Navigator.pushNamed(context, '/room', arguments: item);
@@ -115,7 +107,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
         selectedFontSize: 14,
         unselectedFontSize: 14,
         onTap: (index) {
-          tabBloc.dispatch(UpdateTab(navList));
+          tabBloc.dispatch(UpdateTab(_navList));
           setState(() {
             _currentIndex = index;
           });
@@ -167,22 +159,82 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
       case 0:
         page = BlocBuilder<CounterBloc, int>(
           builder: (BuildContext context, int count) {
-            return Container(
-              child: Column(
-                children: [
-                  _header(),
-                  _nav(),
-                  Expanded(
-                    flex: 1,
-                    child: ListView(
-                      padding: EdgeInsets.only(top: 0),
-                      children: [
-                        _swiper(),
-                        _liveTable(count),
-                      ],
-                    ),
+            return Scaffold(
+              body: _navList == null ? null : DefaultTabController(
+                length: _navList.length,
+                child: NestedScrollView(  // 嵌套式滚动视图
+                  headerSliverBuilder: (context, innerScrolled) => <Widget>[
+                    // 滑动折叠头部
+                    SliverOverlapAbsorber(
+                      // 传入 handle 值，直接通过 `sliverOverlapAbsorberHandleFor` 获取即可
+                      handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                      child: SliverAppBar(
+                        backgroundColor: Colors.white,
+                        brightness: Brightness.dark,
+                        textTheme: TextTheme(
+                          title: TextStyle(
+                            color: DYBase.defaultColor,
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        pinned: true,
+                        actions: <Widget>[
+                          _header()
+                        ],
+                        expandedHeight: dp(140),
+                        flexibleSpace: FlexibleSpaceBar(  // 下拉渐入背景
+                          background: Container(
+                            decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                begin: Alignment(0.0, 1),
+                                end: Alignment(0.0, -0.7),
+                                colors: <Color>[
+                                  Color(0xffffffff),
+                                  Color(0xffff9b7a)
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        bottom: TabBar(
+                          isScrollable: true,
+                          labelStyle: TextStyle(fontSize: 15),
+                          labelColor: DYBase.defaultColor,
+                          unselectedLabelColor: Color(0xff333333),
+                          indicatorSize: TabBarIndicatorSize.label,
+                          tabs: _navList.map((e) => Tab(text: e)).toList()
+                        ),
+                        forceElevated: innerScrolled,
+                      ),
+                    )
+                  ],
+                  body: TabBarView(
+                    // 这边需要通过 Builder 来创建 TabBarView 的内容，否则会报错
+                    // NestedScrollView.sliverOverlapAbsorberHandleFor必须在NestedScrollView中调用
+                    children: _navList.asMap().map((i, tab) => MapEntry(i, Builder(
+                        builder: (context) => CustomScrollView(
+                          key: PageStorageKey<String>(tab),
+                          slivers: <Widget>[
+                            // 将子部件同 `SliverAppBar` 重叠部分顶出来，否则会被遮挡
+                            SliverOverlapInjector(
+                                handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context)),
+                            SliverToBoxAdapter(
+                              child: Container(
+                                child: i == 0 ? Column(
+                                  children: [
+                                    _swiper(),
+                                    _liveTable(count),
+                                  ],
+                                ) : null,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),),
+                    ).values.toList(),
                   ),
-                ],
+                ),
               ),
             );
           },
@@ -217,6 +269,43 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     }
     return page;
   }
+
+  buildBodyView(count) {
+    //构造 TabBarView
+    Widget tabBarBodyView = TabBarView(
+      // controller: tabController,
+      //创建Tab页
+      children: _navList.asMap().map((i, e) {
+        if (i == 0) {
+          return MapEntry(i, Container(
+            child: Column(
+              children: [
+                // _header(),
+                // _nav(),
+                Expanded(
+                  flex: 1,
+                  child: ListView(
+                    padding: EdgeInsets.only(top: 0),
+                    children: [
+                      _swiper(),
+                      _liveTable(count),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ));
+        }
+        return MapEntry(i, Center(child: Text(
+            '正在建设中...',
+            style: TextStyle(fontSize: 20, color: Colors.black45),
+          ),
+        ));
+      }).values.toList(),
+    );
+    return tabBarBodyView;
+  }
+
   /*---- 组件化拆分 ----*/
   // Header容器
   Widget _header() {
@@ -224,16 +313,6 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
       width: dp(375),
       height: dp(80),
       padding: EdgeInsets.fromLTRB(dp(10), dp(24), dp(20), 0),
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment(-1.0, 0.0),
-          end: Alignment(0.6, 0.0),
-          colors: <Color>[
-            Color(0xffffffff),
-            Color(0xffff9b7a)
-          ],
-        ),
-      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[
@@ -294,75 +373,31 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     );
   }
 
-  // tab 切换导航
-  Widget _nav() {
-    return SizedBox(
-      height: dp(40),
-      // 导航滚动列表视图
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.all(10),
-        children: _creatNavList(),
-      ),
-    );
-  }
-
-  // 创建导航子项
-  List<Container> _creatNavList() {
-    var navWidgetList = List<Container>();
-
-    for (var i = 0; i < navList.length; i++) {
-      var border, style;
-      Color actColor = DYBase.defaultColor;
-
-      if (i == _navIndex) {
-        border = Border(bottom: BorderSide(color: actColor, width: dp(2)));
-        style = TextStyle(
-          color: actColor,
-        );
-      } else {
-        style = TextStyle(
-          color: Color(0xff3f3f3f),
-        );
-      }
-      navWidgetList.add(
-        Container(
-          decoration: BoxDecoration(
-            border: border
-          ),
-          margin: EdgeInsets.only(right: dp(10)),
-          child: GestureDetector(
-            onTap: () {
-              _chooseTabNav(i);
-            },
-            child: Text(
-              '${navList[i]}',
-              style: style,
-            ),
-          ),
-        ),
-      );
-    }
-    return navWidgetList;
-  }
-
   // 轮播图
   Widget _swiper() {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.width / 1.7686,
-      child: swiperPic.length < 1 ? null : Swiper(
-        itemBuilder: _swiperBuilder,
-        itemCount: swiperPic.length,
-        pagination: SwiperPagination(
-            builder: DotSwiperPaginationBuilder(
-          color: Color.fromRGBO(0, 0, 0, .2),
-          activeColor: Color(0xfffa7122),
-        )),
-        control: SwiperControl(),
-        scrollDirection: Axis.horizontal,
-        autoplay: true,
-        onTap: (index) => print('Swiper pic $index click'),
+    return Padding(
+      padding: EdgeInsets.all(dp(10)),
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(
+          Radius.circular(dp(10)),
+        ),
+        child: Container(
+          width: dp(340),
+          height: dp(330) / 1.7686,
+          child: swiperPic.length < 1 ? null : Swiper(
+            itemBuilder: _swiperBuilder,
+            itemCount: swiperPic.length,
+            pagination: SwiperPagination(
+                builder: DotSwiperPaginationBuilder(
+              color: Color.fromRGBO(0, 0, 0, .2),
+              activeColor: Color(0xfffa7122),
+            )),
+            control: SwiperControl(),
+            scrollDirection: Axis.horizontal,
+            autoplay: true,
+            onTap: (index) => print('Swiper pic $index click'),
+          ),
+        ),
       ),
     );
   }
