@@ -8,14 +8,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../bloc.dart';
-import '../base.dart';
+import '../../bloc.dart';
+import '../../base.dart';
 
-class IndexPageFocus extends StatefulWidget {
+class FocusPage extends StatefulWidget {
   @override
-  _IndexPageFocus createState() => _IndexPageFocus();
+  _FocusPage createState() => _FocusPage();
 }
-class _IndexPageFocus extends State<IndexPageFocus> with DYBase {
+
+class _FocusPage extends State<FocusPage> with DYBase {
   File _image;  // 拍照（从照片选择）后的文件
 
   // 点击拍照

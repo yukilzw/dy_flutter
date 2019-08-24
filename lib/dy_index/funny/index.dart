@@ -3,17 +3,15 @@
  */
 import 'package:flutter/material.dart';
 
-import '../base.dart';
+import '../../base.dart';
 import 'lottery.dart';
 
-class IndexPageFunny extends StatefulWidget {
-  IndexPageFunny({Key key}) : super(key: key);
-
+class FunnyPage extends StatefulWidget {
   @override
-  _IndexPageFunny createState() => _IndexPageFunny();
+  _FunnyPage createState() => _FunnyPage();
 }
 
-class _IndexPageFunny extends State<IndexPageFunny> with DYBase, SingleTickerProviderStateMixin {
+class _FunnyPage extends State<FunnyPage> with DYBase, SingleTickerProviderStateMixin {
   List tabs = ['抽奖', '竞猜', '答题', '充能', '太空探险', '幻神降临', '幸运水晶']; // 顶部导航栏
 
   TabController tabController;  // 导航栏切换Controller

@@ -6,7 +6,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../base.dart';
+import '../../base.dart';
 
 class Lottery extends StatefulWidget {
   static final List lotteryInOrder = <int>[0, 1, 2, 5, 8, 7, 6, 3];   // 九宫格奖品顺序对应Widget索引
@@ -17,6 +17,7 @@ class Lottery extends StatefulWidget {
   @override
   _Lottery createState() => _Lottery();
 }
+
 class _Lottery extends State<Lottery> with DYBase {
   Map lotteryConfig;    // 从服务端获取的抽奖UI配置信息
   int runCount;    // 九宫格转动时的次数累计
@@ -109,8 +110,8 @@ class _Lottery extends State<Lottery> with DYBase {
 
   @override
   void dispose() {
-    super.dispose();
     timer?.cancel();
+    super.dispose();
   }
 
   List<Widget> _renderLotteryItem() {

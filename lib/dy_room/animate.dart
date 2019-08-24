@@ -110,8 +110,8 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
 
   @override
   void dispose() {
-    super.dispose();
     controller?.dispose();
+    super.dispose();
   }
 
   @override
