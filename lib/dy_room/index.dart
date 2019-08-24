@@ -6,6 +6,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_player/video_player.dart';
 import 'package:chewie/chewie.dart';
@@ -35,6 +36,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   ChewieController _videoController;    // 播放器Controller : chewie
   VideoPlayerController _videoPlayerController;   // 播放器Controller : video_player
 
+  @override
   void initState() {
     super.initState();
     // 初始化播放器设置
@@ -84,31 +86,35 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
     });
   }
 
+  @override
   void dispose() {
+    super.dispose();
     giftTimer?.cancel();
     msgTimer?.cancel();
 
     _videoPlayerController.dispose();
     _videoController.dispose();
-    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
 
-    return Scaffold(
-       body: Column(
-        children: <Widget>[
-          Container(
-            color: Colors.black,
-            height: MediaQueryData.fromWindow(window).padding.top,
-          ),
-          _livePlayer(),
-          _nav(),
-          _chat(),
-          _bottom(),
-        ],
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle.light,
+      child: Scaffold(
+        body: Column(
+          children: <Widget>[
+            Container(
+              height: MediaQueryData.fromWindow(window).padding.top,
+              color: Color(0xff333333),
+            ),
+            _livePlayer(),
+            _nav(),
+            _chat(),
+            _bottom(),
+          ],
+        ),
       ),
     );
   }

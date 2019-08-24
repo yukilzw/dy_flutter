@@ -21,12 +21,14 @@ class DyIndexPage extends StatefulWidget {
 
 class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProviderStateMixin {
   final _bottomNavList = ["推荐", "娱乐", "关注", "鱼吧", "发现"]; // 底部导航
+  final swiperController = SwiperController();
 
   int _currentIndex = 0;  // 底部导航当前页面
   List _navList;  // 推荐标题列表
   List swiperPic = [];  // 轮播图地址
   List liveData = []; // 推荐直播间列表
 
+  @override
   void initState() {
     super.initState();
     // 优先从缓存中拿navList
@@ -39,11 +41,6 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
     });
     _getNav();
     _getSwiperPic();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   // 获取导航列表
@@ -170,7 +167,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
                       handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                       child: SliverAppBar(
                         backgroundColor: Colors.white,
-                        brightness: Brightness.dark,
+                        brightness: Brightness.light,
                         textTheme: TextTheme(
                           title: TextStyle(
                             color: DYBase.defaultColor,
@@ -201,6 +198,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
                           isScrollable: true,
                           labelStyle: TextStyle(fontSize: 15),
                           labelColor: DYBase.defaultColor,
+                          indicatorColor: DYBase.defaultColor,
                           unselectedLabelColor: Color(0xff333333),
                           indicatorSize: TabBarIndicatorSize.label,
                           tabs: _navList.map((e) => Tab(text: e)).toList()
@@ -270,10 +268,9 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
     return page;
   }
 
-  buildBodyView(count) {
+  Widget buildBodyView(count) {
     //构造 TabBarView
-    Widget tabBarBodyView = TabBarView(
-      // controller: tabController,
+    return TabBarView(
       //创建Tab页
       children: _navList.asMap().map((i, e) {
         if (i == 0) {
@@ -303,7 +300,6 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
         ));
       }).values.toList(),
     );
-    return tabBarBodyView;
   }
 
   /*---- 组件化拆分 ----*/
@@ -385,14 +381,18 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
           width: dp(340),
           height: dp(330) / 1.7686,
           child: swiperPic.length < 1 ? null : Swiper(
+            controller: swiperController,
             itemBuilder: _swiperBuilder,
             itemCount: swiperPic.length,
             pagination: SwiperPagination(
                 builder: DotSwiperPaginationBuilder(
               color: Color.fromRGBO(0, 0, 0, .2),
-              activeColor: Color(0xfffa7122),
+              activeColor: DYBase.defaultColor,
             )),
-            control: SwiperControl(),
+            control: SwiperControl(
+              size: dp(20),
+              color: DYBase.defaultColor,
+            ),
             scrollDirection: Axis.horizontal,
             autoplay: true,
             onTap: (index) => print('Swiper pic $index click'),

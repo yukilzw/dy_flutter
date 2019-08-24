@@ -33,7 +33,7 @@ class DyApp extends StatelessWidget {
             title: Text(arg['title']),
           ),
         );
-        }
+      }
     };
     var widget = routes[settings.name];
 

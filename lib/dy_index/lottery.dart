@@ -23,6 +23,7 @@ class _Lottery extends State<Lottery> with DYBase {
   Timer timer;     // 转动时的计时器
   Map lotteryResult;    // 服务端返回的抽奖结果
 
+  @override
   void initState() {
     super.initState();
     // 请求抽奖UI配置渲染
@@ -106,6 +107,7 @@ class _Lottery extends State<Lottery> with DYBase {
     });
   }
 
+  @override
   void dispose() {
     super.dispose();
     timer?.cancel();
