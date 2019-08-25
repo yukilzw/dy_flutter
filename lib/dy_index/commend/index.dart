@@ -24,11 +24,7 @@ class CommendPage extends StatelessWidget with DYBase {
             length: navList.length,
             child: NestedScrollView(  // 嵌套式滚动视图
               headerSliverBuilder: (context, innerScrolled) => <Widget>[
-                // 滑动折叠头部
-                SliverOverlapAbsorber(
-                  // 传入 handle 值，直接通过 `sliverOverlapAbsorberHandleFor` 获取即可
-                  handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                  child: SliverAppBar(
+                SliverAppBar(
                     backgroundColor: Colors.white,
                     brightness: Brightness.light,
                     textTheme: TextTheme(
@@ -68,7 +64,6 @@ class CommendPage extends StatelessWidget with DYBase {
                     ),
                     forceElevated: innerScrolled,
                   ),
-                )
               ],
               body: TabBarView(
                 // 这边需要通过 Builder 来创建 TabBarView 的内容，否则会报错
@@ -78,8 +73,8 @@ class CommendPage extends StatelessWidget with DYBase {
                       key: PageStorageKey<String>(tab),
                       slivers: <Widget>[
                         // 将子部件同 `SliverAppBar` 重叠部分顶出来，否则会被遮挡
-                        SliverOverlapInjector(
-                            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context)),
+                        /* SliverOverlapInjector(
+                          handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context)),*/
                         SliverToBoxAdapter(
                           child: Container(
                             child: i == 0 ? Column(

@@ -33,6 +33,7 @@ dependencies:
   #flutter_statusbarcolor: ^0.2.1
 
 dev_dependencies:
+  mockito: ^4.1.0
   flutter_test:
     sdk: flutter
 
