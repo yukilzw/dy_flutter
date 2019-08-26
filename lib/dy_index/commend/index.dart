@@ -35,10 +35,12 @@ class CommendPage extends StatelessWidget with DYBase {
                       ),
                     ),
                     pinned: true,
+                    floating: true,
+                    snap: true,
                     actions: <Widget>[
                       HeaderWidgets()
                     ],
-                    expandedHeight: dp(140),
+                    // expandedHeight: dp(130),
                     flexibleSpace: FlexibleSpaceBar(  // 下拉渐入背景
                       background: Container(
                         decoration: BoxDecoration(

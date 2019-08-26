@@ -15,12 +15,13 @@ class FocusPage extends StatefulWidget {
 }
 
 class _FocusPage extends State<FocusPage> with DYBase {
+  bool _getPhotoSource = false;
   File _image;  // 拍照（从照片选择）后的文件
 
   // 点击拍照
   Future _getImage() async {
     var image = await ImagePicker.pickImage(
-      source: ImageSource.gallery,
+      source: _getPhotoSource ? ImageSource.camera : ImageSource.gallery,
       maxHeight: dp(200),
       maxWidth: dp(350),
     );
@@ -50,14 +51,28 @@ class _FocusPage extends State<FocusPage> with DYBase {
         padding: EdgeInsets.all(dp(10)),
           child: Column(
           children: <Widget>[
-            RaisedButton(
-              textColor: Colors.white,
-              color: DYBase.defaultColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: Text('拍照'),
-              onPressed: _getImage,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+                  textColor: Colors.white,
+                  color: DYBase.defaultColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Text(_getPhotoSource ? '拍照' : '从相册中选'),
+                  onPressed: _getImage,
+                ),
+                Padding(padding: EdgeInsets.only(left: dp(15)),),
+                Text('是否拍照:'),
+                Switch(
+                  value: _getPhotoSource,
+                  activeColor: DYBase.defaultColor,
+                  onChanged: (value) => setState(() {
+                    _getPhotoSource = value;
+                  }),
+                ),
+              ],
             ),
             _image == null ? SizedBox() : Image.file(_image),
             RaisedButton(
