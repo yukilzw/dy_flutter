@@ -31,6 +31,24 @@ class _FocusPage extends State<FocusPage> with DYBase {
     });
   }
 
+  // 半屏webView
+  void _showHalfWebView() {
+    Navigator.push(context, PageRouteBuilder(
+      opaque: false,
+      pageBuilder: (context, _, __) {
+        return Container(
+          color: Color.fromARGB(100, 0, 0, 0),
+        );
+      },
+      transitionsBuilder: (context, Animation<double> animation, _, Widget child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      }
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
@@ -86,11 +104,12 @@ class _FocusPage extends State<FocusPage> with DYBase {
               color: DYBase.defaultColor,
               child: Text('webView'),
               onPressed: () {
-                Navigator.pushNamed(context, '/webView',
+                /* Navigator.pushNamed(context, '/webView',
                   arguments: {
                     'url': 'https://m.douyu.com',
                     'title': '斗鱼直播 - H5'
-                  });
+                  }); */
+                _showHalfWebView();
               },
             ),
           ],

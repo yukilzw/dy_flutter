@@ -27,13 +27,6 @@ class CommendPage extends StatelessWidget with DYBase {
                 SliverAppBar(
                     backgroundColor: Colors.white,
                     brightness: Brightness.light,
-                    textTheme: TextTheme(
-                      title: TextStyle(
-                        color: DYBase.defaultColor,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
                     pinned: true,
                     floating: true,
                     snap: true,
@@ -57,12 +50,15 @@ class CommendPage extends StatelessWidget with DYBase {
                     ),
                     bottom: TabBar(
                       isScrollable: true,
-                      labelStyle: TextStyle(fontSize: 15),
+                      labelStyle: TextStyle(
+                        fontSize: 15,
+                      ),
                       labelColor: DYBase.defaultColor,
                       indicatorColor: DYBase.defaultColor,
+                      indicatorPadding: EdgeInsets.only(bottom: dp(7)),
                       unselectedLabelColor: Color(0xff333333),
                       indicatorSize: TabBarIndicatorSize.label,
-                      tabs: navList.map((e) => Tab(text: e)).toList()
+                      tabs: navList.map((e) => Tab(text: e)).toList(),
                     ),
                     forceElevated: innerScrolled,
                   ),
