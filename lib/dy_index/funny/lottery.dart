@@ -114,33 +114,6 @@ class _Lottery extends State<Lottery> with DYBase {
     super.dispose();
   }
 
-  List<Widget> _renderLotteryItem() {
-    var inOrder = Lottery.lotteryInOrder,
-        height = dp(lotteryConfig['lotteryH'] / 3),
-        width = dp(lotteryConfig['lotteryW'] / 3);
-    return List(9).asMap().map((i, item) {
-      if (i == 4) {
-        return MapEntry(i, GestureDetector(
-            onTap: _startLottery,
-            child: Container(
-              width: width, height: height,
-              color: Colors.transparent,
-            ),
-          ),
-        );
-      }
-      return MapEntry(i, Container(
-        width: width, height: height,
-        decoration: runCount != null && i == inOrder[runCount % inOrder.length] ? BoxDecoration(
-          image: DecorationImage(
-            image: NetworkImage(lotteryConfig['highLightBg']),
-            fit: BoxFit.fill,
-          ),
-        ) : null,
-      ));
-    }).values.toList();
-  }
-
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
@@ -199,4 +172,30 @@ class _Lottery extends State<Lottery> with DYBase {
     );
   }
 
+  List<Widget> _renderLotteryItem() {
+    var inOrder = Lottery.lotteryInOrder,
+        height = dp(lotteryConfig['lotteryH'] / 3),
+        width = dp(lotteryConfig['lotteryW'] / 3);
+    return List(9).asMap().map((i, item) {
+      if (i == 4) {
+        return MapEntry(i, GestureDetector(
+            onTap: _startLottery,
+            child: Container(
+              width: width, height: height,
+              color: Colors.transparent,
+            ),
+          ),
+        );
+      }
+      return MapEntry(i, Container(
+        width: width, height: height,
+        decoration: runCount != null && i == inOrder[runCount % inOrder.length] ? BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(lotteryConfig['highLightBg']),
+            fit: BoxFit.fill,
+          ),
+        ) : null,
+      ));
+    }).values.toList();
+  }
 }

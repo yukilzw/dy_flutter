@@ -68,6 +68,7 @@ class CommendPage extends StatelessWidget with DYBase {
                 // NestedScrollView.sliverOverlapAbsorberHandleFor必须在NestedScrollView中调用
                 children: navList.asMap().map((i, tab) => MapEntry(i, Builder(
                     builder: (context) => CustomScrollView(
+                      physics: BouncingScrollPhysics(),
                       key: PageStorageKey<String>(tab),
                       slivers: <Widget>[
                         // 将子部件同 `SliverAppBar` 重叠部分顶出来，否则会被遮挡
