@@ -8,36 +8,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../bloc.dart';
 import '../../base.dart';
 
-class LiveListWidgets extends StatefulWidget {
-  @override
-  _LiveListWidgets createState() => _LiveListWidgets();
-}
 
-class _LiveListWidgets extends State<LiveListWidgets> with DYBase {
-  List liveData = []; // 推荐直播间列表
-
-  @override
-  void initState() {
-    super.initState();
-    _getLiveData();
-  }
-
-  // 获取正在直播列表数据
-  void _getLiveData() {
-    DYhttp.post(
-      '/dy/flutter/liveData',
-      param: {
-        'typeName': '1'
-      }
-    ).then((res) {
-      setState(() {
-        liveData = res['data']; 
-      });
-    });
-  }
-
+class LiveListWidgets extends StatelessWidget with DYBase {
+  final _liveData; // 推荐直播间列表
+  LiveListWidgets(this._liveData);
+  
+  
   // 跳转直播间
-  void _goToLiveRoom(item) {
+  void _goToLiveRoom(context, item) {
     Navigator.pushNamed(context, '/room', arguments: item);
   }
 
@@ -48,7 +26,7 @@ class _LiveListWidgets extends State<LiveListWidgets> with DYBase {
     return Column(
       children: <Widget>[
         _listTableHeader(),
-        _listTableInfo(),
+        _listTableInfo(context),
       ]
     );
   }
@@ -109,18 +87,18 @@ class _LiveListWidgets extends State<LiveListWidgets> with DYBase {
   }
 
   // 直播列表详情
-  Widget _listTableInfo() {
+  Widget _listTableInfo(context) {
     final liveList = List<Widget>();
     var fontStyle = TextStyle(
       color: Colors.white,
       fontSize: 12.0
     );
 
-    liveData.forEach((item) {
+    _liveData.forEach((item) {
       liveList.add(
         GestureDetector(
           onTap: () {
-            _goToLiveRoom(item);
+            _goToLiveRoom(context, item);
           },
           child: Padding(
           key: ObjectKey(item['rid']),

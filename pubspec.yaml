@@ -31,6 +31,7 @@ dependencies:
   image_picker: ^0.6.1
   flutter_webview_plugin: ^0.3.7
   #flutter_statusbarcolor: ^0.2.1
+  pull_to_refresh: ^1.5.5
 
 dev_dependencies:
   mockito: ^4.1.0
