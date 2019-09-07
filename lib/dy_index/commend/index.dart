@@ -120,7 +120,6 @@ class _CommendPage extends State<CommendPage> with DYBase {
               ],
               body: TabBarView(
                 // 这边需要通过 Builder 来创建 TabBarView 的内容，否则会报错
-                // NestedScrollView.sliverOverlapAbsorberHandleFor必须在NestedScrollView中调用
                 children: navList.asMap().map((i, tab) => MapEntry(i, Builder(
                     builder: (context) => SmartRefresher(
                       enablePullDown: true,
@@ -131,11 +130,7 @@ class _CommendPage extends State<CommendPage> with DYBase {
                       onLoading: _onLoading,
                       child: CustomScrollView(
                         // physics: BouncingScrollPhysics(),
-                        key: PageStorageKey<String>(tab),
                         slivers: <Widget>[
-                          // 将子部件同 `SliverAppBar` 重叠部分顶出来，否则会被遮挡
-                          /* SliverOverlapInjector(
-                            handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context)),*/
                           SliverToBoxAdapter(
                             child: Container(
                               child: i == 0 ? Column(
