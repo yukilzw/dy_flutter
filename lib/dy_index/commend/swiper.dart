@@ -27,9 +27,7 @@ class _SWwiperWidgets extends State<SWwiperWidgets> with DYBase {
       setState(() {
         swiperPic = res.data['data']; 
       });
-    }).catchError((err) {
-      print(err);
-    });
+    }).catchError((err) { print(err); });
   }
 
   @override
@@ -45,7 +43,10 @@ class _SWwiperWidgets extends State<SWwiperWidgets> with DYBase {
         child: Container(
           width: dp(340),
           height: dp(330) / 1.7686,
-          child: swiperPic.length < 1 ? null : Swiper(
+          child: swiperPic.length < 1 ? 
+            Image.asset(
+              'images/shayuniang.png',
+            ) : Swiper(
             itemBuilder: _swiperBuilder,
             itemCount: swiperPic.length,
             pagination: SwiperPagination(

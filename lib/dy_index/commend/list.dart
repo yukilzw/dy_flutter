@@ -23,66 +23,66 @@ class LiveListWidgets extends StatelessWidget with DYBase {
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
 
-    return Column(
-      children: <Widget>[
-        _listTableHeader(),
-        _listTableInfo(context),
-      ]
+    return BlocBuilder<CounterBloc, int>(
+      builder: (context, count) {
+        return Column(
+          children: <Widget>[
+            _listTableHeader(count),
+            _listTableInfo(context),
+          ]
+        );
+      }
     );
   }
 
   // 直播列表头部
-  Widget _listTableHeader() {
-    return BlocBuilder<CounterBloc, int>(
-      builder: (context, count) {
-        return Padding(
-          padding: EdgeInsets.only(left: dp(6), right: dp(6)),
-          child: Row(
+  Widget _listTableHeader(count) {
+    return Padding(
+      padding: EdgeInsets.only(left: dp(6), right: dp(6)),
+      child: Row(
+        children: <Widget>[
+          Container(
+            width: dp(20),
+            height: dp(30),
+            margin: EdgeInsets.only(right: dp(5)),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('images/isLive.png'),
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ),
+          Expanded(
+            child: Text('正在直播'),
+          ),
+          Row(
             children: <Widget>[
-              Container(
-                width: dp(20),
-                height: dp(30),
-                margin: EdgeInsets.only(right: dp(5)),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('images/isLive.png'),
-                    fit: BoxFit.fitWidth,
-                  ),
+              Text('当前',
+                style: TextStyle(
+                  color: Color(0xff999999),
                 ),
               ),
-              Expanded(
-                child: Text('正在直播'),
+              Text('$count',
+                style: TextStyle(
+                  color: Color(0xffff7700),
+                ),
               ),
-              Row(
-                children: <Widget>[
-                  Text('当前',
-                    style: TextStyle(
-                      color: Color(0xff999999),
-                    ),
-                  ),
-                  Text('$count',
-                    style: TextStyle(
-                      color: Color(0xffff7700),
-                    ),
-                  ),
-                  Text('个直播',
-                    style: TextStyle(
-                      color: Color(0xff999999),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: dp(5)),
-                    child: Image.asset(
-                      'images/next.png',
-                      height: dp(14),
-                    ),
-                  )
-                ],
+              Text('个直播',
+                style: TextStyle(
+                  color: Color(0xff999999),
+                ),
               ),
+              Padding(
+                padding: EdgeInsets.only(left: dp(5)),
+                child: Image.asset(
+                  'images/next.png',
+                  height: dp(14),
+                ),
+              )
             ],
           ),
-        );
-      }
+        ],
+      ),
     );
   }
 
