@@ -28,11 +28,11 @@ class _Lottery extends State<Lottery> with DYBase {
   void initState() {
     super.initState();
     // 请求抽奖UI配置渲染
-    DYhttp.get(
+    httpClient.get(
       '/dy/flutter/lotteryConfig',
     ).then((res) {
       setState(() {
-        lotteryConfig = res['data']; 
+        lotteryConfig = res.data['data']; 
       });
     });
   }
@@ -51,12 +51,12 @@ class _Lottery extends State<Lottery> with DYBase {
     // 开始计时器转动
     _lotteryTimer();
     // 同时请求抽奖结果
-    DYhttp.post(
+    httpClient.post(
       '/dy/flutter/lotteryResult',
     ).then((res) {
-      print(res['data']);
+      print(res.data['data']);
       setState(() {
-        lotteryResult = res['data']; 
+        lotteryResult = res.data['data']; 
       });
     });
   }

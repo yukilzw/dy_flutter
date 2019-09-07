@@ -10,16 +10,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 
 import 'dialog.dart';
 
 // 所有Widget继承的抽象类
 abstract class DYBase {
-  // 网络环境配置
-  static final scheme = 'http';
-  static final host = '192.168.0.100';//'10.113.22.82';
-  static final port = 1236;
+  static final baseUrl = 'http://10.113.22.82:1236';
   // 默认斗鱼主题色
   static final defaultColor = Color(0xffff5d23);
   // 初始化设计稿尺寸
@@ -77,7 +75,14 @@ abstract class DYBase {
 }
 
 // http请求
-class DYhttp {
+final httpClient = Dio(BaseOptions(
+  baseUrl: DYBase.baseUrl,
+  connectTimeout: 5000,
+  responseType: ResponseType.json
+  // receiveTimeout: 3000,
+));
+/* class DYhttp {
+
   static Future<dynamic> post(String url, {bool cache = false, Map param}) async {
     var client = http.Client();
     var totalUrl = Uri(
@@ -118,7 +123,7 @@ class DYhttp {
       client.close();
     }
   }
-}
+} */
 
 // 缓存读写清
 class DYio {

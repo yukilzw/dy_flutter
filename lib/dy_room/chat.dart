@@ -28,8 +28,8 @@ class _ChatWidgets extends State<ChatWidgets> with DYBase {
   void initState() {
     super.initState();
     // 请求弹幕数据，模拟弹幕消息
-    DYhttp.post('/dy/flutter/msgData').then((res) {
-      var msgDataSource = res['data'];
+    httpClient.post('/dy/flutter/msgData').then((res) {
+      var msgDataSource = res.data['data'];
       var i = 0;
       msgTimer = Timer.periodic(Duration(milliseconds: 200), (timer) {
         if (i > 60) {
@@ -45,8 +45,8 @@ class _ChatWidgets extends State<ChatWidgets> with DYBase {
       });
     });
     // 请求礼物横幅数据，模拟礼物赠送动画
-    DYhttp.get('/dy/flutter/giftData').then((res) {
-      var giftData = res['data'];
+    httpClient.get('/dy/flutter/giftData').then((res) {
+      var giftData = res.data['data'];
       giftTimer = Timer.periodic(Duration(seconds: 1), (timer) {
         if (giftTimer.tick > giftData.length) {
           giftTimer.cancel();

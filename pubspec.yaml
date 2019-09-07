@@ -26,6 +26,7 @@ dependencies:
   flutter_swiper: ^1.0.6
   flutter_bloc: ^0.20.0
   equatable: ^0.3.0
+  dio: ^2.1.8
   http: ^0.12.0+2
   chewie: ^0.9.7
   image_picker: ^0.6.1

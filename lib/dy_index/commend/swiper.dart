@@ -23,10 +23,12 @@ class _SWwiperWidgets extends State<SWwiperWidgets> with DYBase {
 
   // 获取轮播图数据
   void _getSwiperPic() {
-    DYhttp.post('/dy/flutter/swiper').then((res) {
+    httpClient.post('/dy/flutter/swiper').then((res) {
       setState(() {
-        swiperPic = res['data']; 
+        swiperPic = res.data['data']; 
       });
+    }).catchError((err) {
+      print(err);
     });
   }
 

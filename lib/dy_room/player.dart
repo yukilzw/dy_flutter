@@ -27,7 +27,7 @@ class _PlayerWidgets extends State<PlayerWidgets> with DYBase {
   void initState() {
     super.initState();
     // 初始化播放器设置
-    _videoPlayerController = VideoPlayerController.network('${DYBase.scheme}://${DYBase.host}:${DYBase.port}/static/suen.mp4');
+    _videoPlayerController = VideoPlayerController.network('${DYBase.baseUrl}/static/suen.mp4');
     _videoController = ChewieController(
       videoPlayerController: _videoPlayerController,
       aspectRatio: 960 / 540,

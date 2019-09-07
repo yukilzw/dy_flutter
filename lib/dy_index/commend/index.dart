@@ -30,14 +30,14 @@ class _CommendPage extends State<CommendPage> with DYBase {
 
   // 获取正在直播推荐列表数据
   Future<List> _getLiveData() async {
-    var res = await DYhttp.post(
+    var res = await httpClient.post(
       '/dy/flutter/liveData',
-      param: {
+      data: {
         'page': livePageIndex.toString()
       }
     );
     livePageIndex++;
-    return res['data']['list'];
+    return res.data['data']['list'];
   }
 
   void _init() async {
