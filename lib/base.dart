@@ -81,49 +81,6 @@ final httpClient = Dio(BaseOptions(
   responseType: ResponseType.json
   // receiveTimeout: 3000,
 ));
-/* class DYhttp {
-
-  static Future<dynamic> post(String url, {bool cache = false, Map param}) async {
-    var client = http.Client();
-    var totalUrl = Uri(
-      scheme: DYBase.scheme,
-      host: DYBase.host,
-      port: DYBase.port,
-      path: url,
-    );
-    try {
-      var uriResponse = await client.post(
-        '$totalUrl',
-        body: param == null ? {} : param
-      );
-      return jsonDecode(uriResponse.body);
-    } finally {
-      client.close();
-    }
-  }
-
-  static Future<dynamic> get(String url, {dynamic cacheName, Map param}) async {
-    var client = http.Client();
-    var totalUrl = Uri(
-      scheme: DYBase.scheme,
-      host: DYBase.host,
-      port: DYBase.port,
-      path: url,
-      queryParameters: param
-    );
-    try {
-      var uriResponse = await client.get(
-        '$totalUrl',
-      );
-      if (cacheName is String) {
-        DYio.setTempFile(cacheName, uriResponse.body);
-      }
-      return jsonDecode(uriResponse.body);
-    } finally {
-      client.close();
-    }
-  }
-} */
 
 // 缓存读写清
 class DYio {
