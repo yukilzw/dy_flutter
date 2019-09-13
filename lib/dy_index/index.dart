@@ -82,28 +82,28 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
           BottomNavigationBarItem(
               title: Text(_bottomNavList[0]),
               icon: _currentIndex == 0
-                  ? Icon(Icons.done_all)
-                  : Icon(Icons.done)),
+                  ? _bottomIcon('images/nav/nav-12.jpg')
+                  : _bottomIcon('images/nav/nav-11.jpg')),
           BottomNavigationBarItem(
               title: Text(_bottomNavList[1]),
               icon: _currentIndex == 1
-                  ? Icon(Icons.flight_takeoff)
-                  : Icon(Icons.flight_land)),
+                  ? _bottomIcon('images/nav/nav-22.jpg')
+                  : _bottomIcon('images/nav/nav-21.jpg')),
           BottomNavigationBarItem(
               title: Text(_bottomNavList[2]),
               icon: _currentIndex == 2
-                  ? Icon(Icons.hourglass_full)
-                  : Icon(Icons.hourglass_empty)),
+                  ? _bottomIcon('images/nav/nav-32.jpg')
+                  : _bottomIcon('images/nav/nav-31.jpg')),
           BottomNavigationBarItem(
               title: Text(_bottomNavList[3]),
               icon: _currentIndex == 3
-                  ? Icon(Icons.trending_up)
-                  : Icon(Icons.trending_down)),
+                  ? _bottomIcon('images/nav/nav-42.jpg')
+                  : _bottomIcon('images/nav/nav-41.jpg')),
           BottomNavigationBarItem(
               title: Text(_bottomNavList[4]),
               icon: _currentIndex == 4
-                  ? Icon(Icons.thumb_up)
-                  : Icon(Icons.thumb_down)),
+                  ? _bottomIcon('images/nav/nav-52.jpg')
+                  : _bottomIcon('images/nav/nav-51.jpg')),
         ]
       ),
       body: _currentPage(),
@@ -112,7 +112,12 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
         foregroundColor: DYBase.defaultColor,
         backgroundColor: Colors.white,
         tooltip: 'Increment',
-        child: Icon(Icons.favorite),
+        child: Image.asset(
+          'images/syn.webp',
+          width: dp(50),
+          height: dp(50),
+          fit: BoxFit.contain,
+        )
       ),
       resizeToAvoidBottomPadding: false,
     );
@@ -153,6 +158,17 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
         break;
     }
     return page;
+  }
+
+  Widget _bottomIcon(path) {
+    return Image.asset(
+      path,
+      width: dp(25),
+      height: dp(25),
+      repeat:ImageRepeat.noRepeat,
+      fit: BoxFit.contain,
+      alignment: Alignment.center,
+    );
   }
 
 }

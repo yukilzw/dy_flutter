@@ -64,11 +64,23 @@ flutter:
     - images/gift-banner.png
     - images/gift-x.png
     - images/gift-1.png
+    - images/syn.webp
 
     - images/lv/3.png
     - images/lv/30.png
     - images/lv/50.png
     - images/lv/80.png
+
+    - images/nav/nav-11.jpg
+    - images/nav/nav-21.jpg
+    - images/nav/nav-31.jpg
+    - images/nav/nav-41.jpg
+    - images/nav/nav-51.jpg
+    - images/nav/nav-12.jpg
+    - images/nav/nav-22.jpg
+    - images/nav/nav-32.jpg
+    - images/nav/nav-42.jpg
+    - images/nav/nav-52.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

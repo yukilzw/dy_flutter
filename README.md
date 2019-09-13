@@ -19,9 +19,9 @@ flutter重构的斗鱼直播APP，接口源来自于服务端[MOCK数据中心](
 - ...（持续增加中）
 
 #### APP截图：
-<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/hQczSj5NliQQyOggCfbBU365lpGmqjEIjLlWKTEP1d0!/r/dL8AAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/ihs1e7eg5Nm4yBi8oe0Mt0WqV.DfQCOa0mWDZ0jyPg4!/r/dMMAAAAAAAAA" width="280"/>
+<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/iOCtJ*948S*M7mYiKqsmyr0*NCMmrC7vgKXG2O5*xBE!/r/dL8AAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/wnNRKktDxz4*DCRWZba6Ar99PZzZ54zQTtPV*jEcb94!/r/dL4AAAAAAAAA" width="280"/>
 <br/>
-<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/c4ql4M5xWstDQx.QsoTQOTZCw7UuPf9zUgCjqG23tOo!/r/dLYAAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/aF9iAvcPD06FGIHKJjwWEopdpLPWSd.Xy9vjyhYQs7o!/r/dL4AAAAAAAAA" width="280"/>
+<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/c4ql4M5xWstDQx.QsoTQOTZCw7UuPf9zUgCjqG23tOo!/r/dLYAAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/i*Gz9aLZDFNufyDrSaHdk2iAV03alqw9astY.TyYwvM!/r/dDUBAAAAAAAA" width="280"/>
 
 #### 调试
 如需本地启动该项目调试，可修改`lib/base.dart`中`DYBase.baseUrl`接口域名为本机ip:port<br/>
