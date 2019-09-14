@@ -85,10 +85,10 @@ class _CommendPage extends State<CommendPage> with DYBase {
                   pinned: true,
                   floating: true,
                   snap: true,
+                  expandedHeight: dp(100),
                   actions: <Widget>[
                     HeaderWidgets()
                   ],
-                  // expandedHeight: dp(130),
                   flexibleSpace: FlexibleSpaceBar(  // 下拉渐入背景
                     background: Container(
                       decoration: BoxDecoration(

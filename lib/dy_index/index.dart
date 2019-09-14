@@ -57,6 +57,13 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
   void _incrementCounter() {
     final counterBloc = BlocProvider.of<CounterBloc>(context);
     counterBloc.dispatch(CounterEvent.increment);
+
+    Navigator.pushNamed(context, '/webView',
+      arguments: {
+        'url': 'https://github.com/yukilzw/dy_flutter',
+        'title': 'dy_flutter 源码'
+      }
+    );
   }
 
   @override
@@ -70,9 +77,9 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
         currentIndex: _currentIndex,
         type: BottomNavigationBarType.fixed,
         selectedItemColor: DYBase.defaultColor,
-        unselectedItemColor: Colors.black38,
-        selectedFontSize: 14,
-        unselectedFontSize: 14,
+        unselectedItemColor: Color(0xff333333),
+        selectedFontSize: 11,
+        unselectedFontSize: 11,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
@@ -161,13 +168,16 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
   }
 
   Widget _bottomIcon(path) {
-    return Image.asset(
-      path,
-      width: dp(25),
-      height: dp(25),
-      repeat:ImageRepeat.noRepeat,
-      fit: BoxFit.contain,
-      alignment: Alignment.center,
+    return Padding(
+      padding: EdgeInsets.only(bottom: dp(4)),
+      child: Image.asset(
+        path,
+        width: dp(25),
+        height: dp(25),
+        repeat:ImageRepeat.noRepeat,
+        fit: BoxFit.contain,
+        alignment: Alignment.center,
+      )
     );
   }
 

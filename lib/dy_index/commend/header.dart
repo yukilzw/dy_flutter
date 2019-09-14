@@ -15,7 +15,7 @@ class HeaderWidgets extends StatelessWidget with DYBase {
     return Container(
       width: dp(375),
       height: dp(80),
-      padding: EdgeInsets.fromLTRB(dp(10), dp(24), dp(20), 0),
+      padding: EdgeInsets.fromLTRB(dp(10), dp(5), dp(20), 0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: <Widget>[

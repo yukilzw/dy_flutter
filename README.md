@@ -19,7 +19,7 @@ flutter重构的斗鱼直播APP，接口源来自于服务端[MOCK数据中心](
 - ...（持续增加中）
 
 #### APP截图：
-<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/iOCtJ*948S*M7mYiKqsmyr0*NCMmrC7vgKXG2O5*xBE!/r/dL8AAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/wnNRKktDxz4*DCRWZba6Ar99PZzZ54zQTtPV*jEcb94!/r/dL4AAAAAAAAA" width="280"/>
+<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/5I7nPNCsk6rawRlhX5DvnmJr9akVwt1*XQIQHTJ1uy0!/r/dDIBAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/wnNRKktDxz4*DCRWZba6Ar99PZzZ54zQTtPV*jEcb94!/r/dL4AAAAAAAAA" width="280"/>
 <br/>
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/c4ql4M5xWstDQx.QsoTQOTZCw7UuPf9zUgCjqG23tOo!/r/dLYAAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/i*Gz9aLZDFNufyDrSaHdk2iAV03alqw9astY.TyYwvM!/r/dDUBAAAAAAAA" width="280"/>
 

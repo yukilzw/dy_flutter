@@ -40,8 +40,8 @@ class _FocusPage extends State<FocusPage> with DYBase {
     if (_openWebViewType) {
       Navigator.pushNamed(context, '/webView',
         arguments: {
-          'url': 'https://m.douyu.com',
-          'title': '斗鱼直播 - H5'
+          'url': 'https://github.com/yukilzw/dy_flutter',
+          'title': 'dy_flutter 源码'
         }
       );
       return;

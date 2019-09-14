@@ -25,18 +25,20 @@ class _FunnyPage extends State<FunnyPage> with DYBase, SingleTickerProviderState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title:Text('娱乐'),
-        bottom: buildTabBar(),
-        centerTitle: true,
-        backgroundColor: DYBase.defaultColor,
-        brightness: Brightness.dark,
-        textTheme: TextTheme(
-          title: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
-          ),
-        )
+      appBar: PreferredSize(
+        child: AppBar(
+          bottom: buildTabBar(),
+          centerTitle: true,
+          backgroundColor: DYBase.defaultColor,
+          brightness: Brightness.dark,
+          textTheme: TextTheme(
+            title: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            ),
+          )
+        ),
+        preferredSize: Size.fromHeight(55)
       ),
       body: buildBodyView(),
     );
