@@ -11,12 +11,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:dio/dio.dart';
+import 'package:web_socket_channel/io.dart';
 
 import 'dialog.dart';
 
 // 所有Widget继承的抽象类
 abstract class DYBase {
-  static final baseUrl = 'http://10.113.22.82:1236';
+  static final baseSchema = 'http';
+  static final baseHost = '10.113.22.82';
+  static final basePort = '1236';
+  static final baseUrl = '${DYBase.baseSchema}://${DYBase.baseHost}:${DYBase.basePort}';
   // 默认斗鱼主题色
   static final defaultColor = Color(0xffff5d23);
   // 初始化设计稿尺寸
@@ -80,6 +84,16 @@ final httpClient = Dio(BaseOptions(
   responseType: ResponseType.json
   // receiveTimeout: 3000,
 ));
+
+// 直播房间webSocket
+class SocketClient {
+  static IOWebSocketChannel channel;
+
+  SocketClient.create() {
+    SocketClient.channel = IOWebSocketChannel.connect('ws://${DYBase.baseHost}:${DYBase.basePort}/socket/dy/flutter');
+  }
+
+}
 
 // 缓存读写清
 class DYio {
