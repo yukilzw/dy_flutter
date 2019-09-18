@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../bloc.dart';
 import '../base.dart';
@@ -21,6 +22,7 @@ class DyIndexPage extends StatefulWidget {
 
 class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProviderStateMixin {
   final _bottomNavList = ["推荐", "娱乐", "关注", "鱼吧", "发现"]; // 底部导航
+  DateTime _lastCloseApp; //上次点击时间
   int _currentIndex = 0;  // 底部导航当前页面
 
   @override
@@ -70,63 +72,73 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
 
-    return Scaffold(
-      // 底部导航栏
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        selectedItemColor: DYBase.defaultColor,
-        unselectedItemColor: Color(0xff333333),
-        selectedFontSize: 11,
-        unselectedFontSize: 11,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-        items: [
-          BottomNavigationBarItem(
-              title: Text(_bottomNavList[0]),
-              icon: _currentIndex == 0
-                  ? _bottomIcon('images/nav/nav-12.jpg')
-                  : _bottomIcon('images/nav/nav-11.jpg')),
-          BottomNavigationBarItem(
-              title: Text(_bottomNavList[1]),
-              icon: _currentIndex == 1
-                  ? _bottomIcon('images/nav/nav-22.jpg')
-                  : _bottomIcon('images/nav/nav-21.jpg')),
-          BottomNavigationBarItem(
-              title: Text(_bottomNavList[2]),
-              icon: _currentIndex == 2
-                  ? _bottomIcon('images/nav/nav-32.jpg')
-                  : _bottomIcon('images/nav/nav-31.jpg')),
-          BottomNavigationBarItem(
-              title: Text(_bottomNavList[3]),
-              icon: _currentIndex == 3
-                  ? _bottomIcon('images/nav/nav-42.jpg')
-                  : _bottomIcon('images/nav/nav-41.jpg')),
-          BottomNavigationBarItem(
-              title: Text(_bottomNavList[4]),
-              icon: _currentIndex == 4
-                  ? _bottomIcon('images/nav/nav-52.jpg')
-                  : _bottomIcon('images/nav/nav-51.jpg')),
-        ]
+    return WillPopScope(
+      onWillPop: () async {
+        if (_lastCloseApp == null || DateTime.now().difference(_lastCloseApp) > Duration(seconds: 1)) {
+          _lastCloseApp = DateTime.now();
+          Fluttertoast.showToast(msg: '再次返回退出斗鱼');
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        // 底部导航栏
+        bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.white,
+          currentIndex: _currentIndex,
+          type: BottomNavigationBarType.fixed,
+          selectedItemColor: DYBase.defaultColor,
+          unselectedItemColor: Color(0xff333333),
+          selectedFontSize: 11,
+          unselectedFontSize: 11,
+          onTap: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+          items: [
+            BottomNavigationBarItem(
+                title: Text(_bottomNavList[0]),
+                icon: _currentIndex == 0
+                    ? _bottomIcon('images/nav/nav-12.jpg')
+                    : _bottomIcon('images/nav/nav-11.jpg')),
+            BottomNavigationBarItem(
+                title: Text(_bottomNavList[1]),
+                icon: _currentIndex == 1
+                    ? _bottomIcon('images/nav/nav-22.jpg')
+                    : _bottomIcon('images/nav/nav-21.jpg')),
+            BottomNavigationBarItem(
+                title: Text(_bottomNavList[2]),
+                icon: _currentIndex == 2
+                    ? _bottomIcon('images/nav/nav-32.jpg')
+                    : _bottomIcon('images/nav/nav-31.jpg')),
+            BottomNavigationBarItem(
+                title: Text(_bottomNavList[3]),
+                icon: _currentIndex == 3
+                    ? _bottomIcon('images/nav/nav-42.jpg')
+                    : _bottomIcon('images/nav/nav-41.jpg')),
+            BottomNavigationBarItem(
+                title: Text(_bottomNavList[4]),
+                icon: _currentIndex == 4
+                    ? _bottomIcon('images/nav/nav-52.jpg')
+                    : _bottomIcon('images/nav/nav-51.jpg')),
+          ]
+        ),
+        body: _currentPage(),
+        floatingActionButton: _currentIndex != 0 ? null : FloatingActionButton(
+          onPressed: _incrementCounter,
+          foregroundColor: DYBase.defaultColor,
+          backgroundColor: Colors.white,
+          tooltip: 'Increment',
+          child: Image.asset(
+            'images/syn.webp',
+            width: dp(50),
+            height: dp(50),
+            fit: BoxFit.contain,
+          )
+        ),
+        resizeToAvoidBottomPadding: false,
       ),
-      body: _currentPage(),
-      floatingActionButton: _currentIndex != 0 ? null : FloatingActionButton(
-        onPressed: _incrementCounter,
-        foregroundColor: DYBase.defaultColor,
-        backgroundColor: Colors.white,
-        tooltip: 'Increment',
-        child: Image.asset(
-          'images/syn.webp',
-          width: dp(50),
-          height: dp(50),
-          fit: BoxFit.contain,
-        )
-      ),
-      resizeToAvoidBottomPadding: false,
     );
   }
 

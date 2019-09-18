@@ -20,8 +20,8 @@ class _ChatWidgets extends State<ChatWidgets> with DYBase {
   List msgData = [];  // 弹幕消息列表
   List<Map> giftBannerView = [];  // 礼物横幅列表JSON
 
-  Timer giftTimer;  // 礼物横幅模拟每s循环出现动画
-  Timer msgTimer;  // 弹幕消息模拟200ms收到弹幕
+  // Timer giftTimer;  // 礼物横幅模拟每s循环出现动画
+  // Timer msgTimer;  // 弹幕消息模拟200ms收到弹幕
 
   ScrollController _chatController = ScrollController();  // 弹幕区滚动Controller
 
@@ -121,8 +121,8 @@ class _ChatWidgets extends State<ChatWidgets> with DYBase {
   @override
   void dispose() {
     SocketClient.channel?.sink?.close(status.goingAway);
-    giftTimer?.cancel();
-    msgTimer?.cancel();
+    // giftTimer?.cancel();
+    // msgTimer?.cancel();
     super.dispose();
   }
 
