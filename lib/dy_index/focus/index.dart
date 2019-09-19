@@ -1,164 +1,182 @@
 /**
  * @discripe: 关注
  */
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import '../../base.dart';
+import 'webView.dart';
 
-final flutterWebviewPlugin = new FlutterWebviewPlugin();
-
-class FocusPage extends StatefulWidget {
+class FocusPage extends StatelessWidget {
   @override
-  _FocusPage createState() => _FocusPage();
-}
-
-class _FocusPage extends State<FocusPage> with DYBase {
-  File _image;  // 拍照（从照片选择）后的文件
-  bool _getPhotoSource = false;   // 是否拍照
-  bool _openWebViewType = false;    // 是否全屏打开webView
-
-  // 点击拍照
-  Future _getImage() async {
-    var image = await ImagePicker.pickImage(
-      source: _getPhotoSource ? ImageSource.camera : ImageSource.gallery,
-      maxHeight: dp(200),
-      maxWidth: dp(350),
-    );
-
-    setState(() {
-      _image = image;
-    });
-  }
-
-  // 弹出webView
-  void _showWebView() {
-    if (_openWebViewType) {
-      Navigator.pushNamed(context, '/webView',
-        arguments: {
-          'url': 'https://github.com/yukilzw/dy_flutter',
-          'title': 'dy_flutter 源码'
-        }
-      );
-      return;
-    }
-    flutterWebviewPlugin.launch('https://m.douyu.com',
-      rect: new Rect.fromLTWH(
-        0.0,
-        MediaQuery.of(context).size.height * .3,
-        MediaQuery.of(context).size.width,
-        MediaQuery.of(context).size.height * .7,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: CustomScrollView(
+        // physics: BouncingScrollPhysics(),
+        slivers: <Widget>[
+          SliverPersistentHeader(
+            pinned: true,
+            delegate: SliverCustomHeaderDelegate(
+              title: '关注（现为新加功能测试页面）',
+              collapsedHeight: 40,
+              expandedHeight: 300,
+              paddingTop: MediaQuery.of(context).padding.top,
+              coverImgUrl: 'http://www.people.com.cn/mediafile/pic/20170306/26/12565131254318156238.jpg'
+            ),
+          ),
+          SliverFillRemaining(
+            child: FilmContent(),
+          )
+        ],
       ),
     );
-    Navigator.push(context, PageRouteBuilder(
-      opaque: false,
-      pageBuilder: (context, _, __) {
-        return GestureDetector(
-          onTap: () {
-            flutterWebviewPlugin?.close();
-            Navigator.pop(context);
-          },
-          child: WillPopScope(
-            onWillPop: _onWillPop,
-              child: Container(
-              color: Color.fromARGB(100, 0, 0, 0),
-            ),
-          )
-        );
-      },
-      transitionsBuilder: (context, Animation<double> animation, _, Widget child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      }
-    ));
   }
+}
 
-  Future<bool> _onWillPop() async {
-    flutterWebviewPlugin?.close();
+class SliverCustomHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final double collapsedHeight;
+  final double expandedHeight;
+  final double paddingTop;
+  final String coverImgUrl;
+  final String title;
+  String statusBarMode = 'dark';
+
+  SliverCustomHeaderDelegate({
+    this.collapsedHeight,
+    this.expandedHeight,
+    this.paddingTop,
+    this.coverImgUrl,
+    this.title,
+  });
+
+  @override
+  double get minExtent => this.collapsedHeight + this.paddingTop;
+
+  @override
+  double get maxExtent => this.expandedHeight;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) {
     return true;
   }
 
+  void updateStatusBarBrightness(shrinkOffset) {
+    if(shrinkOffset <= 50 && this.statusBarMode == 'dark') {
+      this.statusBarMode = 'light';
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.light,
+      ));
+    } else if(shrinkOffset > 50 && this.statusBarMode == 'light') {
+      this.statusBarMode = 'dark';
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.dark,
+        statusBarIconBrightness: Brightness.dark,
+      ));
+    }
+  }
+
+  Color makeStickyHeaderBgColor(shrinkOffset) {
+    final int alpha = (shrinkOffset / (this.maxExtent - this.minExtent) * 255).clamp(0, 255).toInt();
+    return Color.fromARGB(alpha, 255, 255, 255);
+  }
+
+  Color makeStickyHeaderTextColor(shrinkOffset, isIcon) {
+    if(shrinkOffset <= 50) {
+      return isIcon ? Colors.white : Colors.transparent;
+    } else {
+      final int alpha = (shrinkOffset / (this.maxExtent - this.minExtent) * 255).clamp(0, 255).toInt();
+      return Color.fromARGB(alpha, 0, 0, 0);
+    }
+  }
+
   @override
-  Widget build(BuildContext context) {
-    ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
-    return Scaffold(
-      appBar: AppBar(
-        title:Text('关注（现为新加功能测试页面）'),
-        centerTitle: true,
-        backgroundColor: DYBase.defaultColor,
-        brightness: Brightness.dark,
-        textTheme: TextTheme(
-          title: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    this.updateStatusBarBrightness(shrinkOffset);
+    return Container(
+      height: this.maxExtent,
+      width: MediaQuery.of(context).size.width,
+      child: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          Container(child: Image.network(this.coverImgUrl, fit: BoxFit.cover)),
+          Positioned(
+            left: 0,
+            top: this.maxExtent / 2,
+            right: 0,
+            bottom: 0,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0x00000000),
+                    Color(0x90000000),
+                  ],
+                ),
+              ),
+            ),
           ),
-        )
-      ),
-      body: Padding(
-        padding: EdgeInsets.all(dp(10)),
-          child: Column(
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                RaisedButton(
-                  textColor: Colors.white,
-                  color: DYBase.defaultColor,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(100),
+          Positioned(
+            left: 0,
+            right: 0,
+            top: 0,
+            child: Container(
+              color: this.makeStickyHeaderBgColor(shrinkOffset),
+              child: SafeArea(
+                bottom: false,
+                child: Container(
+                  height: this.collapsedHeight,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(
+                          Icons.arrow_back_ios,
+                          color: this.makeStickyHeaderTextColor(shrinkOffset, true),
+                        ),
+                        onPressed: () => Fluttertoast.showToast(msg: '没有上一页了'),
+                      ),
+                      Text(
+                        this.title,
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
+                          color: this.makeStickyHeaderTextColor(shrinkOffset, false),
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(
+                          Icons.share,
+                          color: this.makeStickyHeaderTextColor(shrinkOffset, true),
+                        ),
+                        onPressed: () {},
+                      ),
+                    ],
                   ),
-                  child: Text(_getPhotoSource ? '拍照' : '从相册中选'),
-                  onPressed: _getImage,
                 ),
-                Padding(padding: EdgeInsets.only(left: dp(15)),),
-                Text('是否拍照:'),
-                Switch(
-                  value: _getPhotoSource,
-                  activeColor: DYBase.defaultColor,
-                  onChanged: (value) => setState(() {
-                    _getPhotoSource = value;
-                  }),
-                ),
-              ],
+              ),
             ),
-            _image == null ? SizedBox() : Image.file(_image),
-            RaisedButton(
-              textColor: Colors.white,
-              color: DYBase.defaultColor,
-              child: Text('正在加载弹框'),
-              onPressed: () => showLoading(context),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                RaisedButton(
-                  textColor: Colors.white,
-                  color: DYBase.defaultColor,
-                  child: Text('${_openWebViewType ? '全屏' : '半屏'}webView'),
-                  onPressed: _showWebView,
-                ),
-                Padding(padding: EdgeInsets.only(left: dp(15)),),
-                Text('是否全屏:'),
-                Switch(
-                  value: _openWebViewType,
-                  activeColor: DYBase.defaultColor,
-                  onChanged: (value) => setState(() {
-                    _openWebViewType = value;
-                  }),
-                ),
-              ],
-            )
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
+}
 
+class FilmContent extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          DevelopTest(),
+        ],
+      ),
+    );
+  }
 }
