@@ -33,6 +33,7 @@ dependencies:
   #flutter_statusbarcolor: ^0.2.1
   pull_to_refresh: ^1.5.5
   web_socket_channel: ^1.0.15
+  flustars: ^0.2.6
 
 dev_dependencies:
   mockito: ^4.1.0
@@ -66,6 +67,8 @@ flutter:
     - images/gift-x.png
     - images/gift-1.png
     - images/syn.webp
+    - images/init_logo.webp
+    - images/init_icon.png
 
     - images/lv/3.png
     - images/lv/30.png
