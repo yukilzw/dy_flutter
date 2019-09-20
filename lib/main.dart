@@ -7,6 +7,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 import 'base.dart';
 import 'bloc.dart';
+import 'dy_index/init/index.dart';
 import 'dy_index/index.dart';
 import 'dy_room/index.dart';
 
@@ -14,7 +15,8 @@ class DyApp extends StatelessWidget {
   // 路由路径匹配
   Route<dynamic> _getRoute(RouteSettings settings) {
     Map<String, WidgetBuilder> routes = {
-      '/':     (BuildContext context) => DyIndexPage(),
+      '/': (BuildContext context) => SplashPage(),
+      '/index':     (BuildContext context) => DyIndexPage(),
       '/room': (BuildContext context) => DyRoomPage(arguments: settings.arguments),
       '/webView': (BuildContext context) {  // webView全屏容器
         Map arg = settings.arguments;
