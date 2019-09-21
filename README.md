@@ -21,11 +21,11 @@ flutter重构的斗鱼直播APP，接口源来自于服务端[MOCK数据中心](
 - ...（持续增加中）
 
 #### APP截图：
-<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/OFSw8qFQ6ZTt4Qry.FD5zxLEOyTxOJDRc0zUeDKvTgU!/r/dMMAAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/FDYCtFUGAS.FMi0oCu0wzIGhFK3BDzubAXdlZbStLyg!/r/dFIBAAAAAAAA" width="280"/>
+<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/OFSw8qFQ6ZTt4Qry.FD5zxLEOyTxOJDRc0zUeDKvTgU!/r/dMMAAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/5I7nPNCsk6rawRlhX5DvnmJr9akVwt1*XQIQHTJ1uy0!/r/dDIBAAAAAAAA" width="280"/>
 <br/>
-<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/5I7nPNCsk6rawRlhX5DvnmJr9akVwt1*XQIQHTJ1uy0!/r/dDIBAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/PiWK848iFea5HhE8XPuJnU2y8CPRpn91zuSYejmfu7s!/r/dL8AAAAAAAAA" width="280"/>
+<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/PiWK848iFea5HhE8XPuJnU2y8CPRpn91zuSYejmfu7s!/r/dL8AAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/c4ql4M5xWstDQx.QsoTQOTZCw7UuPf9zUgCjqG23tOo!/r/dLYAAAAAAAAA" width="280"/>
 <br/>
-<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/c4ql4M5xWstDQx.QsoTQOTZCw7UuPf9zUgCjqG23tOo!/r/dLYAAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/MLs.r66dWgbZWl3nbHTS52HLpFYuc8gZv6RVCNg0JVw!/r/dFEBAAAAAAAA" width="280"/>
+<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/FDYCtFUGAS.FMi0oCu0wzIGhFK3BDzubAXdlZbStLyg!/r/dFIBAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/MLs.r66dWgbZWl3nbHTS52HLpFYuc8gZv6RVCNg0JVw!/r/dFEBAAAAAAAA" width="280"/>
 
 #### 调试
 如需本地启动该项目调试，可修改`lib/base.dart`中`DYBase.baseUrl`接口域名为本机ip:port<br/>
