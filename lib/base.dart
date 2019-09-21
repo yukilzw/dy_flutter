@@ -81,7 +81,7 @@ abstract class DYBase {
 final httpClient = Dio(BaseOptions(
   baseUrl: DYBase.baseUrl,
   connectTimeout: 5000,
-  responseType: ResponseType.json
+  responseType: ResponseType.json,
   // receiveTimeout: 3000,
 ));
 

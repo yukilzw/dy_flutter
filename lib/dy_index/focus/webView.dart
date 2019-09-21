@@ -11,7 +11,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 import '../../base.dart';
 
-final flutterWebviewPlugin = new FlutterWebviewPlugin();
+final flutterWebviewPlugin = FlutterWebviewPlugin();
 
 class DevelopTest extends StatefulWidget {
   @override
@@ -19,6 +19,7 @@ class DevelopTest extends StatefulWidget {
 }
 
 class _DevelopTest extends State<DevelopTest> with DYBase {
+  final url = 'https://apiv2.douyucdn.cn/h5/ecydt/subjectRanklist';
   File _image;  // 拍照（从照片选择）后的文件
   bool _getPhotoSource = false;   // 是否拍照
   bool _openWebViewType = false;    // 是否全屏打开webView
@@ -41,14 +42,14 @@ class _DevelopTest extends State<DevelopTest> with DYBase {
     if (_openWebViewType) {
       Navigator.pushNamed(context, '/webView',
         arguments: {
-          'url': 'https://github.com/yukilzw/dy_flutter',
+          'url': url,
           'title': 'dy_flutter 源码'
         }
       );
       return;
     }
-    flutterWebviewPlugin.launch('https://m.douyu.com',
-      rect: new Rect.fromLTWH(
+    flutterWebviewPlugin.launch(url,
+      rect: Rect.fromLTWH(
         0.0,
         MediaQuery.of(context).size.height * .3,
         MediaQuery.of(context).size.width,

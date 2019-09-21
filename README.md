@@ -1,13 +1,14 @@
 ## 斗鱼APP by Flutter
-![Flutter](https://img.shields.io/badge/Flutter-1.7.8-5bc7f8.svg) ![Dart](https://img.shields.io/badge/Dart-2.4.0%2B-00B4AB.svg) 
+![Flutter](https://img.shields.io/badge/Flutter-1.7.8%2B-5bc7f8.svg) ![Dart](https://img.shields.io/badge/Dart-2.4.0%2B-00B4AB.svg) 
 
 flutter重构的斗鱼直播APP，接口源来自于服务端[MOCK数据中心](https://github.com/yukilzw/factory/blob/master/py/tornado/flutter_data.py)<br/>
 
 #### 包含功能：
 
-- 开播列表上拉加载、下拉刷新
-- 渐进式导航头部
-- 封装HTTP、IO缓存操作
+- 启动页广告位
+- 开播列表上拉加载、下拉刷新、返回顶部
+- 渐进式导航头部动画
+- HTTP、IO缓存操作
 - 直播间webSocket消息弹幕、礼物
 - 页面路由传值
 - bloc全局状态管理
@@ -15,11 +16,13 @@ flutter重构的斗鱼直播APP，接口源来自于服务端[MOCK数据中心](
 - 弹幕消息滚动
 - 静态视频流
 - 九宫格抽奖游戏
-- 照片选择
-- 全屏、窗口webView
+- 照片选择器
+- 全屏、半屏webView
 - ...（持续增加中）
 
 #### APP截图：
+<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/OFSw8qFQ6ZTt4Qry.FD5zxLEOyTxOJDRc0zUeDKvTgU!/r/dMMAAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/FDYCtFUGAS.FMi0oCu0wzIGhFK3BDzubAXdlZbStLyg!/r/dFIBAAAAAAAA" width="280"/>
+<br/>
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/5I7nPNCsk6rawRlhX5DvnmJr9akVwt1*XQIQHTJ1uy0!/r/dDIBAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/PiWK848iFea5HhE8XPuJnU2y8CPRpn91zuSYejmfu7s!/r/dL8AAAAAAAAA" width="280"/>
 <br/>
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/c4ql4M5xWstDQx.QsoTQOTZCw7UuPf9zUgCjqG23tOo!/r/dLYAAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/MLs.r66dWgbZWl3nbHTS52HLpFYuc8gZv6RVCNg0JVw!/r/dFEBAAAAAAAA" width="280"/>
