@@ -73,4 +73,4 @@ class DyApp extends StatelessWidget {
   }
 }
 
-void main() => runApp(new DyApp());
+void main() => runApp(DyApp());

@@ -25,7 +25,7 @@ class FocusPage extends StatelessWidget {
               coverImgUrl: 'http://www.people.com.cn/mediafile/pic/20170306/26/12565131254318156238.jpg'
             ),
           ),
-          SliverFillRemaining(
+          SliverToBoxAdapter(
             child: FilmContent(),
           )
         ],
@@ -175,6 +175,9 @@ class FilmContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           DevelopTest(),
+          SizedBox(
+            height: 700,
+          )
         ],
       ),
     );

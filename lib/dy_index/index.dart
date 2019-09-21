@@ -24,6 +24,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
   final _bottomNavList = ["推荐", "娱乐", "关注", "鱼吧", "发现"]; // 底部导航
   DateTime _lastCloseApp; //上次点击时间
   int _currentIndex = 0;  // 底部导航当前页面
+  ScrollController _scrollController = ScrollController();  // 首页整体滚动控制器
 
   @override
   void initState() {
@@ -37,6 +38,12 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
       });
     });
     _getNav();
+  }
+
+  @override
+  void dispose() {
+    _scrollController?.dispose();
+    super.dispose();
   }
 
   // 获取导航列表
@@ -55,16 +62,14 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
     tabBloc.dispatch(UpdateTab(navList));
   }
 
-  // 点击悬浮标
-  void _incrementCounter() {
+  // 点击悬浮标回到顶部
+  void _indexPageScrollTop() {
     final counterBloc = BlocProvider.of<CounterBloc>(context);
     counterBloc.dispatch(CounterEvent.increment);
 
-    Navigator.pushNamed(context, '/webView',
-      arguments: {
-        'url': 'https://github.com/yukilzw/dy_flutter',
-        'title': 'dy_flutter 源码'
-      }
+    _scrollController.animateTo(.0,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.ease
     );
   }
 
@@ -126,7 +131,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
         ),
         body: _currentPage(),
         floatingActionButton: _currentIndex != 0 ? null : FloatingActionButton(
-          onPressed: _incrementCounter,
+          onPressed: _indexPageScrollTop,
           foregroundColor: DYBase.defaultColor,
           backgroundColor: Colors.white,
           tooltip: 'Increment',
@@ -147,7 +152,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
     Widget page;
     switch (_currentIndex) {
       case 0:
-        page = CommendPage();
+        page = CommendPage(_scrollController);
         break;
       case 1:
         page = FunnyPage();

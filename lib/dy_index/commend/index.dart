@@ -13,14 +13,20 @@ import 'swiper.dart';
 import 'list.dart';
 
 class CommendPage extends StatefulWidget {
+  final _scrollController;
+  CommendPage(this._scrollController);
+
   @override
-  _CommendPage createState() => _CommendPage();
+  _CommendPage createState() => _CommendPage(this._scrollController);
 }
 
 class _CommendPage extends State<CommendPage> with DYBase {
-  int livePageIndex = 1;
+  int livePageIndex = 1;  // 上拉加载列表页码
   List liveData = []; // 推荐直播间列表
   RefreshController _refreshController = RefreshController(initialRefresh: false);
+  final _scrollController;
+
+  _CommendPage(this._scrollController);
 
   @override
   void initState() {
@@ -28,13 +34,19 @@ class _CommendPage extends State<CommendPage> with DYBase {
     _init();
   }
 
+  @override
+  void dispose() {
+    _refreshController?.dispose();
+    super.dispose();
+  }
+
   // 获取正在直播推荐列表数据
   Future<List> _getLiveData() async {
-    var res = await httpClient.post(
+    var res = await httpClient.get(
       '/dy/flutter/liveData',
-      data: {
+      queryParameters: {
         'page': livePageIndex.toString()
-      }
+      },
     );
     livePageIndex++;
     return res.data['data']['list'];
@@ -42,6 +54,7 @@ class _CommendPage extends State<CommendPage> with DYBase {
 
   void _init() async {
     var liveList = await _getLiveData();
+    if(mounted)
     setState(() {
       liveData = liveList;
     });
@@ -78,6 +91,7 @@ class _CommendPage extends State<CommendPage> with DYBase {
           body: navList.length == 0 ? null : DefaultTabController(
             length: navList.length,
             child: NestedScrollView(  // 嵌套式滚动视图
+              controller: _scrollController,
               headerSliverBuilder: (context, innerScrolled) => <Widget>[
                 SliverAppBar(
                   backgroundColor: Colors.white,
