@@ -29,7 +29,7 @@ class _Lottery extends State<Lottery> with DYBase {
     super.initState();
     // 请求抽奖UI配置渲染
     httpClient.get(
-      '/dy/flutter/lotteryConfig',
+      API.lotteryConfig,
     ).then((res) {
       setState(() {
         lotteryConfig = res.data['data']; 
@@ -52,7 +52,7 @@ class _Lottery extends State<Lottery> with DYBase {
     _lotteryTimer();
     // 同时请求抽奖结果
     httpClient.post(
-      '/dy/flutter/lotteryResult',
+      API.lotteryResult,
     ).then((res) {
       print(res.data['data']);
       setState(() {
@@ -117,57 +117,74 @@ class _Lottery extends State<Lottery> with DYBase {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
-    return  Container(
-      color: Color(0xffff9434),
-      child: lotteryConfig == null ? null : ListView(
-        children: [
-          Container(
-            height: dp(lotteryConfig['pageH']),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(lotteryConfig['pageBg']),
-                fit: BoxFit.fill,
+    return Container(
+      child: lotteryConfig == null ? null : Card(
+        elevation: 5,
+        margin: EdgeInsets.all(dp(20)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(dp(25)),
+          ),
+        ),
+        clipBehavior: Clip.antiAlias,
+        color: Color(0xffff9434),
+        child: ListView(
+          physics: BouncingScrollPhysics(),
+          children: [
+            Container(
+              height: dp(lotteryConfig['pageH']),
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: NetworkImage(lotteryConfig['pageBg']),
+                  fit: BoxFit.fill,
+                ),
               ),
-            ),
-            child: Stack(
-              alignment: AlignmentDirectional.center,
-              children: <Widget>[
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    width: dp(lotteryConfig['lotteryW']),
-                    height: dp(lotteryConfig['lotteryH']),
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(lotteryConfig['lotteryBg']),
-                        fit: BoxFit.fill,
+              child: Stack(
+                alignment: AlignmentDirectional.center,
+                children: <Widget>[
+                  Positioned(
+                    bottom: 0,
+                    child:  Transform.scale(
+                      scale: 0.9,
+                      child: Container(
+                        width: dp(lotteryConfig['lotteryW']),
+                        height: dp(lotteryConfig['lotteryH']),
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(lotteryConfig['lotteryBg']),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        child: Wrap(
+                          children: _renderLotteryItem(),
+                        ),
                       ),
                     ),
-                    child: Wrap(
-                      children: _renderLotteryItem(),
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                GestureDetector(
+                  onTap: () => alert(context, text: '正在建设中~'),
+                  child: Container(
+                    width: dp(lotteryConfig['myRewardW']),
+                    height: dp(lotteryConfig['myRewardH']),
+                    margin: EdgeInsets.only(bottom: dp(10)),
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(lotteryConfig['myRewardBg']),
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ),
                 ),
               ],
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                width: dp(lotteryConfig['myRewardW']),
-                height: dp(lotteryConfig['myRewardH']),
-                margin: EdgeInsets.only(top: dp(10), bottom: dp(10)),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(lotteryConfig['myRewardBg']),
-                    fit: BoxFit.fill,
-                  ),
-                ),
-              ),
-            ],
-          )
-        ],
+            )
+          ],
+        ),
       ),
     );
   }

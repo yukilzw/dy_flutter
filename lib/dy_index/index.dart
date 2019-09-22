@@ -49,7 +49,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
   // 获取导航列表
   void _getNav() {
     httpClient.get(
-      '/dy/flutter/nav',
+      API.nav,
     ).then((res) {
       DYio.setTempFile('navList', res.data.toString());
       var navList = res.data['data'];
