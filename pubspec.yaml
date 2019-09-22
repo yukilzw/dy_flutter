@@ -14,7 +14,7 @@ description: A new Flutter project.
 version: 1.0.4
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.3.0 <3.0.0"
 
 dependencies:
   flutter:
@@ -27,6 +27,7 @@ dependencies:
   flutter_bloc: ^0.20.0
   equatable: ^0.3.0
   dio: ^2.1.8
+  dio_http_cache: ^0.1.4
   chewie: ^0.9.7
   image_picker: ^0.6.1
   flutter_webview_plugin: ^0.3.7

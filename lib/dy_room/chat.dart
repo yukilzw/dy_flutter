@@ -30,7 +30,7 @@ class _ChatWidgets extends State<ChatWidgets> with DYBase {
     super.initState();
     SocketClient.create();
     var channel = SocketClient.channel;
-    // 接受弹幕消息
+    // 接受弹幕、礼物消息(webSocket)
     channel.stream.listen((message) {
       message = json.decode(message);
       var sign = message[0];
@@ -58,64 +58,6 @@ class _ChatWidgets extends State<ChatWidgets> with DYBase {
 
     channel.sink.add('getChat');
     channel.sink.add('getGift');
-
-    // 接受礼物消息
-    /* channel.stream.listen((message) {
-      if (message == 'getGift') {
-        message = json.decode(message);
-        print(message);
-        /* var now = DateTime.now();
-        var obj = {
-          'stamp': now.millisecondsSinceEpoch,
-          'config': message
-        };
-        Gift.add(giftBannerView, obj, 6500, (giftBannerViewNew) {
-          setState(() {
-            giftBannerView = giftBannerViewNew;
-          });
-        }); */
-      }
-    });
-
-    channel.sink.add('getGift'); */
-
-    // 请求弹幕数据，模拟弹幕消息 (已废弃，现改为webSocket接受服务端推送消息)
-    /* httpClient.post('/dy/flutter/msgData').then((res) {
-      var msgDataSource = res.data['data'];
-      var i = 0;
-      msgTimer = Timer.periodic(Duration(milliseconds: 200), (timer) {
-        if (i > 60) {
-          _chatController.jumpTo(_chatController.position.maxScrollExtent);
-          msgTimer.cancel();
-          return;
-        }
-        setState(() {
-          msgData.add(msgDataSource[Random().nextInt(msgDataSource.length)]);
-        });
-        _chatController.jumpTo(_chatController.position.maxScrollExtent);
-        i++;
-      });
-    }); */
-    // 请求礼物横幅数据，模拟礼物赠送动画 (已废弃，现改为webSocket接受服务端推送消息)
-    /* httpClient.get('/dy/flutter/giftData').then((res) {
-      var giftData = res.data['data'];
-      giftTimer = Timer.periodic(Duration(seconds: 1), (timer) {
-        if (giftTimer.tick > giftData.length) {
-          giftTimer.cancel();
-          return;
-        }
-        var now = DateTime.now();
-        var json = {
-          'stamp': now.millisecondsSinceEpoch,
-          'config': giftData[giftTimer.tick - 1]
-        };
-        Gift.add(giftBannerView, json, 6500, (giftBannerViewNew) {
-          setState(() {
-            giftBannerView = giftBannerViewNew;
-          });
-        });
-      });
-    }); */
   }
 
   @override

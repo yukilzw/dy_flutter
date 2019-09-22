@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:dio_http_cache/dio_http_cache.dart';
 
 import '../../bloc.dart';
 import '../../base.dart';
@@ -43,10 +44,13 @@ class _CommendPage extends State<CommendPage> with DYBase {
   // 获取正在直播推荐列表数据
   Future<List> _getLiveData() async {
     var res = await httpClient.get(
-      '/dy/flutter/liveData',
+      API.liveData,
       queryParameters: {
         'page': livePageIndex.toString()
       },
+      options: livePageIndex == 1 ? buildCacheOptions(
+        Duration(minutes: 30),
+      ) : null,
     );
     livePageIndex++;
     return res.data['data']['list'];
@@ -62,6 +66,7 @@ class _CommendPage extends State<CommendPage> with DYBase {
 
   // 下拉刷新
   void _onRefresh() async {
+    await dioManager.deleteByPrimaryKey(DYBase.baseUrl + API.liveData);
     livePageIndex = 1;
     var liveList = await _getLiveData();
     if(mounted)

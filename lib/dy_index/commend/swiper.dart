@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:dio_http_cache/dio_http_cache.dart';
 
 import '../../base.dart';
 
@@ -23,11 +24,18 @@ class _SWwiperWidgets extends State<SWwiperWidgets> with DYBase {
 
   // 获取轮播图数据
   void _getSwiperPic() {
-    httpClient.post('/dy/flutter/swiper').then((res) {
+    httpClient.post(
+      API.swiper,
+      options: buildCacheOptions(Duration(minutes: 30)),
+    ).then((res) {
       setState(() {
         swiperPic = res.data['data']; 
       });
-    }).catchError((err) { print(err); });
+    }).catchError((err) {
+      setState(() {
+        swiperPic = null;
+      });
+    });
   }
 
   @override
@@ -43,28 +51,37 @@ class _SWwiperWidgets extends State<SWwiperWidgets> with DYBase {
         child: Container(
           width: dp(340),
           height: dp(330) / 1.7686,
-          child: swiperPic.length < 1 ? 
-            Image.asset(
-              'images/shayuniang.png',
-            ) : Swiper(
-            itemBuilder: _swiperBuilder,
-            itemCount: swiperPic.length,
-            pagination: SwiperPagination(
-                builder: DotSwiperPaginationBuilder(
-              color: Color.fromRGBO(0, 0, 0, .2),
-              activeColor: DYBase.defaultColor,
-            )),
-            control: SwiperControl(
-              size: dp(20),
-              color: DYBase.defaultColor,
-            ),
-            scrollDirection: Axis.horizontal,
-            autoplay: true,
-            onTap: (index) => print('Swiper pic $index click'),
-          ),
+          child: _waitSwiperData(),
         ),
       ),
     );
+  }
+
+  Widget _waitSwiperData() {
+    if (swiperPic == null) {
+      return Image.asset(
+        'images/shayuniang.png',
+      );
+    } else if (swiperPic.length > 0) {
+      return Swiper(
+        itemBuilder: _swiperBuilder,
+        itemCount: swiperPic.length,
+        pagination: SwiperPagination(
+            builder: DotSwiperPaginationBuilder(
+          color: Color.fromRGBO(0, 0, 0, .2),
+          activeColor: DYBase.defaultColor,
+        )),
+        control: SwiperControl(
+          size: dp(20),
+          color: DYBase.defaultColor,
+        ),
+        scrollDirection: Axis.horizontal,
+        autoplay: true,
+        onTap: (index) => print('Swiper pic $index click'),
+      );
+    }
+
+    return null;
   }
 
   Widget _swiperBuilder(BuildContext context, int index) {

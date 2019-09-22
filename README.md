@@ -1,14 +1,16 @@
-## 斗鱼APP by Flutter
+## 斗鱼APP
 ![Flutter](https://img.shields.io/badge/Flutter-1.7.8%2B-5bc7f8.svg) ![Dart](https://img.shields.io/badge/Dart-2.4.0%2B-00B4AB.svg) 
 
-flutter重构的斗鱼直播APP，接口源来自于服务端[MOCK数据中心](https://github.com/yukilzw/factory/blob/master/py/tornado/flutter_data.py)<br/>
+flutter重构的斗鱼直播APP<br/>
+基于官方Material设计，外加各类优质的第三方开源库，打造出优于原生APP的用户体验<br/>
+尽可能接入更多功能，帮助你在使用flutter进行开发新的应用提供对应的借鉴案例<br/>
 
 #### 包含功能：
 
 - 启动页广告位
 - 开播列表上拉加载、下拉刷新、返回顶部
 - 渐进式导航头部动画
-- HTTP、IO缓存操作
+- HTTP缓存、IO缓存
 - 直播间webSocket消息弹幕、礼物
 - 页面路由传值
 - bloc全局状态管理
@@ -25,9 +27,15 @@ flutter重构的斗鱼直播APP，接口源来自于服务端[MOCK数据中心](
 <br/>
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/PiWK848iFea5HhE8XPuJnU2y8CPRpn91zuSYejmfu7s!/r/dL8AAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/c4ql4M5xWstDQx.QsoTQOTZCw7UuPf9zUgCjqG23tOo!/r/dLYAAAAAAAAA" width="280"/>
 <br/>
-<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/FDYCtFUGAS.FMi0oCu0wzIGhFK3BDzubAXdlZbStLyg!/r/dFIBAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/MLs.r66dWgbZWl3nbHTS52HLpFYuc8gZv6RVCNg0JVw!/r/dFEBAAAAAAAA" width="280"/>
+<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/uPUfvzq6QWWJjmkf*OkmzHV6apSbGKK9FPXXC8itWH8!/r/dMMAAAAAAAAA" width="280"/> <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/FDYCtFUGAS.FMi0oCu0wzIGhFK3BDzubAXdlZbStLyg!/r/dFIBAAAAAAAA" width="280"/>
 
-#### 调试
-如需本地启动该项目调试，可修改`lib/base.dart`中`DYBase.baseUrl`接口域名为本机ip:port<br/>
+#### 调试：
+服务端接口没有上云，如需本地启动该项目调试，可修改`lib/base.dart`中`DYBase.baseUrl`接口域名为本机ip:port<br/>
 然后clone[服务端仓库](https://github.com/yukilzw/factory)，安装python3与tornado，命令行cd进入`./py/tornado`文件夹执行`python main.py`启动服务<br/>
-个人项目，仅供学习交流用
+
+#### 建议：
+使用Material自带的widget进行搭配使用，已经能满足绝大部分场景的开发需求<br/>
+但是在企业级APP高度UI交互定制化的场景下，仍需要根据业务场景重新实现诸如AppBar、TabView等widget<br/><br/>
+
+
+#### dy_flutter为个人试验项目，仅供学习借鉴用
