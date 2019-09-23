@@ -11,10 +11,13 @@ class FunnyPage extends StatefulWidget {
   _FunnyPage createState() => _FunnyPage();
 }
 
-class _FunnyPage extends State<FunnyPage> with DYBase, SingleTickerProviderStateMixin {
+class _FunnyPage extends State<FunnyPage> with DYBase, SingleTickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   List tabs = ['抽奖', '竞猜', '答题', '充能', '太空探险', '幻神降临', '幸运水晶']; // 顶部导航栏
 
   TabController tabController;  // 导航栏切换Controller
+
+  @override
+  bool get wantKeepAlive => true;
 
   @override
   void initState() {
@@ -24,6 +27,7 @@ class _FunnyPage extends State<FunnyPage> with DYBase, SingleTickerProviderState
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: PreferredSize(
         child: AppBar(

@@ -25,41 +25,12 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
   DateTime _lastCloseApp; //上次点击时间
   int _currentIndex = 0;  // 底部导航当前页面
   ScrollController _scrollController = ScrollController();  // 首页整体滚动控制器
-
-  @override
-  void initState() {
-    super.initState();
-    // 优先从缓存中拿navList
-    DYio.getTempFile('navList').then((dynamic data) {
-      if (data == null) return;
-      setState(() {
-        var navList = data['data'];
-        _setNavInBloc(navList);
-      });
-    });
-    _getNav();
-  }
+  PageController _pageController = PageController();
 
   @override
   void dispose() {
     _scrollController?.dispose();
     super.dispose();
-  }
-
-  // 获取导航列表
-  void _getNav() {
-    httpClient.get(
-      API.nav,
-    ).then((res) {
-      DYio.setTempFile('navList', res.data.toString());
-      var navList = res.data['data'];
-      _setNavInBloc(navList);
-    });
-  }
-
-  void _setNavInBloc(navList) {
-    final tabBloc = BlocProvider.of<TabBloc>(context);
-    tabBloc.dispatch(UpdateTab(navList));
   }
 
   // 点击悬浮标回到顶部
@@ -97,9 +68,11 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
           selectedFontSize: 11,
           unselectedFontSize: 11,
           onTap: (index) {
+            if (mounted)
             setState(() {
               _currentIndex = index;
             });
+            _pageController.jumpToPage(index);
           },
           items: [
             BottomNavigationBarItem(
@@ -149,39 +122,38 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProv
 
   // 底部导航对应的页面
   Widget _currentPage() {
-    Widget page;
-    switch (_currentIndex) {
-      case 0:
-        page = CommendPage(_scrollController);
-        break;
-      case 1:
-        page = FunnyPage();
-        break;
-      case 2:
-        page = FocusPage();
-        break;
-      default:
-        page = Scaffold(
-          appBar: AppBar(
-            title:Text(_bottomNavList[_currentIndex]),
-            backgroundColor: DYBase.defaultColor,
-            brightness: Brightness.dark,
-            textTheme: TextTheme(
-              title: TextStyle(
-                color: Colors.white,
-                fontSize: 18,
-              ),
-            )
+    var pageInDevelop = Scaffold(
+      appBar: AppBar(
+        title:Text(_bottomNavList[_currentIndex]),
+        backgroundColor: DYBase.defaultColor,
+        brightness: Brightness.dark,
+        textTheme: TextTheme(
+          title: TextStyle(
+            color: Colors.white,
+            fontSize: 18,
           ),
-          body: Center(child: Text(
-              '正在建设中...',
-              style: TextStyle(fontSize: 20, color: Colors.black45),
-            ),
-          ),
-        );
-        break;
-    }
-    return page;
+        )
+      ),
+      body: Center(child: Text(
+          '正在建设中...',
+          style: TextStyle(fontSize: 20, color: Colors.black45),
+        ),
+      ),
+    );
+    var _pages = [
+      CommendPage(_scrollController),
+      FunnyPage(),
+      FocusPage(),
+      pageInDevelop,
+      pageInDevelop,
+    ];
+
+    return PageView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      controller: _pageController,
+      itemCount: _pages.length,
+      itemBuilder: (context,index)=>_pages[index]
+    );
   }
 
   Widget _bottomIcon(path) {

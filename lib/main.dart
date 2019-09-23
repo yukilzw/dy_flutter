@@ -7,7 +7,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 import 'base.dart';
 import 'bloc.dart';
-import 'dy_index/init/index.dart';
+import 'dy_init/index.dart';
 import 'dy_index/index.dart';
 import 'dy_room/index.dart';
 
@@ -54,10 +54,10 @@ class DyApp extends StatelessWidget {
     return MultiBlocProvider(     // 多个Bloc注册
       providers: [
         BlocProvider<CounterBloc>(
-          builder: (context) => CounterBloc(),
+          builder: (context) => BlocObj.counter,
         ),
-        BlocProvider<TabBloc>(
-          builder: (context) => TabBloc(),
+        BlocProvider<IndexBloc>(
+          builder: (context) => BlocObj.index,
         ),
       ],
       child: MaterialApp(

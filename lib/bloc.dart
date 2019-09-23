@@ -4,18 +4,18 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-enum CounterEvent { increment, decrement }
+enum CounterEvent { increment, reset }
 
 // 点击悬浮球增加当前直播数量
 class CounterBloc extends Bloc<CounterEvent, int> {
   @override
-  int get initialState => 21567;
+  int get initialState => 1;
 
   @override
   Stream<int> mapEventToState(CounterEvent event) async* {
     switch (event) {
-      case CounterEvent.decrement:
-        yield currentState - 1;
+      case CounterEvent.reset:
+        yield 1;
         break;
       case CounterEvent.increment:
         yield currentState + 1;
@@ -24,29 +24,51 @@ class CounterBloc extends Bloc<CounterEvent, int> {
   }
 }
 
-// 保存首页navList信息
-abstract class TabEvent extends Equatable {
-  TabEvent([List props = const []]) : super(props);
+// 启动页预加载首页信息
+abstract class IndexEvent extends Equatable {
+  IndexEvent([List props = const []]) : super(props);
 }
 
-class UpdateTab extends TabEvent {
+class UpdateTab extends IndexEvent {
   final List tab;
-
   UpdateTab(this.tab) : super([tab]);
-
-  @override
-  String toString() => 'UpdateTab { tab: $tab }';
 }
 
+class UpdateLiveData extends IndexEvent {
+  final List liveData;
+  UpdateLiveData(this.liveData) : super([liveData]);
+}
 
-class TabBloc extends Bloc<TabEvent, List> {
+class UpdateSwiper extends IndexEvent {
+  final List swiper;
+  UpdateSwiper(this.swiper) : super([swiper]);
+}
+
+class IndexBloc extends Bloc<IndexEvent, Map> {
   @override
-  List get initialState => [];
+  Map get initialState => {
+    'nav': [],
+    'liveData': [],
+    'swiper': []
+  };
 
   @override
-  Stream<List> mapEventToState(TabEvent event) async* {
+  Stream<Map> mapEventToState(IndexEvent event) async* {
     if (event is UpdateTab) {
-      yield event.tab;
+      currentState.addAll({
+        'nav': event.tab
+      });
+      yield currentState;
+    } else if (event is UpdateLiveData) {
+      currentState.addAll({
+        'liveData': event.liveData
+      });
+      yield currentState;
+    } else if (event is UpdateSwiper) {
+      currentState.addAll({
+        'swiper': event.swiper
+      });
+      yield currentState;
     }
   }
 }

@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wave/wave.dart';
 import 'package:wave/config.dart';
 
-import '../../base.dart';
+import '../base.dart';
 
 class WaveBtoom extends StatelessWidget with DYBase {
   
