@@ -2,14 +2,14 @@
  * @discripe: 正在直播列表
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../bloc.dart';
 import '../../base.dart';
 
+class LiveListWidgets extends StatelessWidget with DYBase {
+  final indexState;
+  LiveListWidgets(this.indexState);
 
-class LiveListWidgets extends StatelessWidget with DYBase {  
   // 跳转直播间
   void _goToLiveRoom(context, item) {
     Navigator.pushNamed(context, '/room', arguments: item);
@@ -18,17 +18,13 @@ class LiveListWidgets extends StatelessWidget with DYBase {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
+    List liveData = indexState['liveData'];
 
-    return BlocBuilder<IndexBloc, Map>(
-      builder: (context, indexState) {
-        List liveData = indexState['liveData'];
-        return Column(
-          children: <Widget>[
-            _listTableHeader(),
-            _listTableInfo(context, liveData),
-          ]
-        );
-      }
+    return Column(
+      children: <Widget>[
+        _listTableHeader(),
+        _listTableInfo(context, liveData),
+      ]
     );
   }
 

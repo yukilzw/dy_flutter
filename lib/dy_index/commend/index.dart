@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:dio_http_cache/dio_http_cache.dart';
 
 import '../../bloc.dart';
 import '../../base.dart';
+import '../../service.dart';
 import 'header.dart';
 import 'swiper.dart';
 import 'list.dart';
@@ -36,25 +36,6 @@ class _CommendPage extends State<CommendPage> with DYBase, AutomaticKeepAliveCli
     super.dispose();
   }
 
-  // 获取直播间列表
-  Future<List> _getLiveData([ pageIndex ]) async {
-    final counterBloc = BlocProvider.of<CounterBloc>(context);
-    int livePageIndex = BlocObj.counter.currentState;
-
-    var res = await httpClient.get(
-      API.liveData,
-      queryParameters: {
-        'page': pageIndex == null ? livePageIndex : pageIndex
-      },
-      options: livePageIndex == 1 ? buildCacheOptions(
-        Duration(minutes: 30),
-      ) : null,
-    );
-
-    counterBloc.dispatch(CounterEvent.increment);
-    return res.data['data']['list'];
-  }
-
   // 下拉刷新
   void _onRefresh() async {
     await dioManager.deleteByPrimaryKey(DYBase.baseUrl + API.liveData);
@@ -64,8 +45,9 @@ class _CommendPage extends State<CommendPage> with DYBase, AutomaticKeepAliveCli
 
     counterBloc.dispatch(CounterEvent.reset);
 
-    var liveList = await _getLiveData(1);
+    var liveList = await DYservice.getLiveData(context, 1);
     indexBloc.dispatch(UpdateLiveData(liveList));
+    // setState(() => null);
 
     _refreshController.refreshCompleted();
   }
@@ -75,9 +57,10 @@ class _CommendPage extends State<CommendPage> with DYBase, AutomaticKeepAliveCli
     final indexBloc = BlocProvider.of<IndexBloc>(context);
 
     List liveData = BlocObj.index.currentState['liveData'];
-    var liveList = await _getLiveData();
+    var liveList = await DYservice.getLiveData(context);
     liveData.addAll(liveList);
     indexBloc.dispatch(UpdateLiveData(liveData));
+    // setState(() => null);
 
     _refreshController.loadComplete();
   }
@@ -153,7 +136,7 @@ class _CommendPage extends State<CommendPage> with DYBase, AutomaticKeepAliveCli
                               child: i == 0 ? Column(
                                 children: [
                                   SWwiperWidgets(),
-                                  LiveListWidgets(),
+                                  LiveListWidgets(indexState),
                                 ],
                               ) : null,
                             ),
