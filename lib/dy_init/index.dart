@@ -9,6 +9,7 @@ import 'package:dio_http_cache/dio_http_cache.dart';
 
 import '../bloc.dart';
 import '../base.dart';
+import '../service.dart';
 import 'countdown.dart';
 import 'wave.dart';
 
@@ -21,7 +22,6 @@ class SplashPage extends StatefulWidget {
   
 class _SplashPageState extends State<SplashPage> with DYBase, SingleTickerProviderStateMixin  {
   SharedPreferences prefs;
-  int count;
   
   @override
   void initState() {
@@ -64,29 +64,10 @@ class _SplashPageState extends State<SplashPage> with DYBase, SingleTickerProvid
     });
   }
 
-  // 获取直播间列表
-  Future<List> _getLiveData() async {
-    final counterBloc = BlocProvider.of<CounterBloc>(context);
-    int livePageIndex = BlocObj.counter.currentState;
-
-    var res = await httpClient.get(
-      API.liveData,
-      queryParameters: {
-        'page': livePageIndex.toString()
-      },
-      options: livePageIndex == 1 ? buildCacheOptions(
-        Duration(minutes: 30),
-      ) : null,
-    );
-
-    counterBloc.dispatch(CounterEvent.increment);
-    return res.data['data']['list'];
-  }
-
   void _initLiveData() async {
     final indexBloc = BlocProvider.of<IndexBloc>(context);
 
-    var liveList = await _getLiveData();
+    var liveList = await DYservice.getLiveData(context);
     indexBloc.dispatch(UpdateLiveData(liveList));
   }
 
