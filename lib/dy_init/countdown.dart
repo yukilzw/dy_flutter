@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../base.dart';
+import '../base.dart';
 
 class CountdownInit extends StatefulWidget {
   CountdownInit({Key key}) : super(key: key);
@@ -28,6 +28,7 @@ class _CountdownInit extends State<CountdownInit> with DYBase, SingleTickerProvi
     _controller = AnimationController(vsync: this, duration: Duration(seconds: _time));
     _animation = Tween(begin: 0.0, end: 360.0).animate(_controller);
     _controller.addListener(() {
+      if (mounted)
       setState(() {});
     });
     _controller.addStatusListener((AnimationStatus a) {

@@ -21,19 +21,14 @@ class CommendPage extends StatefulWidget {
   _CommendPage createState() => _CommendPage(this._scrollController);
 }
 
-class _CommendPage extends State<CommendPage> with DYBase {
-  int livePageIndex = 1;  // 上拉加载列表页码
-  List liveData = []; // 推荐直播间列表
+class _CommendPage extends State<CommendPage> with DYBase, AutomaticKeepAliveClientMixin  {
   RefreshController _refreshController = RefreshController(initialRefresh: false);
   final _scrollController;
 
   _CommendPage(this._scrollController);
 
   @override
-  void initState() {
-    super.initState();
-    _init();
-  }
+  bool get wantKeepAlive => true;
 
   @override
   void dispose() {
@@ -41,57 +36,60 @@ class _CommendPage extends State<CommendPage> with DYBase {
     super.dispose();
   }
 
-  // 获取正在直播推荐列表数据
-  Future<List> _getLiveData() async {
+  // 获取直播间列表
+  Future<List> _getLiveData([ pageIndex ]) async {
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    int livePageIndex = BlocObj.counter.currentState;
+
     var res = await httpClient.get(
       API.liveData,
       queryParameters: {
-        'page': livePageIndex.toString()
+        'page': pageIndex == null ? livePageIndex : pageIndex
       },
       options: livePageIndex == 1 ? buildCacheOptions(
         Duration(minutes: 30),
       ) : null,
     );
-    livePageIndex++;
-    return res.data['data']['list'];
-  }
 
-  void _init() async {
-    var liveList = await _getLiveData();
-    if(mounted)
-    setState(() {
-      liveData = liveList;
-    });
+    counterBloc.dispatch(CounterEvent.increment);
+    return res.data['data']['list'];
   }
 
   // 下拉刷新
   void _onRefresh() async {
     await dioManager.deleteByPrimaryKey(DYBase.baseUrl + API.liveData);
-    livePageIndex = 1;
-    var liveList = await _getLiveData();
-    if(mounted)
-    setState(() {
-      liveData = liveList;
-    });
+
+    final counterBloc = BlocProvider.of<CounterBloc>(context);
+    final indexBloc = BlocProvider.of<IndexBloc>(context);
+
+    counterBloc.dispatch(CounterEvent.reset);
+
+    var liveList = await _getLiveData(1);
+    indexBloc.dispatch(UpdateLiveData(liveList));
+
     _refreshController.refreshCompleted();
   }
 
   // 上拉加载
   void _onLoading() async {
+    final indexBloc = BlocProvider.of<IndexBloc>(context);
+
+    List liveData = BlocObj.index.currentState['liveData'];
     var liveList = await _getLiveData();
-    if(mounted)
-    setState(() {
-      liveData.addAll(liveList);
-    });
+    liveData.addAll(liveList);
+    indexBloc.dispatch(UpdateLiveData(liveData));
+
     _refreshController.loadComplete();
   }
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
 
-    return BlocBuilder<TabBloc, List>(
-      builder: (context, navList) {
+    return BlocBuilder<IndexBloc, Map>(
+      builder: (context, indexState) {
+        List navList = indexState['nav'];
         return Scaffold(
           body: navList.length == 0 ? null : DefaultTabController(
             length: navList.length,
@@ -155,7 +153,7 @@ class _CommendPage extends State<CommendPage> with DYBase {
                               child: i == 0 ? Column(
                                 children: [
                                   SWwiperWidgets(),
-                                  LiveListWidgets(liveData),
+                                  LiveListWidgets(),
                                 ],
                               ) : null,
                             ),

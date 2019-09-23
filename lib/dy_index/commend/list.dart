@@ -9,11 +9,7 @@ import '../../bloc.dart';
 import '../../base.dart';
 
 
-class LiveListWidgets extends StatelessWidget with DYBase {
-  final _liveData; // 推荐直播间列表
-  LiveListWidgets(this._liveData);
-  
-  
+class LiveListWidgets extends StatelessWidget with DYBase {  
   // 跳转直播间
   void _goToLiveRoom(context, item) {
     Navigator.pushNamed(context, '/room', arguments: item);
@@ -23,12 +19,13 @@ class LiveListWidgets extends StatelessWidget with DYBase {
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
 
-    return BlocBuilder<CounterBloc, int>(
-      builder: (context, count) {
+    return BlocBuilder<IndexBloc, Map>(
+      builder: (context, indexState) {
+        List liveData = indexState['liveData'];
         return Column(
           children: <Widget>[
-            _listTableHeader(count),
-            _listTableInfo(context),
+            _listTableHeader(),
+            _listTableInfo(context, liveData),
           ]
         );
       }
@@ -36,7 +33,7 @@ class LiveListWidgets extends StatelessWidget with DYBase {
   }
 
   // 直播列表头部
-  Widget _listTableHeader(count) {
+  Widget _listTableHeader() {
     return Padding(
       padding: EdgeInsets.only(left: dp(6), right: dp(6)),
       child: Row(
@@ -62,7 +59,7 @@ class LiveListWidgets extends StatelessWidget with DYBase {
                   color: Color(0xff999999),
                 ),
               ),
-              Text('$count',
+              Text('12345',
                 style: TextStyle(
                   color: Color(0xffff7700),
                 ),
@@ -87,14 +84,14 @@ class LiveListWidgets extends StatelessWidget with DYBase {
   }
 
   // 直播列表详情
-  Widget _listTableInfo(context) {
+  Widget _listTableInfo(context, liveData) {
     final liveList = List<Widget>();
     var fontStyle = TextStyle(
       color: Colors.white,
       fontSize: 12.0
     );
 
-    _liveData.forEach((item) {
+    liveData.forEach((item) {
       liveList.add(
         GestureDetector(
           onTap: () {

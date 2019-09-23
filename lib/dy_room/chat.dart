@@ -1,7 +1,6 @@
 /**
  * @discripe: 弹幕 & 礼物
  */
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -20,9 +19,6 @@ class _ChatWidgets extends State<ChatWidgets> with DYBase {
   List msgData = [];  // 弹幕消息列表
   List<Map> giftBannerView = [];  // 礼物横幅列表JSON
 
-  // Timer giftTimer;  // 礼物横幅模拟每s循环出现动画
-  // Timer msgTimer;  // 弹幕消息模拟200ms收到弹幕
-
   ScrollController _chatController = ScrollController();  // 弹幕区滚动Controller
 
   @override
@@ -37,6 +33,7 @@ class _ChatWidgets extends State<ChatWidgets> with DYBase {
       var data = message[1];
       if (sign == 'getChat') {
         print(data);
+        if (mounted)
         setState(() {
           msgData.add(data);
         });
@@ -49,6 +46,7 @@ class _ChatWidgets extends State<ChatWidgets> with DYBase {
           'config': data
         };
         Gift.add(giftBannerView, obj, 6500, (giftBannerViewNew) {
+          if (mounted)
           setState(() {
             giftBannerView = giftBannerViewNew;
           });
@@ -63,8 +61,6 @@ class _ChatWidgets extends State<ChatWidgets> with DYBase {
   @override
   void dispose() {
     SocketClient.channel?.sink?.close(status.goingAway);
-    // giftTimer?.cancel();
-    // msgTimer?.cancel();
     super.dispose();
   }
 

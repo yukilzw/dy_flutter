@@ -31,7 +31,7 @@ class _DevelopTest extends State<DevelopTest> with DYBase {
       maxHeight: dp(200),
       maxWidth: dp(350),
     );
-
+    if (mounted)
     setState(() {
       _image = image;
     });
@@ -110,9 +110,12 @@ class _DevelopTest extends State<DevelopTest> with DYBase {
                 Switch(
                   value: _getPhotoSource,
                   activeColor: DYBase.defaultColor,
-                  onChanged: (value) => setState(() {
-                    _getPhotoSource = value;
-                  }),
+                  onChanged: (value) => {
+                    if (mounted)
+                    setState(() {
+                      _getPhotoSource = value;
+                    })
+                  },
                 ),
               ],
             ),
@@ -137,9 +140,12 @@ class _DevelopTest extends State<DevelopTest> with DYBase {
                 Switch(
                   value: _openWebViewType,
                   activeColor: DYBase.defaultColor,
-                  onChanged: (value) => setState(() {
-                    _openWebViewType = value;
-                  }),
+                  onChanged: (value) => {
+                    if (mounted)
+                    setState(() {
+                      _openWebViewType = value;
+                    })
+                  },
                 ),
               ],
             )

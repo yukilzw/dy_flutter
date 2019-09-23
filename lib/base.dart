@@ -14,6 +14,7 @@ import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:web_socket_channel/io.dart';
 
 import 'dialog.dart';
+import 'bloc.dart';
 
 // 接口URL
 abstract class API {
@@ -24,10 +25,15 @@ abstract class API {
   static const lotteryResult = '/dy/flutter/lotteryResult';                   // 点击抽奖结果
 }
 
+abstract class BlocObj {
+  static final counter = CounterBloc();
+  static final index = IndexBloc();
+}
+
 // 所有Widget继承的抽象类
 abstract class DYBase {
   static final baseSchema = 'http';
-  static final baseHost = '192.168.0.100';
+  static final baseHost = '10.113.22.82';
   static final basePort = '1236';
   static final baseUrl = '${DYBase.baseSchema}://${DYBase.baseHost}:${DYBase.basePort}';
   // 默认斗鱼主题色
@@ -143,7 +149,6 @@ class DYio {
       await _delDir(tempDir);
       Fluttertoast.showToast(msg: '清除缓存成功');
     } catch (e) {
-      print(e);
       Fluttertoast.showToast(msg: '清除缓存失败');
     } finally {}
   }

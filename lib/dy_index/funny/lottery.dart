@@ -31,6 +31,7 @@ class _Lottery extends State<Lottery> with DYBase {
     httpClient.get(
       API.lotteryConfig,
     ).then((res) {
+      if (mounted)
       setState(() {
         lotteryConfig = res.data['data']; 
       });
@@ -44,6 +45,7 @@ class _Lottery extends State<Lottery> with DYBase {
       return;
     }
     // 初始化九宫格抽奖
+    if (mounted)
     setState(() {
       runCount = 0;
       lotteryResult = null;
@@ -54,7 +56,7 @@ class _Lottery extends State<Lottery> with DYBase {
     httpClient.post(
       API.lotteryResult,
     ).then((res) {
-      print(res.data['data']);
+      if (mounted)
       setState(() {
         lotteryResult = res.data['data']; 
       });
@@ -64,6 +66,7 @@ class _Lottery extends State<Lottery> with DYBase {
   // 九宫格匀速计时器
   void _lotteryTimer() {
     timer = Timer(Duration(milliseconds: 100), () {
+      if (mounted)
       setState(() {
         runCount++;
       });
@@ -82,6 +85,7 @@ class _Lottery extends State<Lottery> with DYBase {
   // 九宫格缓速计时器
   void _slowLotteryTimer(ms) {
     timer = Timer(Duration(milliseconds: ms), () {
+      if (mounted)
       setState(() {
         runCount++;
       });
@@ -91,15 +95,21 @@ class _Lottery extends State<Lottery> with DYBase {
       } else {  // 已转到开奖位置，弹窗提醒
         if (lotteryResult['giftIndex'] == 3) {
           alert(context, title: '很遗憾~', text: '谢谢参与',
-            yesCallBack: () => setState(() {
-              runCount = null;
-            }),
+            yesCallBack: () => {
+              if (mounted)
+              setState(() {
+                runCount = null;
+              })
+            },
           );
         } else {
           alert(context, title: '中奖了！', text: '恭喜您获得 ${lotteryResult['giftName']}',
-            yesCallBack: () => setState(() {
-              runCount = null;
-            }),
+            yesCallBack: () => {
+              if (mounted)
+              setState(() {
+                runCount = null;
+              })
+            },
           );
         }
         timer?.cancel();
