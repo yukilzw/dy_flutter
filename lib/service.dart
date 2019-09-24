@@ -1,3 +1,6 @@
+/**
+ * @discripe: 业务层方法
+ */
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 

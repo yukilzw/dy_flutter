@@ -3,6 +3,7 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../base.dart';
 
@@ -99,92 +100,100 @@ class LiveListWidgets extends StatelessWidget with DYBase {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Container(
-                  width: dp(175),
-                  height: dp(101.25),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(dp(4)),
+                CachedNetworkImage(
+                  imageUrl: item['roomSrc'],
+                  imageBuilder: (context, imageProvider) => Container(
+                    width: dp(175),
+                    height: dp(101.25),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(dp(4)),
+                      ),
+                      image: DecorationImage(
+                        image: imageProvider,
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                    image: DecorationImage(
-                      image: NetworkImage(item['roomSrc']),
-                      fit: BoxFit.fill,
+                    child: Stack(
+                      children: <Widget>[
+                        Positioned(
+                          child: Container(
+                            width: dp(120),
+                            height: dp(18),
+                            padding: EdgeInsets.only(right: dp(5)),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(topRight: Radius.circular(dp(4))),
+                              gradient: LinearGradient(
+                                begin: Alignment(-.4, 0.0),
+                                end: Alignment(1, 0.0),
+                                colors: <Color>[
+                                  Color.fromRGBO(0, 0, 0, 0),
+                                  Color.fromRGBO(0, 0, 0, .6),
+                                ],
+                              ),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: <Widget>[
+                                Image.asset(
+                                  'images/hot.png',
+                                  height: dp(14),
+                                ),
+                                Padding(padding: EdgeInsets.only(right: dp(3))),
+                                Text(
+                                  item['hn'],
+                                  style: fontStyle,
+                                ),
+                              ],
+                            ),
+                          ),
+                          top: 0,
+                          right: 0,
+                        ),
+                        Positioned(
+                          child: Container(
+                            width: dp(175),
+                            height: dp(18),
+                            padding: EdgeInsets.only(right: dp(5)),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topRight: Radius.circular(dp(4)),
+                                bottomRight: Radius.circular(dp(4)),
+                              ),
+                              gradient: LinearGradient(
+                                begin: Alignment(0, -.5),
+                                end: Alignment(0, 1.3),
+                                colors: <Color>[
+                                  Color.fromRGBO(0, 0, 0, 0),
+                                  Color.fromRGBO(0, 0, 0, .6),
+                                ],
+                              ),
+                            ),
+                            child: Row(
+                              children: <Widget>[
+                                Padding(padding: EdgeInsets.only(left: dp(3))),
+                                Image.asset(
+                                  'images/member.png',
+                                  height: dp(14),
+                                ),
+                                Padding(padding: EdgeInsets.only(right: dp(3))),
+                                Text(
+                                  item['nickname'],
+                                  style: fontStyle,
+                                ),
+                              ],
+                            ),
+                          ),
+                          bottom: 0,
+                          left: 0,
+                        ),
+                      ],
                     ),
                   ),
-                  child: Stack(
-                    children: <Widget>[
-                      Positioned(
-                        child: Container(
-                          width: dp(120),
-                          height: dp(18),
-                          padding: EdgeInsets.only(right: dp(5)),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(topRight: Radius.circular(dp(4))),
-                            gradient: LinearGradient(
-                              begin: Alignment(-.4, 0.0),
-                              end: Alignment(1, 0.0),
-                              colors: <Color>[
-                                Color.fromRGBO(0, 0, 0, 0),
-                                Color.fromRGBO(0, 0, 0, .6),
-                              ],
-                            ),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Image.asset(
-                                'images/hot.png',
-                                height: dp(14),
-                              ),
-                              Padding(padding: EdgeInsets.only(right: dp(3))),
-                              Text(
-                                item['hn'],
-                                style: fontStyle,
-                              ),
-                            ],
-                          ),
-                        ),
-                        top: 0,
-                        right: 0,
-                      ),
-                      Positioned(
-                        child: Container(
-                          width: dp(175),
-                          height: dp(18),
-                          padding: EdgeInsets.only(right: dp(5)),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(dp(4)),
-                              bottomRight: Radius.circular(dp(4)),
-                            ),
-                            gradient: LinearGradient(
-                              begin: Alignment(0, -.5),
-                              end: Alignment(0, 1.3),
-                              colors: <Color>[
-                                Color.fromRGBO(0, 0, 0, 0),
-                                Color.fromRGBO(0, 0, 0, .6),
-                              ],
-                            ),
-                          ),
-                          child: Row(
-                            children: <Widget>[
-                              Padding(padding: EdgeInsets.only(left: dp(3))),
-                              Image.asset(
-                                'images/member.png',
-                                height: dp(14),
-                              ),
-                              Padding(padding: EdgeInsets.only(right: dp(3))),
-                              Text(
-                                item['nickname'],
-                                style: fontStyle,
-                              ),
-                            ],
-                          ),
-                        ),
-                        bottom: 0,
-                        left: 0,
-                      ),
-                    ],
+                  placeholder: (context, url) => Image.asset(
+                    'images/pic-default.jpg',
+                    width: dp(175),
+                    height: dp(101.25),
                   ),
                 ),
                 Container(

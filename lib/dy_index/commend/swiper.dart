@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../bloc.dart';
 import '../../base.dart';
@@ -42,9 +43,13 @@ class SWwiperWidgets extends StatelessWidget with DYBase {
       );
     } else if (swiperPic.length > 0) {
       return Swiper(
-        itemBuilder: (BuildContext context, int index) => Image.network(
-          swiperPic[index],
-          fit: BoxFit.fill,
+        itemBuilder: (BuildContext context, int index) => CachedNetworkImage(
+            imageUrl: swiperPic[index],
+            placeholder: (context, url) => Image.asset(
+              'images/pic-default.jpg',
+              fit: BoxFit.fill,
+            ),
+            fit: BoxFit.fill,
         ),
         itemCount: swiperPic.length,
         pagination: SwiperPagination(
