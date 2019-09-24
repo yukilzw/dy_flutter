@@ -36,6 +36,7 @@ dependencies:
   web_socket_channel: ^1.0.15
   shared_preferences: ^0.5.3
   wave: ^0.0.8
+  cached_network_image: ^1.1.1
 
 dev_dependencies:
   mockito: ^4.1.0
@@ -56,6 +57,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
+    - images/pic-default.jpg
     - images/shayuniang.png
     - images/dylogo.png
     - images/search.png
