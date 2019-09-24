@@ -1,5 +1,5 @@
 /**
- * @discripe: 首页轮播图、视频列表、底部导航更多功能
+ * @discripe: 底部导航
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

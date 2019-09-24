@@ -1,5 +1,5 @@
 /**
- * @discripe: 底部导航 - 推荐
+ * @discripe: 推荐
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
