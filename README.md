@@ -33,7 +33,7 @@ flutter重构的斗鱼直播APP<br/>
 
 #### 调试：
 服务端接口没有上云，如需本地启动该项目调试，可修改`lib/base.dart`中`DYBase.baseUrl`接口域名为本机ip:port<br/>
-然后clone[服务端仓库](https://github.com/yukilzw/factory)，安装python3与tornado，命令行cd进入`./py/tornado`文件夹执行`python main.py`启动服务<br/>
+然后clone[服务端仓库](https://github.com/yukilzw/factory)，安装python3与tornado，requests，命令行cd进入`./py/tornado`文件夹执行`python main.py`启动服务<br/>
 
 #### 建议：
 使用Material自带的widget进行搭配使用，已经能满足绝大部分场景的开发需求<br/>
