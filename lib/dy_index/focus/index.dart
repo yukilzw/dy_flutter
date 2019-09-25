@@ -11,8 +11,7 @@ import 'webView.dart';
 class FocusPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: CustomScrollView(
+    return CustomScrollView(
         // physics: BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverPersistentHeader(
@@ -29,8 +28,7 @@ class FocusPage extends StatelessWidget {
             child: FilmContent(),
           )
         ],
-      ),
-    );
+      );
   }
 }
 

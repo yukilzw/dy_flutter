@@ -24,8 +24,13 @@ class _CountdownInit extends State<CountdownInit> with DYBase, SingleTickerProvi
   @override
   void initState() {
     super.initState();
-    SystemChrome.setEnabledSystemUIOverlays([]);
-    _controller = AnimationController(vsync: this, duration: Duration(seconds: _time));
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarBrightness: Brightness.light,
+      statusBarIconBrightness: Brightness.light,
+    ));
+    // SystemChrome.setEnabledSystemUIOverlays([]);
+
+    _controller = AnimationController(duration: Duration(seconds: _time), vsync: this,);  // 倒计时动画控制器
     _animation = Tween(begin: 0.0, end: 360.0).animate(_controller);
     _controller.addListener(() {
       if (mounted)
@@ -47,7 +52,9 @@ class _CountdownInit extends State<CountdownInit> with DYBase, SingleTickerProvi
 
   void _jumpIndex() {
     Navigator.of(context).pushReplacementNamed('/index');
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    /* Future.delayed(Duration(milliseconds: 300), () {
+      SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    }); */
   }
   
   @override
