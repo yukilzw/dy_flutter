@@ -2,7 +2,7 @@
 ![Flutter](https://img.shields.io/badge/Flutter-1.7.8%2B-5bc7f8.svg) ![Dart](https://img.shields.io/badge/Dart-2.4.0%2B-00B4AB.svg) 
 
 flutter重构的斗鱼直播APP<br/>
-基于Material原生Widget开发，外加各类优质的第三方开源库，打造出优于原生APP的用户体验<br/>
+基于Material原生Widget开发，外加各类优质的第三方开源库，打造出原生APP丝滑的用户体验<br/>
 尽可能接入更多功能，帮助你在使用flutter进行开发新的应用提供实用的借鉴案例<br/>
 
 #### 包含功能：
@@ -15,7 +15,7 @@ flutter重构的斗鱼直播APP<br/>
 - HTTP缓存、IO缓存
 - 直播间webSocket消息弹幕、礼物
 - 页面路由传值
-- Bloc全局状态管理(启动页预加载首页数据)
+- Bloc流式状态管理(启动页预加载首页数据)
 - 礼物横幅动画队列
 - 弹幕消息滚动
 - 静态视频流
