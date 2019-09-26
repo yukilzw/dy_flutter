@@ -118,109 +118,109 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
   Widget build(BuildContext context) {
     return Center(
       child: AnimatedBuilder(
-      animation: controller,
-      builder: (BuildContext context, Widget child) {
-        return Transform.translate(
-          offset: Offset(animationGiftNum_3.value, 0),
-          child: Stack(
-            overflow: Overflow.visible,
-            children: <Widget>[
-              Container(
-                height: dp(48),
-                width: dp(244),
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('images/gift-banner.png'),
-                    fit: BoxFit.fill,
+        animation: controller,
+        builder: (BuildContext context, Widget child) {
+          return Transform.translate(
+            offset: Offset(animationGiftNum_3.value, 0),
+            child: Stack(
+              overflow: Overflow.visible,
+              children: <Widget>[
+                Container(
+                  height: dp(48),
+                  width: dp(244),
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('images/gift-banner.png'),
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                ),
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      width: dp(40),
-                      height: dp(40),
-                      margin: EdgeInsets.only(left: dp(4)),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        image: DecorationImage(
-                          image: NetworkImage(giftInfo['avatar']),
-                          fit: BoxFit.fill,
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: dp(40),
+                        height: dp(40),
+                        margin: EdgeInsets.only(left: dp(4)),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          image: DecorationImage(
+                            image: NetworkImage(giftInfo['avatar']),
+                            fit: BoxFit.fill,
+                          ),
                         ),
                       ),
-                    ),
-                    SizedBox(
-                      height: dp(48),
-                      width: dp(105),
-                      child: Padding(
-                        padding: EdgeInsets.all(dp(5)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              giftInfo['nickName'],
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                color: Colors.white
+                      SizedBox(
+                        height: dp(48),
+                        width: dp(105),
+                        child: Padding(
+                          padding: EdgeInsets.all(dp(5)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                giftInfo['nickName'],
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  color: Colors.white
+                                ),
                               ),
-                            ),
-                            RichText(
-                              overflow: TextOverflow.ellipsis,
-                              text: TextSpan(
-                                style: TextStyle(color: Colors.yellow),
-                                children: [
-                                  TextSpan(
-                                    text: '送出',
-                                  ),
-                                  TextSpan(
-                                    text: giftInfo['giftName'],
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontStyle: FontStyle.italic
+                              RichText(
+                                overflow: TextOverflow.ellipsis,
+                                text: TextSpan(
+                                  style: TextStyle(color: Colors.yellow),
+                                  children: [
+                                    TextSpan(
+                                      text: '送出',
                                     ),
-                                  ),
-                                ]
-                              ),       
-                            ),
-                          ],
+                                    TextSpan(
+                                      text: giftInfo['giftName'],
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontStyle: FontStyle.italic
+                                      ),
+                                    ),
+                                  ]
+                                ),       
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(padding: EdgeInsets.only(right: dp(50))),
-                    Padding(
-                      padding: EdgeInsets.only(top: dp(10)),
-                      child: Transform.scale(
+                      Padding(padding: EdgeInsets.only(right: dp(50))),
+                      Padding(
+                        padding: EdgeInsets.only(top: dp(10)),
+                        child: Transform.scale(
+                          scale: animationGiftNum_1.value >= 1.7 ? animationGiftNum_2.value : animationGiftNum_1.value,
+                          child: Image.asset(
+                            'images/gift-x.png',
+                            height: dp(10),
+                          ),
+                        ),
+                      ),
+                      Transform.scale(
                         scale: animationGiftNum_1.value >= 1.7 ? animationGiftNum_2.value : animationGiftNum_1.value,
                         child: Image.asset(
-                          'images/gift-x.png',
-                          height: dp(10),
+                          'images/gift-1.png',
+                          height: dp(30),
                         ),
                       ),
-                    ),
-                    Transform.scale(
-                      scale: animationGiftNum_1.value >= 1.7 ? animationGiftNum_2.value : animationGiftNum_1.value,
-                      child: Image.asset(
-                        'images/gift-1.png',
-                        height: dp(30),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Positioned(
-                left: dp(145),
-                top: dp(-15),
-                child: Image.network(
-                  giftInfo['giftImg'],
-                  height: dp(50),
+                Positioned(
+                  left: dp(145),
+                  top: dp(-15),
+                  child: Image.network(
+                    giftInfo['giftImg'],
+                    height: dp(50),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        );
-      },
-      child: widget.child,
-    ),
+              ],
+            ),
+          );
+        },
+        child: widget.child,
+      ),
     );
   }
 }
