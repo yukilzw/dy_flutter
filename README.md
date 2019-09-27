@@ -31,12 +31,21 @@ flutter重构的斗鱼直播APP<br/>
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/uPUfvzq6QWWJjmkf*OkmzHV6apSbGKK9FPXXC8itWH8!/r/dMMAAAAAAAAA" width="280"/> | <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/FDYCtFUGAS.FMi0oCu0wzIGhFK3BDzubAXdlZbStLyg!/r/dFIBAAAAAAAA" width="280"/> |
 
 #### 调试：
-服务端接口没有上云，如需本地启动该项目调试，可修改`lib/base.dart`中`DYBase.baseUrl`接口域名为本机ip:port<br/>
-然后clone[服务端仓库](https://github.com/yukilzw/factory)，安装python3与tornado，requests，命令行cd进入`./py/tornado`文件夹执行`python main.py`启动服务<br/>
+服务端接口没有上云，如需本地启动该项目调试，可修改`lib/base.dart`中`DYBase.baseHost`接口HOST为本机IP<br/>
+然后clone[服务端仓库](https://github.com/yukilzw/factory)，安装python3.6<br/>
+进入`./py/tornado`文件夹路径执行`pip install tornado requests`安装依赖，`python main.py`启动服务<br/>
 
 #### 建议：
 使用Material自带的widget进行搭配使用，已经能满足绝大部分场景的开发需求<br/>
 但是在企业级APP高度UI交互定制化的场景下，仍需要根据业务场景重新实现诸如AppBar、TabView等widget<br/><br/>
 
+#### 入门推荐：
+[Dart语法](http://dart.goodev.org/guides/language/language-tour)<br/>
+[Dart SDK](https://api.dartlang.org/stable/2.4.0/index.html)<br/>
+[Flutter中文网](https://flutterchina.club/get-started/install/) - 简单易懂的入门教程<br/>
+[Flutter实战](https://book.flutterchina.club/) - 较为全面的进阶教程<br/>
+[Flutter官网（英）](https://flutter.dev/docs) - 可查阅全部的API与SDK相关<br/>
+[Bloc（英）](https://felangel.github.io/bloc/#/gettingstarted) - 全局状态管理(除此之外也可选用`redux`或原生`InheritedWidget`)
 
-#### dy_flutter为个人试验项目，仅供学习借鉴用
+
+#### dy_flutter为个人项目，仅用作学习交流
