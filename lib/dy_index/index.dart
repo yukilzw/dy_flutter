@@ -20,7 +20,7 @@ class DyIndexPage extends StatefulWidget {
   _DyIndexPageState createState() => _DyIndexPageState();
 }
 
-class _DyIndexPageState extends State<DyIndexPage> with DYBase, SingleTickerProviderStateMixin {
+class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   final _bottomNavList = ["推荐", "娱乐", "关注", "鱼吧", "发现"]; // 底部导航
   DateTime _lastCloseApp; //上次点击时间
   int _currentIndex = 0;  // 底部导航当前页面

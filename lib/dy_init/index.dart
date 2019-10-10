@@ -20,7 +20,7 @@ class SplashPage extends StatefulWidget {
   _SplashPageState createState() => _SplashPageState();
 }
   
-class _SplashPageState extends State<SplashPage> with DYBase, SingleTickerProviderStateMixin  {
+class _SplashPageState extends State<SplashPage> with DYBase {
   SharedPreferences prefs;
   
   @override
