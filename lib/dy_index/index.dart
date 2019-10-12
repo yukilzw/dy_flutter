@@ -35,9 +35,6 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
 
   // 点击悬浮标回到顶部
   void _indexPageScrollTop() {
-    final counterBloc = BlocProvider.of<CounterBloc>(context);
-    counterBloc.dispatch(CounterEvent.increment);
-
     _scrollController.animateTo(.0,
         duration: Duration(milliseconds: 300),
         curve: Curves.ease
