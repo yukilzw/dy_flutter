@@ -11,6 +11,7 @@ import '../base.dart';
 import 'funny/index.dart';
 import 'focus/index.dart';
 import 'commend/index.dart';
+import 'fishbar/index.dart';
 
 class DyIndexPage extends StatefulWidget {
   final arguments;
@@ -141,7 +142,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
       CommendPage(_scrollController),
       FunnyPage(),
       FocusPage(),
-      pageInDevelop,
+      FishBarPage(),
       pageInDevelop,
     ];
 
