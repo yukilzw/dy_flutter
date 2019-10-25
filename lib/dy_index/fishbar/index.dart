@@ -2,25 +2,116 @@
  * @discripe: 鱼吧
  */
 import 'dart:ui';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../base.dart';
+import 'myConcern.dart';
+
+class FishBarHeader extends StatelessWidget with DYBase {
+  final height;
+  FishBarHeader({ this.height });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      width: MediaQuery.of(context).size.width,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: <Color>[
+            Color(0xffff8633),
+            Color(0xffff6634),
+          ],
+        ),
+      ),
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        children: <Widget>[
+          Positioned(
+            bottom: 10,
+            child: Container(
+              width: 300,
+              height: 40,
+              color: Colors.black,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+class AnimatedLogo extends AnimatedWidget {
+  AnimatedLogo({Key key, Animation<double> animation})
+      : super(key: key, listenable: animation);
+
+  @override
+  Widget build(BuildContext context) {
+    final Animation<double> animation = listenable;
+    print(animation.value);
+    return FishBarHeader(height: animation.value,);
+  }
+}
+
+class LogoApp extends StatefulWidget {
+  final direction;
+  LogoApp(this.direction, {Key key}) : super(key: key);
+
+  _LogoAppState createState() => new _LogoAppState(direction);
+}
+
+class _LogoAppState extends State<LogoApp> with DYBase, SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Animation<double> animation;
+  final direction;
+
+  _LogoAppState(this.direction);
+
+  initState() {
+    super.initState();
+    controller = AnimationController(
+      duration: Duration(milliseconds: 180),
+      vsync: this
+    );
+
+    double begin = direction == -1 ? DYBase.statusBarHeight : DYBase.statusBarHeight + dp(50);
+    double end = direction == -1 ? DYBase.statusBarHeight + dp(50) : DYBase.statusBarHeight;
+    animation = Tween(
+      begin: begin, end: end,
+    ).animate(
+      CurvedAnimation(
+        parent: controller,
+        curve: Curves.easeInOut,
+      )
+    );
+
+    controller.forward();
+  }
+
+  Widget build(BuildContext context) {
+    return new AnimatedLogo(animation: animation);
+  }
+
+  dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+}
 
 class FishBarPage extends StatefulWidget {
   @override
   _FishBarPage createState() => _FishBarPage();
 }
 
-class _FishBarPage extends State<FishBarPage> with DYBase, SingleTickerProviderStateMixin {
-  double statusBarHight = MediaQueryData.fromWindow(window).padding.top;
+class _FishBarPage extends State<FishBarPage> with DYBase {
   int _navActIndex = 0;
-  // PageController _pageController = PageController();
   List<String> _navList = ['我的', '广场', '找吧'];
-  bool isDone = false;
-  AnimationController controller;
-  Animation<double> animationGiftNum_1;
+  bool _duringAnimation = false;
+  int _anmiationTime = 180;
+  AnimationController _controller;
+  int _direction;
 
   @override
   void initState() {
@@ -28,6 +119,12 @@ class _FishBarPage extends State<FishBarPage> with DYBase, SingleTickerProviderS
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
       statusBarIconBrightness: Brightness.light,
     ));
+  }
+
+  @override
+  void dispose() {
+    _controller?.dispose();
+    super.dispose();
   }
 
   List<Widget> _nav() {
@@ -77,8 +174,7 @@ class _FishBarPage extends State<FishBarPage> with DYBase, SingleTickerProviderS
     var color;
     switch (_navActIndex) {
       case 0:
-        color = Colors.lightBlue;
-        break;
+        return MyConcern();
       case 1:
         color = Colors.lightGreen;
         break;
@@ -86,40 +182,43 @@ class _FishBarPage extends State<FishBarPage> with DYBase, SingleTickerProviderS
         color = Colors.pink;
         break;
     }
-    return Container(
-      height: 900,
-      color: color,
+    return ScrollConfiguration(
+      behavior: DyBehavior(),
+      child: ListView(
+        key: ObjectKey(_navActIndex),
+        padding: EdgeInsets.all(0),
+        physics: BouncingScrollPhysics(),
+        children: [
+          Container(
+            height: 900,
+            color: color,
+          ),
+        ],
+      ),
     );
   }
 
   void _onVerticalDragUpdate(DragUpdateDetails details) {
-
     if (details.delta.dy >= 1.0) {
-      print('down');
-    } else if (details.delta.dy <= -1.0 && !isDone) {
-      print('up');
-      isDone = true;
-
-      controller = AnimationController(
-        duration: Duration(milliseconds: 180),
-        vsync: this
-      );
-
-      animationGiftNum_1 = Tween(
-        begin: statusBarHight + dp(50), end: statusBarHight,
-      ).animate(
-        CurvedAnimation(
-          parent: controller,
-          curve: Curves.easeInOut,
-        )
-      );
-      controller.addListener(() {
-        if (mounted)
-        setState(() {});
-      });
-
-      controller.forward();
+      _headerAnimated(-1);  // 向下滑动 ↓
+    } else if (details.delta.dy <= -1.0 && !_duringAnimation) {
+      _headerAnimated(1);   // 向上滑动 ↑
     }
+  }
+
+  void _headerAnimated(direction) {
+    if (_duringAnimation) {
+      return;
+    }
+    _duringAnimation = true;
+
+    setState(() {
+      _direction = direction;
+    });
+
+    Timer(Duration(milliseconds: _anmiationTime), () {
+      _duringAnimation = false;
+    });
   }
 
   @override
@@ -129,31 +228,8 @@ class _FishBarPage extends State<FishBarPage> with DYBase, SingleTickerProviderS
         onVerticalDragUpdate: _onVerticalDragUpdate,
         child: Column(
           children: <Widget>[
-            Container(
-              height: animationGiftNum_1 == null ? statusBarHight + dp(50) : animationGiftNum_1.value,
-              width: MediaQuery.of(context).size.width,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: <Color>[
-                    Color(0xffff8633),
-                    Color(0xffff6634),
-                  ],
-                ),
-              ),
-              child: Stack(
-                alignment: AlignmentDirectional.center,
-                children: <Widget>[
-                  Positioned(
-                    bottom: 10,
-                    child: Container(
-                      width: 300,
-                      height: 40,
-                      color: Colors.black,
-                    ),
-                  )
-                ],
-              ),
-            ),
+            _direction == null ? FishBarHeader(height: DYBase.statusBarHeight + dp(50),) :
+            LogoApp(_direction, key: ObjectKey(_direction)),
             Container(
               color: Colors.transparent,
               child: Row(
@@ -162,17 +238,7 @@ class _FishBarPage extends State<FishBarPage> with DYBase, SingleTickerProviderS
             ),
             Expanded(
               flex: 1,
-              child: ScrollConfiguration(
-                behavior: DyBehavior(),
-                child: ListView(
-                  key: ObjectKey(_navActIndex),
-                  padding: EdgeInsets.all(0),
-                  physics: BouncingScrollPhysics(),
-                  children: [
-                    _view(),
-                  ],
-                ),
-              ),
+              child: _view(),
             ),
           ],
         ),

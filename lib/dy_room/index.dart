@@ -33,7 +33,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
         body: Column(
           children: <Widget>[
             Container(
-              height: MediaQueryData.fromWindow(window).padding.top,
+              height: DYBase.statusBarHeight,
               color: Color(0xff333333),
             ),
             PlayerWidgets(_routeProp),
