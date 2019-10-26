@@ -44,13 +44,13 @@ class FishBarHeader extends StatelessWidget with DYBase {
   }
 }
 class AnimatedLogo extends AnimatedWidget {
-  AnimatedLogo({Key key, Animation<double> animation})
-      : super(key: key, listenable: animation);
+  AnimatedLogo({
+    Key key, Animation<double> animation
+  }) : super(key: key, listenable: animation);
 
   @override
   Widget build(BuildContext context) {
     final Animation<double> animation = listenable;
-    print(animation.value);
     return FishBarHeader(height: animation.value,);
   }
 }
@@ -174,7 +174,7 @@ class _FishBarPage extends State<FishBarPage> with DYBase {
     var color;
     switch (_navActIndex) {
       case 0:
-        return MyConcern();
+        return MyConcern(headerAnimated: _headerAnimated);
       case 1:
         color = Colors.lightGreen;
         break;

@@ -90,8 +90,20 @@ flutter:
     - images/nav/nav-42.jpg
     - images/nav/nav-52.jpg
 
-    - images/bar-girl.webp
-    - images/bar-boy.webp
+    - images/bar/hot-chat.jpg
+    - images/bar/day-title.png
+    - images/bar/hot-title.png
+    - images/bar/pull-icon.webp
+    - images/bar/usefulSelect.webp
+    - images/bar/girl.webp
+    - images/bar/boy.webp
+    - images/bar/tab-0.png
+    - images/bar/tab-1.png
+    - images/bar/tab-2.png
+    - images/bar/chat-add.jpg
+    - images/bar/chat-share.jpg
+    - images/bar/chat-star.jpg
+    - images/bar/chat-star-act.webp
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
