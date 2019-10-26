@@ -36,14 +36,20 @@ class _MyConcern extends State<MyConcern> with DYBase {
       if (scrollTop < 0 || scrollTop >= _scrollController.position.maxScrollExtent) {
         return;
       }
-      if (scrollTop - _scrollTop > 20) {  // 向上滑动 ↑
-        headerAnimated(1);
-        _scrollTop = scrollTop;
-      } else if (_scrollTop - scrollTop > 20) { // 向下滑动 ↓
+      if (_scrollTop - scrollTop > 20) { // 向下滑动 ↓
         headerAnimated(-1);
+        _scrollTop = scrollTop;
+      } else if (scrollTop - _scrollTop > 20) {  // 向上滑动 ↑
+        headerAnimated(1);
         _scrollTop = scrollTop;
       }
     });
+  }
+
+  @override
+  void dispose() {
+    _scrollController?.dispose();
+    super.dispose();
   }
 
   void _showCardOption() {
@@ -112,7 +118,6 @@ class _MyConcern extends State<MyConcern> with DYBase {
                 ),
               ),
             );
-            // imageSize['width'] = dp(160);
           // 2、4张图：宽高正方形，单行80%各占一半
           } else if (pic.length == 2 || pic.length == 4) {
             if (pic.length == 4) {
