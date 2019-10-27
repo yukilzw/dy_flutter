@@ -59,6 +59,18 @@ class _MyConcern extends State<MyConcern> with DYBase {
     print(offset);
   }
 
+  // 下拉刷新
+  void _onRefresh() async {
+
+    _refreshController.refreshCompleted();
+  }
+
+  // 上拉加载
+  void _onLoading() async {
+
+    _refreshController.loadComplete();
+  }
+
   // 根据数量动态计算图片宽高（类似微信朋友圈）
   Widget _picUnknownNum(List pic) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -202,12 +214,12 @@ class _MyConcern extends State<MyConcern> with DYBase {
         Container(
           // color: Color(0xfff3f3f3),
           child: SmartRefresher(
-            enablePullDown: false,
-            enablePullUp: false,
+            enablePullDown: true,
+            enablePullUp: true,
             header: WaterDropHeader(),
             controller: _refreshController,
-            // onRefresh: _onRefresh,
-            // onLoading: _onLoading,
+            onRefresh: _onRefresh,
+            onLoading: _onLoading,
             child: ListView(
               controller: _scrollController,
               padding: EdgeInsets.all(0),
@@ -219,7 +231,9 @@ class _MyConcern extends State<MyConcern> with DYBase {
                 ),
                 Padding(
                   key: _hourTitleKey,
-                  padding: EdgeInsets.all(15),
+                  padding: EdgeInsets.only(
+                    left: dp(15), right: dp(15), top: dp(5), bottom: dp(10),
+                  ),
                   child: Row(
                     children: <Widget>[
                       Image.asset(
@@ -238,10 +252,9 @@ class _MyConcern extends State<MyConcern> with DYBase {
                           ),
                         ),
                       ),
-                      Text('斗鱼24小时精彩',
-                        style: TextStyle(
-                          color: Color(0xff999999)
-                        ),
+                      Image.asset(
+                        'images/bar/usefulSelect.webp',
+                        height: dp(25),
                       ),
                     ],
                   ),
@@ -357,6 +370,7 @@ class _MyConcern extends State<MyConcern> with DYBase {
                                                         maxLines: 1,
                                                         overflow: TextOverflow.ellipsis,
                                                       ),
+                                                      Padding(padding: EdgeInsets.only(left: dp(4)),),
                                                       Image.asset(
                                                         'images/bar/girl.webp',
                                                         height: dp(17),

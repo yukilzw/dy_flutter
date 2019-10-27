@@ -10,15 +10,19 @@ import 'package:flutter/services.dart';
 import '../../base.dart';
 import 'myConcern.dart';
 
+int _headerAnimationTime = 250;
+
 class FishBarHeader extends StatelessWidget with DYBase {
-  final height;
-  FishBarHeader({ this.height });
+  final height, opacity;
+  FishBarHeader({ this.height, this.opacity = 1.0 });
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
-      height: height,
-      width: MediaQuery.of(context).size.width,
+      height: height != null ? height : DYBase.statusBarHeight + dp(55),
+      width: screenWidth,
       decoration: BoxDecoration(
         gradient: LinearGradient(
           colors: <Color>[
@@ -31,11 +35,96 @@ class FishBarHeader extends StatelessWidget with DYBase {
         alignment: AlignmentDirectional.center,
         children: <Widget>[
           Positioned(
-            bottom: 10,
-            child: Container(
-              width: 300,
-              height: 40,
-              color: Colors.black,
+            bottom: dp(10),
+            child: Opacity(
+              opacity: opacity,
+              child: SizedBox(
+                width: screenWidth - dp(30),
+                height: dp(40),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(dp(20)),
+                      ),
+                      child: Image.asset(
+                        'images/default-avatar.webp',
+                        width: dp(40),
+                        height: dp(40),
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        height: dp(35),
+                        margin: EdgeInsets.only(left: dp(15)),
+                        padding: EdgeInsets.only(left: dp(5), right: dp(5)),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(dp(35 / 2)),
+                          ), 
+                        ),
+                        child: Row(
+                          children: <Widget>[
+                            // 搜索ICON
+                            Image.asset(
+                              'images/head/search.webp',
+                              width: dp(25),
+                              height: dp(15),
+                            ),
+                            // 搜索输入框
+                            Expanded(
+                              flex: 1,
+                              child: TextField(
+                                cursorColor: DYBase.defaultColor,
+                                cursorWidth: 1.5,
+                                style: TextStyle(
+                                  color: DYBase.defaultColor,
+                                  fontSize: 14.0,
+                                ),
+                                decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding: EdgeInsets.all(0),
+                                  hintText: '金咕咕doinb',
+                                ),
+                              ),
+                            ),
+                            Image.asset(
+                              'images/head/camera.webp',
+                              width: dp(20),
+                              height: dp(15),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: dp(10)),
+                      child: Image.asset(
+                        'images/head/history.webp',
+                        width: dp(25),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: dp(10)),
+                      child: Image.asset(
+                        'images/head/game.webp',
+                        width: dp(25),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(left: dp(10)),
+                      child: Image.asset(
+                        'images/head/chat.webp',
+                        width: dp(25),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           )
         ],
@@ -43,15 +132,29 @@ class FishBarHeader extends StatelessWidget with DYBase {
     );
   }
 }
-class AnimatedLogo extends AnimatedWidget {
+class AnimatedLogo extends AnimatedWidget with DYBase {
+  Tween<double> _opacityTween, _heightTween;
+  double height, opacity, beginH, beginO, endH, endO;
+  final direction;
   AnimatedLogo({
-    Key key, Animation<double> animation
-  }) : super(key: key, listenable: animation);
+    Key key, Animation<double> animation, this.direction,
+  }) : super(key: key, listenable: animation) {
+    beginH = direction == -1 ? DYBase.statusBarHeight : DYBase.statusBarHeight + dp(55);
+    endH = direction == -1 ? DYBase.statusBarHeight + dp(55) : DYBase.statusBarHeight;
+    beginO = direction == -1 ? 0 : 1;
+    endO = direction == -1 ? 1 : 0;
+    _heightTween= Tween(
+      begin: beginH, end: endH,
+    );
+    _opacityTween= Tween(
+      begin: beginO, end: endO,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final Animation<double> animation = listenable;
-    return FishBarHeader(height: animation.value,);
+    return FishBarHeader(height: _heightTween.evaluate(animation), opacity: _opacityTween.evaluate(animation),);
   }
 }
 
@@ -72,26 +175,17 @@ class _LogoAppState extends State<LogoApp> with DYBase, SingleTickerProviderStat
   initState() {
     super.initState();
     controller = AnimationController(
-      duration: Duration(milliseconds: 180),
+      duration: Duration(milliseconds: _headerAnimationTime),
       vsync: this
     );
 
-    double begin = direction == -1 ? DYBase.statusBarHeight : DYBase.statusBarHeight + dp(50);
-    double end = direction == -1 ? DYBase.statusBarHeight + dp(50) : DYBase.statusBarHeight;
-    animation = Tween(
-      begin: begin, end: end,
-    ).animate(
-      CurvedAnimation(
-        parent: controller,
-        curve: Curves.easeInOut,
-      )
-    );
+    animation = CurvedAnimation(parent: controller, curve: Curves.easeInOut);
 
     controller.forward();
   }
 
   Widget build(BuildContext context) {
-    return new AnimatedLogo(animation: animation);
+    return AnimatedLogo(animation: animation, direction: direction);
   }
 
   dispose() {
@@ -109,7 +203,6 @@ class _FishBarPage extends State<FishBarPage> with DYBase {
   int _navActIndex = 0;
   List<String> _navList = ['我的', '广场', '找吧'];
   bool _duringAnimation = false;
-  int _anmiationTime = 180;
   AnimationController _controller;
   int _direction;
 
@@ -135,7 +228,7 @@ class _FishBarPage extends State<FishBarPage> with DYBase {
         }),
         child: Container(
           width: dp(70),
-          height: dp(50),
+          height: dp(55),
           color: Colors.transparent,
           child: Stack(
             children: <Widget>[
@@ -216,7 +309,7 @@ class _FishBarPage extends State<FishBarPage> with DYBase {
       _direction = direction;
     });
 
-    Timer(Duration(milliseconds: _anmiationTime), () {
+    Timer(Duration(milliseconds: _headerAnimationTime), () {
       _duringAnimation = false;
     });
   }
@@ -228,7 +321,7 @@ class _FishBarPage extends State<FishBarPage> with DYBase {
         onVerticalDragUpdate: _onVerticalDragUpdate,
         child: Column(
           children: <Widget>[
-            _direction == null ? FishBarHeader(height: DYBase.statusBarHeight + dp(50),) :
+            _direction == null ? FishBarHeader() :
             LogoApp(_direction, key: ObjectKey(_direction)),
             Container(
               color: Colors.transparent,

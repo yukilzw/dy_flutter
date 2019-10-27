@@ -58,9 +58,9 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/pic-default.jpg
+    - images/default-avatar.webp
     - images/shayuniang.png
-    - images/dylogo.png
-    - images/search.png
+    - images/search.webp
     - images/isLive.png
     - images/next.png
     - images/hot.png
@@ -73,6 +73,12 @@ flutter:
     - images/syn.webp
     - images/init_logo.webp
     - images/init_icon.png
+
+    - images/head/dylogo.png
+    - images/head/camera.webp
+    - images/head/chat.webp
+    - images/head/game.webp
+    - images/head/history.webp
 
     - images/lv/3.png
     - images/lv/30.png

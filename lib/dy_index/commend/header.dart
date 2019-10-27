@@ -23,7 +23,7 @@ class HeaderWidgets extends StatelessWidget with DYBase {
           GestureDetector(
             onTap: DYio.clearCache,
             child: Image(
-              image: AssetImage('images/dylogo.png'),
+              image: AssetImage('images/head/dylogo.png'),
               width: dp(76),
               height: dp(34),
             ),
@@ -32,7 +32,6 @@ class HeaderWidgets extends StatelessWidget with DYBase {
           Expanded(
             flex: 1,
             child: Container(
-              width: dp(150),
               height: dp(30),
               margin: EdgeInsets.only(left: dp(15)),
               padding: EdgeInsets.only(left: dp(5), right: dp(5)),
@@ -46,7 +45,7 @@ class HeaderWidgets extends StatelessWidget with DYBase {
                 children: <Widget>[
                   // 搜索ICON
                   Image.asset(
-                    'images/search.png',
+                    'images/head/search.webp',
                     width: dp(25),
                     height: dp(15),
                   ),
