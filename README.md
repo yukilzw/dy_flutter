@@ -41,7 +41,7 @@ flutter重构的斗鱼直播APP<br/>
 
 #### 建议：
 使用Material自带的widget进行搭配使用，已经能满足绝大部分场景的开发需求<br/>
-但是在企业级APP高度UI交互定制化的场景下，仍需要根据业务场景重新实现诸如AppBar、TabView等widget，并编写手势交互<br/><br/>
+但是在企业级APP高度UI交互定制化的场景下，仍需要根据业务场景重新实现诸如AppBar、TabView等widget，并编写手势交互<br/>
 
 #### 入门推荐：
 [Dart语法](http://dart.goodev.org/guides/language/language-tour)<br/>
