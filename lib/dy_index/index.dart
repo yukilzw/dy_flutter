@@ -2,12 +2,11 @@
  * @discripe: 底部导航
  */
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../bloc.dart';
 import '../base.dart';
+import 'header.dart';
 import 'funny/index.dart';
 import 'focus/index.dart';
 import 'commend/index.dart';
@@ -121,16 +120,34 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   // 底部导航对应的页面
   Widget _currentPage() {
     var pageInDevelop = Scaffold(
-      appBar: AppBar(
-        title:Text(_bottomNavList[_currentIndex]),
-        backgroundColor: DYBase.defaultColor,
-        brightness: Brightness.dark,
-        textTheme: TextTheme(
-          title: TextStyle(
-            color: Colors.white,
-            fontSize: 18,
+      appBar: PreferredSize(
+        child: AppBar(
+          title:Text(_bottomNavList[_currentIndex]),
+          backgroundColor: DYBase.defaultColor,
+          brightness: Brightness.dark,
+          textTheme: TextTheme(
+            title: TextStyle(
+              color: Colors.white,
+              fontSize: 18,
+            ),
           ),
-        )
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: <Color>[
+                  Color(0xffff8633),
+                  Color(0xffff6634)
+                ],
+              ),
+            ),
+          ),
+          actions: <Widget>[
+            DyHeader(decoration: BoxDecoration(
+              color: Colors.transparent,
+            ),),
+          ],
+        ),
+        preferredSize: Size.fromHeight(dp(55)),
       ),
       body: Center(child: Text(
           '正在建设中...',

@@ -9,7 +9,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import '../../bloc.dart';
 import '../../base.dart';
 import '../../service.dart';
-import 'header.dart';
+import '../header.dart';
 import 'swiper.dart';
 import 'list.dart';
 
@@ -85,9 +85,14 @@ class _CommendPage extends State<CommendPage> with DYBase, AutomaticKeepAliveCli
                   pinned: true,
                   floating: true,
                   snap: true,
-                  expandedHeight: dp(100),
+                  expandedHeight: dp(55) + 49,
                   actions: <Widget>[
-                    HeaderWidgets()
+                    DyHeader(
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                      ),
+                      gray: true,
+                    ),
                   ],
                   flexibleSpace: FlexibleSpaceBar(  // 下拉渐入背景
                     background: Container(

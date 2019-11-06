@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 
 import '../../base.dart';
+import '../header.dart';
 import 'lottery.dart';
 
 class FunnyPage extends StatefulWidget {
@@ -34,6 +35,11 @@ class _FunnyPage extends State<FunnyPage> with DYBase, SingleTickerProviderState
           bottom: buildTabBar(),
           centerTitle: true,
           // backgroundColor: Colors.white,
+          actions: <Widget>[
+            DyHeader(decoration: BoxDecoration(
+              color: Colors.transparent,
+            ),),
+          ],
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -51,7 +57,7 @@ class _FunnyPage extends State<FunnyPage> with DYBase, SingleTickerProviderState
             ),
           )
         ),
-        preferredSize: Size.fromHeight(55)
+        preferredSize: Size.fromHeight(49 + dp(55)),
       ),
       body: buildBodyView(),
     );
@@ -101,7 +107,7 @@ class _FunnyPage extends State<FunnyPage> with DYBase, SingleTickerProviderState
         //设置自定义tab的指示器，CustomUnderlineTabIndicator
         //若不需要自定义，可直接通过
         indicatorColor: Colors.white,  // 设置指示器颜色
-        indicatorWeight: 2.8,  // 设置指示器厚度
+        indicatorWeight: 3,  // 设置指示器厚度
         //indicatorPadding
         //indicatorSize  设置指示器大小计算方式
         ///指示器大小计算方式，TabBarIndicatorSize.label跟文字等宽,TabBarIndicatorSize.tab跟每个tab等宽
