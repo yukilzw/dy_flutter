@@ -124,7 +124,6 @@ class _CommendPage extends State<CommendPage> with DYBase, AutomaticKeepAliveCli
                 ),
               ],
               body: TabBarView(
-                // 这边需要通过 Builder 来创建 TabBarView 的内容，否则会报错
                 children: navList.asMap().map((i, tab) => MapEntry(i, Builder(
                     builder: (context) => SmartRefresher(
                       enablePullDown: true,
