@@ -28,11 +28,11 @@ flutter重构的斗鱼直播APP<br/>
 - ...（持续增加中）
 
 #### APP截图：
-<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/OFSw8qFQ6ZTt4Qry.FD5zxLEOyTxOJDRc0zUeDKvTgU!/r/dMMAAAAAAAAA" width="280"/> | <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/5I7nPNCsk6rawRlhX5DvnmJr9akVwt1*XQIQHTJ1uy0!/r/dDIBAAAAAAAA" width="280"/> |
+<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/OFSw8qFQ6ZTt4Qry.FD5zxLEOyTxOJDRc0zUeDKvTgU!/r/dMMAAAAAAAAA" width="280"/> | <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/mglvxMdn4XcLWsbbQ*umSLtQ7QHaexKMvGcDmdCBO6A!/r/dFQBAAAAAAAA" width="280"/> |
 -|-
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/PiWK848iFea5HhE8XPuJnU2y8CPRpn91zuSYejmfu7s!/r/dL8AAAAAAAAA" width="280"/> | <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/c4ql4M5xWstDQx.QsoTQOTZCw7UuPf9zUgCjqG23tOo!/r/dLYAAAAAAAAA" width="280"/> |
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/q08JBttKNyQCzGtnK2d6X3J.9ZT6SO7cx4ypcpg75p0!/r/dFQBAAAAAAAA" width="280"/> | <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/7iQScOrnyUP*YwqZOCmDrspGoHWj3Dn3LZjh4T8xjA8!/r/dMMAAAAAAAAA" width="280"/> |
-<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/uPUfvzq6QWWJjmkf*OkmzHV6apSbGKK9FPXXC8itWH8!/r/dMMAAAAAAAAA" width="280"/> | <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/FDYCtFUGAS.FMi0oCu0wzIGhFK3BDzubAXdlZbStLyg!/r/dFIBAAAAAAAA" width="280"/> |
+<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/c*G7Ez9KpndmkA2O6rTJx108ZFise249wTfNaCG6UVg!/r/dFIBAAAAAAAA" width="280"/> | <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/FDYCtFUGAS.FMi0oCu0wzIGhFK3BDzubAXdlZbStLyg!/r/dFIBAAAAAAAA" width="280"/> |
 
 #### 调试：
 服务端接口没有上云，如需本地启动该项目调试，可修改`lib/base.dart`中`DYBase.baseHost`接口HOST为本机IP<br/>
