@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../../base.dart';
 import 'webView.dart';
 
 class FocusPage extends StatelessWidget {
@@ -21,7 +20,7 @@ class FocusPage extends StatelessWidget {
               collapsedHeight: 40,
               expandedHeight: 300,
               paddingTop: MediaQuery.of(context).padding.top,
-              coverImgUrl: 'http://www.people.com.cn/mediafile/pic/20170306/26/12565131254318156238.jpg'
+              coverImgUrl: 'http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/iEyZ0zEnZQmbqfs.BUMe9Visc92Tqohh0OKKP0JOtVU!/r/dMMAAAAAAAAA'
             ),
           ),
           SliverToBoxAdapter(
