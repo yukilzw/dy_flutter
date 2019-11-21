@@ -49,3 +49,44 @@ class LoadingDialog extends Dialog with DYBase {
     );
   }
 }
+
+class LoginDialog extends Dialog with DYBase {
+  LoginDialog({Key key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      type: MaterialType.transparency,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Container(
+            width: dp(320),
+            height: dp(400),
+            color: Colors.white,
+            child: OverflowBox(
+              alignment: Alignment.bottomCenter,
+              maxHeight: dp(500),
+              child: Stack(
+                alignment: AlignmentDirectional.topCenter,
+                children: <Widget>[
+                  Positioned(
+                    child: Image.asset(
+                      'images/syn.webp',
+                      width: dp(220),
+                    ),
+                  ),
+                  Column(
+                    children: <Widget>[
+
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

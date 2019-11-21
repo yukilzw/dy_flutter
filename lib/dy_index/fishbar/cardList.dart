@@ -19,6 +19,8 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
   final hourTitleKey;
   _FishBarCardList(this.hourTitleKey);
 
+  bool _isStar = false;
+
   // 根据数量动态计算图片宽高（类似微信朋友圈）
   Widget _picUnknownNum(List pic) {
     double screenWidth = MediaQuery.of(context).size.width;
@@ -122,6 +124,12 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
     Offset offset = box.localToGlobal(Offset.zero);
 
     print(offset);
+  }
+
+  void _starNews() {
+    setState(() {
+        _isStar = !_isStar; 
+    });
   }
 
    List<Widget> _creatEach() {
@@ -432,7 +440,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                         Padding(
                           padding: EdgeInsets.only(left: dp(4), right: dp(12)),
                           child: Text(
-                            '1.3万',
+                            '2156',
                             style: TextStyle(
                               color: Color(0xff999999),
                             ),
@@ -440,22 +448,27 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                         ),
                       ],
                     ),
-                    Row(
-                      children: <Widget>[
-                        Image.asset(
-                          'images/bar/chat-star.jpg',
-                          height: dp(18),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: dp(4),),
-                          child: Text(
-                            '1.3万',
-                            style: TextStyle(
-                              color: Color(0xff999999),
+                    GestureDetector(
+                      onTap: () {
+                        _starNews();
+                      },
+                      child: Row(
+                        children: <Widget>[
+                          Image.asset(
+                            _isStar ? 'images/bar/chat-star-act.webp' : 'images/bar/chat-star.jpg',
+                            height: dp(18),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: dp(4),),
+                            child: Text(
+                              '1.3万',
+                              style: TextStyle(
+                                color: _isStar ? DYBase.defaultColor : Color(0xff999999),
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),

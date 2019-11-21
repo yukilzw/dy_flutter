@@ -126,6 +126,12 @@ class _DevelopTest extends State<DevelopTest> with DYBase {
               child: Text('正在加载弹框'),
               onPressed: () => showLoading(context),
             ),
+            RaisedButton(
+              textColor: Colors.white,
+              color: DYBase.defaultColor,
+              child: Text('自定义登陆弹窗'),
+              onPressed: () => showLogin(context),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[

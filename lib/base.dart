@@ -93,6 +93,16 @@ abstract class DYBase {
       );
     });
   }
+
+  // login
+  void showLogin(context) {
+    showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      return LoginDialog();
+    });
+  }
 }
 
 // http请求
