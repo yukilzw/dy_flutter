@@ -70,9 +70,15 @@ flutter:
     - images/gift-banner.png
     - images/gift-x.png
     - images/gift-1.png
-    - images/syn.webp
+    - images/float-icon.webp
     - images/init_logo.webp
     - images/init_icon.png
+
+    - images/login/syn.webp
+    - images/login/qq.webp
+    - images/login/wx.webp
+    - images/login/weibo.webp
+    - images/login/close.webp
 
     - images/head/dylogo.png
     - images/head/camera.webp

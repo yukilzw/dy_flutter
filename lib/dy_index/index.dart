@@ -106,9 +106,9 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
           backgroundColor: Colors.white,
           tooltip: 'Increment',
           child: Image.asset(
-            'images/syn.webp',
-            width: dp(50),
-            height: dp(50),
+            'images/float-icon.webp',
+            width: dp(100),
+            height: dp(100),
             fit: BoxFit.contain,
           )
         ),
