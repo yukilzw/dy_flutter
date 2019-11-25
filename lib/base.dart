@@ -14,7 +14,6 @@ import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:web_socket_channel/io.dart';
 
-import 'dialog.dart';
 import 'bloc.dart';
 
 // 接口URL
@@ -47,62 +46,6 @@ abstract class DYBase {
 
   // flutter_screenutil px转dp
   num dp(double dessignValue) => ScreenUtil.getInstance().setWidth(dessignValue);
-
-  // 默认弹窗alert
-  void alert(context, {
-    @required String text, String title = '提示', String yes = '确定',
-    Function yesCallBack
-  }) {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text(text),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text(yes),
-              onPressed: () {
-                if (yesCallBack != null) yesCallBack();
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    ).then((val) {});
-  }
-
-  // loadingDialog
-  void showLoading(context, {
-    String title = '正在加载...'
-  }) {
-    showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      return LoadingDialog(
-        text: title,
-      );
-    });
-  }
-
-  // login
-  void showLogin(context) {
-    showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      return LoginDialog();
-    });
-  }
 }
 
 // http请求

@@ -25,6 +25,7 @@ flutter重构的斗鱼直播APP<br/>
 - 全屏、半屏webView
 - 鱼吧头部手势动画
 - 仿微信朋友圈图片控件
+- 登录弹窗与页面
 - ...（持续增加中）
 
 #### APP截图：
@@ -32,6 +33,7 @@ flutter重构的斗鱼直播APP<br/>
 -|-
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/PiWK848iFea5HhE8XPuJnU2y8CPRpn91zuSYejmfu7s!/r/dL8AAAAAAAAA" width="280"/> | <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/c4ql4M5xWstDQx.QsoTQOTZCw7UuPf9zUgCjqG23tOo!/r/dLYAAAAAAAAA" width="280"/> |
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/q08JBttKNyQCzGtnK2d6X3J.9ZT6SO7cx4ypcpg75p0!/r/dFQBAAAAAAAA" width="280"/> | <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/7iQScOrnyUP*YwqZOCmDrspGoHWj3Dn3LZjh4T8xjA8!/r/dMMAAAAAAAAA" width="280"/> |
+<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/N7jxyxYZx8JWGXHdk6FNCFuwTJRTjvC3Z.wsN48cRRo!/r/dL8AAAAAAAAA" width="280"/> | <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/flPcnoB6*50r8Ea7Cd.zBJCO3BDa9nDHTlKIQ4pO0P4!/r/dLgAAAAAAAAA" width="280"/> |
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/c*G7Ez9KpndmkA2O6rTJx108ZFise249wTfNaCG6UVg!/r/dFIBAAAAAAAA" width="280"/> | <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/FDYCtFUGAS.FMi0oCu0wzIGhFK3BDzubAXdlZbStLyg!/r/dFIBAAAAAAAA" width="280"/> |
 
 #### 调试：

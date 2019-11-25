@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../base.dart';
+import '../../service.dart';
 
 class Lottery extends StatefulWidget {
   static final List lotteryInOrder = <int>[0, 1, 2, 5, 8, 7, 6, 3];   // 九宫格奖品顺序对应Widget索引
@@ -94,7 +95,7 @@ class _Lottery extends State<Lottery> with DYBase {
         _slowLotteryTimer((ms * Lottery.slowMultiple).ceil());
       } else {  // 已转到开奖位置，弹窗提醒
         if (lotteryResult['giftIndex'] == 3) {
-          alert(context, title: '很遗憾~', text: '谢谢参与',
+          DYdialog.alert(context, title: '很遗憾~', text: '谢谢参与',
             yesCallBack: () => {
               if (mounted)
               setState(() {
@@ -103,7 +104,7 @@ class _Lottery extends State<Lottery> with DYBase {
             },
           );
         } else {
-          alert(context, title: '中奖了！', text: '恭喜您获得 ${lotteryResult['giftName']}',
+          DYdialog.alert(context, title: '中奖了！', text: '恭喜您获得 ${lotteryResult['giftName']}',
             yesCallBack: () => {
               if (mounted)
               setState(() {
@@ -178,7 +179,7 @@ class _Lottery extends State<Lottery> with DYBase {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 GestureDetector(
-                  onTap: () => alert(context, text: '正在建设中~'),
+                  onTap: () => DYdialog.alert(context, text: '正在建设中~'),
                   child: Container(
                     width: dp(lotteryConfig['myRewardW']),
                     height: dp(lotteryConfig['myRewardH']),

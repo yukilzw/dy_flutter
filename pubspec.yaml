@@ -73,6 +73,8 @@ flutter:
     - images/float-icon.webp
     - images/init_logo.webp
     - images/init_icon.png
+    - images/show-area.webp
+    - images/lock.webp
 
     - images/login/syn.webp
     - images/login/qq.webp

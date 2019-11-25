@@ -10,14 +10,16 @@ import 'bloc.dart';
 import 'dy_init/index.dart';
 import 'dy_index/index.dart';
 import 'dy_room/index.dart';
+import 'dy_login/index.dart';
 
 class DyApp extends StatelessWidget {
   // 路由路径匹配
   Route<dynamic> _getRoute(RouteSettings settings) {
     Map<String, WidgetBuilder> routes = {
       '/': (BuildContext context) => SplashPage(),
-      '/index':     (BuildContext context) => DyIndexPage(),
+      '/index': (BuildContext context) => DyIndexPage(),
       '/room': (BuildContext context) => DyRoomPage(arguments: settings.arguments),
+      '/login': (BuildContext context) => DyLoginPage(arguments: settings.arguments),
       '/webView': (BuildContext context) {  // webView全屏容器
         Map arg = settings.arguments;
         return WebviewScaffold(
@@ -65,7 +67,7 @@ class DyApp extends StatelessWidget {
           theme: ThemeData(
             scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
             primarySwatch: Colors.orange,
-            splashFactory: NoSplashFactory()
+            // splashFactory: NoSplashFactory()
           ),
           onGenerateRoute: _getRoute,
         ),

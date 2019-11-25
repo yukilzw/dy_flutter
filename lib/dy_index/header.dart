@@ -6,6 +6,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../base.dart';
+import '../service.dart';
 
 class DyHeader extends StatelessWidget with DYBase {
   final num height;
@@ -46,11 +47,14 @@ class DyHeader extends StatelessWidget with DYBase {
                       borderRadius: BorderRadius.all(
                         Radius.circular(dp(20)),
                       ),
-                      child: Image.asset(
-                        'images/default-avatar.webp',
-                        width: dp(40),
-                        height: dp(40),
-                        fit: BoxFit.fill,
+                      child: GestureDetector(
+                        onTap: () => DYdialog.showLogin(context),
+                        child: Image.asset(
+                          'images/default-avatar.webp',
+                          width: dp(40),
+                          height: dp(40),
+                          fit: BoxFit.fill,
+                        ),
                       ),
                     ),
                     Expanded(

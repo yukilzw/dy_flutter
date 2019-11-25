@@ -10,6 +10,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 import '../../base.dart';
+import '../../service.dart';
 
 final flutterWebviewPlugin = FlutterWebviewPlugin();
 
@@ -124,13 +125,13 @@ class _DevelopTest extends State<DevelopTest> with DYBase {
               textColor: Colors.white,
               color: DYBase.defaultColor,
               child: Text('正在加载弹框'),
-              onPressed: () => showLoading(context),
+              onPressed: () => DYdialog.showLoading(context),
             ),
             RaisedButton(
               textColor: Colors.white,
               color: DYBase.defaultColor,
-              child: Text('自定义登陆弹窗'),
-              onPressed: () => showLogin(context),
+              child: Text('登陆弹窗'),
+              onPressed: () => DYdialog.showLogin(context),
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

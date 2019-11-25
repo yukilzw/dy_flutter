@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../base.dart';
+import '../service.dart';
 import 'player.dart';
 import 'chat.dart';
 
@@ -66,7 +67,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
           ),
         ),
         GestureDetector(
-          onTap: () => alert(context, text: '正在建设中~'),
+          onTap: () => DYdialog.alert(context, text: '正在建设中~'),
           child: Container(
             height: dp(40),
             padding: EdgeInsets.only(top: dp(12)),
@@ -117,7 +118,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () => alert(context, text: '正在建设中~'),
+                    onTap: () => DYdialog.alert(context, text: '正在建设中~'),
                     child: Container(
                       width: dp(40),
                       height: dp(26),
@@ -148,7 +149,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
             ),
           ),
           GestureDetector(
-            onTap: () => alert(context, text: '正在建设中~'),
+            onTap: () => DYdialog.alert(context, text: '正在建设中~'),
             child: Image.asset(
               'images/gift.png',
               height: dp(36),
