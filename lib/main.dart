@@ -67,6 +67,16 @@ class DyApp extends StatelessWidget {
           theme: ThemeData(
             scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
             primarySwatch: Colors.orange,
+            textTheme: TextTheme(body1: TextStyle(color: Colors.black)),
+            appBarTheme: AppBarTheme(
+              textTheme: TextTheme(
+                title: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                ),
+                body1: TextStyle(color: Colors.black),
+              ),
+            )
             // splashFactory: NoSplashFactory()
           ),
           onGenerateRoute: _getRoute,

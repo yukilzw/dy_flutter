@@ -18,10 +18,28 @@ class DyLoginPage extends StatefulWidget {
 class _DyLoginPage extends State<DyLoginPage> with DYBase {
   final _routeProp;
   _DyLoginPage(this._routeProp);
+
+  TextEditingController _nickNameController = TextEditingController();
+  TextEditingController _mobileController = TextEditingController();
+  TextEditingController _codeController = TextEditingController();
+  TextEditingController _passWordController = TextEditingController();
+  int type = 2; // 1：手机号码+密码登录；2：手机号码+验证码登录；3：昵称登录
   
   @override
   void initState() {
     super.initState();
+  }
+
+  void _changePhoneLogin() {
+    setState(() {
+      type = type == 2 ? 1 : 2;
+    });
+  }
+
+  void _changeNickNameLogin() {
+    setState(() {
+      type = type == 3 ? 1 : 3;
+    });
   }
 
   @override
@@ -38,27 +56,24 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
             onTap: () => Navigator.of(context).pop(),
             child: Container(
               color: Colors.white,
-              child: Icon(
-                Icons.arrow_back_ios,
-                color: Color(0xff939393),
+              child: Center(
+                child: Image.asset('images/back.webp',
+                  width: dp(8),
+                ),
               ),
             ),
           ),
           elevation: 0,
-          iconTheme: IconThemeData(size: dp(20)),
-          textTheme: TextTheme(
-            title: TextStyle(
-              color: Color(0xff333333),
-              fontSize: 18,
-            ),
-          ),
           actions: <Widget>[
-            Row(
-              children: <Widget>[
-                Text('昵称登录'),
-                Padding(padding: EdgeInsets.only(left: dp(20)),)
-              ],
-            ),
+            GestureDetector(
+              onTap: _changeNickNameLogin,
+              child: Row(
+                children: <Widget>[
+                  Text(type == 3 ? '手机登录' : '昵称登录'),
+                  Padding(padding: EdgeInsets.only(left: dp(20)),)
+                ],
+              ),
+            )
           ],
         ),
         preferredSize: Size.fromHeight(dp(55)),
@@ -68,8 +83,8 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
         padding: EdgeInsets.all(18),
         child: Column(
           children: <Widget>[
-            Container(
-              height: dp(46),
+            type != 3 ? Container(
+              height: dp(40),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -94,10 +109,10 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                   ],
                 ),
               ),
-            ),
-            Padding(padding: EdgeInsets.only(top: dp(18)),),
-            Container(
-              height: dp(46),
+            ) : SizedBox(),
+            type != 3 ? Padding(padding: EdgeInsets.only(top: dp(18)),) : SizedBox(),
+            type != 3 ? Container(
+              height: dp(40),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -120,8 +135,9 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                           border: Border(left: BorderSide(color: Color(0xff999999), width: dp(1))),
                         ),
                         child: TextField(
+                          controller: _mobileController,
                           inputFormatters:  [
-                            WhitelistingTextInputFormatter(RegExp('[0-9]')),
+                            WhitelistingTextInputFormatter(RegExp(r'[0-9]')),
                           ],
                           keyboardType: TextInputType.number,
                           cursorColor: DYBase.defaultColor,
@@ -141,10 +157,8 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                   ],
                 ),
               ),
-            ),
-            Padding(padding: EdgeInsets.only(top: dp(18)),),
-            Container(
-              height: dp(46),
+            ) : Container(
+              height: dp(40),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -153,15 +167,108 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                 padding: EdgeInsets.only(left: dp(20), right: dp(20)),
                 child: Row(
                   children: <Widget>[
-                    Image.asset('images/lock.webp',
+                    Image.asset('images/login/member.webp',
                       height: dp(20),
                     ),
                     Expanded(
                       flex: 1,
                       child: Container(
                         child: TextField(
+                          controller: _nickNameController,
                           inputFormatters:  [
-                            WhitelistingTextInputFormatter(RegExp('[^\u4e00-\u9fa5]')),
+                            WhitelistingTextInputFormatter(RegExp(r'[0-9]')),
+                          ],
+                          keyboardType: TextInputType.number,
+                          cursorColor: DYBase.defaultColor,
+                          cursorWidth: 1.5,
+                          style: TextStyle(
+                            color: Color(0xff333333),
+                            fontSize: 14.0,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.only(left: dp(15), top: dp(3), bottom: dp(3)),
+                            hintText: '昵称/用户名（5-30位字符）',
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(padding: EdgeInsets.only(top: dp(18)),),
+            Container(
+              height: dp(40),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+              ),
+              child: type == 2 ? Padding(
+                padding: EdgeInsets.only(left: dp(20), right: dp(5)),
+                child: Row(
+                  children: <Widget>[
+                    Image.asset('images/login/safe.webp',
+                      height: dp(20),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        child: TextField(
+                          controller: _codeController,
+                          inputFormatters:  [
+                            LengthLimitingTextInputFormatter(6),
+                            WhitelistingTextInputFormatter(RegExp(r'[0-9]')),
+                          ],
+                          cursorColor: DYBase.defaultColor,
+                          cursorWidth: 1.5,
+                          style: TextStyle(
+                            color: Color(0xff333333),
+                            fontSize: 14.0,
+                          ),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.only(left: dp(15), top: dp(3), bottom: dp(3)),
+                            hintText: '请输入验证码',
+                          ),
+                        ),
+                      ),
+                    ),
+                    RawMaterialButton(
+                      constraints: BoxConstraints(maxHeight: dp(30), minWidth: dp(100)),
+                      fillColor: Color(0xffff7701),
+                      elevation: 0,
+                      highlightElevation: 0,
+                      highlightColor: Colors.transparent,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
+                      ),
+                      onPressed: () {},
+                      child: Center(
+                        child: Text('短信验证',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ) : Padding(
+                padding: EdgeInsets.only(left: dp(20), right: dp(20)),
+                child: Row(
+                  children: <Widget>[
+                    Image.asset('images/login/lock.webp',
+                      height: dp(20),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        child: TextField(
+                          controller: _passWordController,
+                          inputFormatters:  [
+                            BlacklistingTextInputFormatter(RegExp(r'[\u4e00-\u9fa5]')),
                           ],
                           obscureText: true,
                           cursorColor: DYBase.defaultColor,
@@ -182,8 +289,9 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                 ),
               ),
             ),
-            Padding(padding: EdgeInsets.only(top: dp(40)),),
+            Padding(padding: EdgeInsets.only(top: dp(30)),),
             RawMaterialButton (
+              constraints: BoxConstraints(minHeight: 40),
               fillColor: Color(0xffff7701),
               elevation: 0,
               highlightElevation: 0,
@@ -192,17 +300,11 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                 borderRadius: BorderRadius.all(Radius.circular(5)),
               ),
               onPressed: () {},
-              child: Container(
-                height: dp(50),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(dp(5))),
-                ),
-                child: Center(
-                  child: Text('登录',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                    ),
+              child: Center(
+                child: Text('登录',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
                   ),
                 ),
               ),
@@ -216,9 +318,12 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                     color: Color(0xff999999),
                   ),
                 ),
-                Text('手机验证码快捷登录',
-                  style: TextStyle(
-                    color: Color(0xffff7701),
+                GestureDetector(
+                  onTap: _changePhoneLogin,
+                  child: Text(type == 2 ? '手机密码登录' : '手机验证码快捷登录',
+                    style: TextStyle(
+                      color: Color(0xffff7701),
+                    ),
                   ),
                 ),
                 Text('快速注册',

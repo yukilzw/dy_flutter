@@ -58,6 +58,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - images/pic-default.jpg
+    - images/back.webp
     - images/default-avatar.webp
     - images/shayuniang.png
     - images/search.webp
@@ -74,13 +75,15 @@ flutter:
     - images/init_logo.webp
     - images/init_icon.png
     - images/show-area.webp
-    - images/lock.webp
 
     - images/login/syn.webp
     - images/login/qq.webp
     - images/login/wx.webp
     - images/login/weibo.webp
     - images/login/close.webp
+    - images/login/safe.webp
+    - images/login/member.webp
+    - images/login/lock.webp
 
     - images/head/dylogo.png
     - images/head/camera.webp
