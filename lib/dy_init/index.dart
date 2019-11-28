@@ -1,11 +1,14 @@
 /**
  * @discripe: 载入APP启动页
  */
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:dio/dio.dart';
 
 import '../bloc.dart';
 import '../base.dart';
@@ -55,7 +58,13 @@ class _SplashPageState extends State<SplashPage> with DYBase {
 
     httpClient.post(
       API.swiper,
-      options: buildCacheOptions(Duration(minutes: 30)),
+      data: FormData.from({
+        'num': 4
+      }),
+      options: buildCacheOptions(
+        Duration(minutes: 30),
+        // options: Options(contentType: ContentType.parse("application/x-www-form-urlencoded"))
+      ),
     ).then((res) {
       var swiper = res.data['data'];
       indexBloc.dispatch(UpdateSwiper(swiper));

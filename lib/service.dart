@@ -27,6 +27,7 @@ abstract class DYservice {
     );
 
     counterBloc.dispatch(CounterEvent.increment);
+    print(res.data is String);
     return res.data['data']['list'];
   }
 }

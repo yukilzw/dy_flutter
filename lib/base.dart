@@ -23,6 +23,7 @@ abstract class API {
   static const liveData = '/dy/flutter/liveData';                             // 首页直播视频列表
   static const lotteryConfig = '/dy/flutter/lotteryConfig';                   // 抽奖配置信息
   static const lotteryResult = '/dy/flutter/lotteryResult';                   // 点击抽奖结果
+  static const areaList = '/static/areaTel.json';                             // 国家地区号码静态文件
 }
 
 abstract class BlocObj {
