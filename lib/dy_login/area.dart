@@ -3,9 +3,9 @@
  */
 import 'dart:convert';
 import 'dart:ui';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as prefix0;
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
@@ -26,6 +26,7 @@ class _AreaTel extends State<AreaTel> with DYBase {
   ScrollController _scrollController = ScrollController();
   Map<String, GlobalKey> _titlekey = {};
   Map _area = {};
+  Map _letterScrollTopMap;
   
   _AreaTel() {
     _letterListHeight = MediaQueryData.fromWindow(window).size.height - DYBase.statusBarHeight - dp(50) - 60;
@@ -54,8 +55,23 @@ class _AreaTel extends State<AreaTel> with DYBase {
         Duration(days: 365),
       ),
     );
+    var data = jsonDecode(res.data);
+    var letterScrollTopMap = {};
+    double height = 0;
+    data.forEach((key, value) {
+      if (value.length == 0) {
+        return;
+      }
+      letterScrollTopMap[key] = height;
+      var i = 0;
+      do {
+        height += 40.0;
+        i++;
+      } while(i < value.length);
+    });
     setState(() {
-      _area = jsonDecode(res.data);
+      _area = data;
+      _letterScrollTopMap = letterScrollTopMap;
     });
   }
 
@@ -161,6 +177,11 @@ class _AreaTel extends State<AreaTel> with DYBase {
       _actLetter = details.localPosition.dy ~/ eachHeight;
     }
     setState(() {});
+    if (_letterScrollTopMap[_selectLetter] != null) {
+      _scrollController.jumpTo(
+        min(_letterScrollTopMap[_selectLetter], _scrollController.position.maxScrollExtent)
+      );
+    }
   }
 
   void _onVerticalDragEnd(details) {
