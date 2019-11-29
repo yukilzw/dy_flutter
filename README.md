@@ -16,7 +16,7 @@ flutter重构的斗鱼直播APP<br/>
 - HTTP缓存、IO缓存
 - 直播间webSocket消息弹幕、礼物
 - 页面路由传值
-- rxDart分发观察者模式
+- RxDart全局消息通信封装
 - Bloc流式状态管理(启动页预加载首页数据)
 - 礼物横幅动画队列
 - 弹幕消息滚动
@@ -26,8 +26,10 @@ flutter重构的斗鱼直播APP<br/>
 - 全屏、半屏webView
 - 鱼吧头部手势动画
 - 仿微信朋友圈图片控件
-- 登录弹窗与页面
-- ...（持续增加中）
+- 登录注册弹窗
+- 国家区号列表页(仿微信朋友圈首字母定位)
+- ...
+- 持续增加中
 
 #### APP截图：
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/OFSw8qFQ6ZTt4Qry.FD5zxLEOyTxOJDRc0zUeDKvTgU!/r/dMMAAAAAAAAA" width="280"/> | <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/mglvxMdn4XcLWsbbQ*umSLtQ7QHaexKMvGcDmdCBO6A!/r/dFQBAAAAAAAA" width="280"/> |
