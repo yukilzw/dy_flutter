@@ -1,5 +1,5 @@
 /**
- * @discripe: 登录注册页
+ * @discripe: 国家首字母选择页(仿微信联系人列表)
  */
 import 'dart:convert';
 import 'dart:ui';
@@ -12,6 +12,8 @@ import 'package:dio_http_cache/dio_http_cache.dart';
 
 import '../base.dart';
 
+const _letter = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+
 class AreaTel extends StatefulWidget {
   AreaTel({Key key}) : super(key: key);
   
@@ -22,7 +24,6 @@ class AreaTel extends StatefulWidget {
 class _AreaTel extends State<AreaTel> with DYBase {
   double _letterListHeight = 0;
   int _actLetter;
-  String _selectLetter;
   ScrollController _scrollController = ScrollController();
   Map<String, GlobalKey> _titlekey = {};
   Map _area = {};
@@ -38,14 +39,39 @@ class _AreaTel extends State<AreaTel> with DYBase {
     _getAreaList();
   }
 
-  void _show(GlobalKey key) {
-    if (key.currentContext == null) {
+  void _chooseArea(String country, String tel) {
+    rx.push('chooseArea', data: [country, tel] );
+    Navigator.of(context).pop();
+    /* if (key.currentContext == null) {
       return;
     }
     RenderBox renderBox = key.currentContext.findRenderObject();
     Offset offset = renderBox.localToGlobal(Offset.zero);
 
-    print('${offset.dx},${offset.dy}');
+    print('${offset.dx},${offset.dy}'); */
+  }
+
+  void _onVerticalDragUpdate(details) {
+    var eachHeight =_letterListHeight / 26;
+    if (details.localPosition.dy <= 0) {
+      _actLetter = 0;
+    } else if (details.localPosition.dy >= _letterListHeight) {
+      _actLetter = 25;
+    } else {
+      _actLetter = details.localPosition.dy ~/ eachHeight;
+    }
+    setState(() {});
+    if (_letterScrollTopMap[_letter[_actLetter]] != null) {
+      _scrollController.jumpTo(
+        min(_letterScrollTopMap[_letter[_actLetter]], _scrollController.position.maxScrollExtent)
+      );
+    }
+  }
+
+  void _onVerticalDragEnd(details) {
+    setState(() {
+      _actLetter = null;
+    });
   }
 
   void _getAreaList() async {
@@ -65,9 +91,9 @@ class _AreaTel extends State<AreaTel> with DYBase {
       letterScrollTopMap[key] = height;
       var i = 0;
       do {
-        height += 40.0;
+        height += dp(46.6);
         i++;
-      } while(i < value.length);
+      } while(i < value.length + 1);
     });
     setState(() {
       _area = data;
@@ -114,7 +140,7 @@ class _AreaTel extends State<AreaTel> with DYBase {
         var cnName = _item[1];
         var tel = _item[2];
         result.add(GestureDetector(
-          onTap: () => _show(_key),
+          onTap: () => _chooseArea(cnName, tel),
           child: Container(
             margin: EdgeInsets.only(left: dp(6), right: dp(6)),
             decoration: BoxDecoration(
@@ -149,11 +175,6 @@ class _AreaTel extends State<AreaTel> with DYBase {
 
     return config.asMap().map((i, item) {
       var baseColor = _actLetter == null ? Colors.black : Colors.white;
-      if (i == _actLetter) {
-        setState(() {
-          _selectLetter =  item['key'];
-        });
-      }
       return MapEntry(i, Container(
         height: _letterListHeight / 26,
         child: Center(child: Text(item['key'],
@@ -165,30 +186,6 @@ class _AreaTel extends State<AreaTel> with DYBase {
         ),),
       ));
     }).values.toList();
-  }
-
-  void _onVerticalDragUpdate(details) {
-    var eachHeight =_letterListHeight / 26;
-    if (details.localPosition.dy <= 0) {
-      _actLetter = 0;
-    } else if (details.localPosition.dy >= _letterListHeight) {
-      _actLetter = 25;
-    } else {
-      _actLetter = details.localPosition.dy ~/ eachHeight;
-    }
-    setState(() {});
-    if (_letterScrollTopMap[_selectLetter] != null) {
-      _scrollController.jumpTo(
-        min(_letterScrollTopMap[_selectLetter], _scrollController.position.maxScrollExtent)
-      );
-    }
-  }
-
-  void _onVerticalDragEnd(details) {
-    setState(() {
-      _actLetter = null;
-      _selectLetter = null;
-    });
   }
 
   @override
@@ -249,7 +246,7 @@ class _AreaTel extends State<AreaTel> with DYBase {
               ),
             ),   
           ),
-          _selectLetter != null ? Positioned(
+          _actLetter != null ? Positioned(
             child: Container(
               height: dp(120),
               width: dp(120),
@@ -258,7 +255,7 @@ class _AreaTel extends State<AreaTel> with DYBase {
                 borderRadius: BorderRadius.all(Radius.circular(15)),
               ),
               child: Center(
-                child: Text(_selectLetter,
+                child: Text(_letter[_actLetter],
                   style: TextStyle(
                     fontSize: dp(60),
                     color: Colors.white,

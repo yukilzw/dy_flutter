@@ -25,6 +25,7 @@ dependencies:
   flutter_screenutil: ^0.5.3
   flutter_swiper: ^1.0.6
   flutter_bloc: ^0.20.0
+  rxdart: ^0.22.0
   equatable: ^0.3.0
   dio: ^2.1.8
   dio_http_cache: ^0.1.4

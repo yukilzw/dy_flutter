@@ -3,6 +3,11 @@
  */
 import 'package:bloc/bloc.dart';
 
+abstract class BlocObj {
+  static final counter = CounterBloc();
+  static final index = IndexBloc();
+}
+
 // 直播列表页码
 enum CounterEvent { increment, reset }
 

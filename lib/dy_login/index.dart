@@ -18,6 +18,8 @@ class DyLoginPage extends StatefulWidget {
   
 class _DyLoginPage extends State<DyLoginPage> with DYBase {
   final _routeProp;
+  String _country = '中国大陆';
+  String _phoneNumber = '86';
   int type = 2; // 0:注册, 1:手机号码+密码登录, 2:手机号码+验证码登录, 3:昵称登录
 
   _DyLoginPage(this._routeProp) {
@@ -39,6 +41,23 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
   @override
   void initState() {
     super.initState();
+    _subscribeChooseArea();
+  }
+
+  @override
+  void dispose() {
+    rx.unSubscribe('chooseArea', name: 'DyLoginPage');
+    super.dispose();
+  }
+
+  void _subscribeChooseArea() {
+    rx.subscribe('chooseArea', (data) {
+        if (mounted)
+        setState(() {
+          _country = data[0];
+          _phoneNumber = data[1];
+        });
+    }, name: 'DyLoginPage');
   }
 
   void _changePhoneLogin() {
@@ -150,7 +169,7 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                           ),
                         ),
                       ),
-                      Text('中国大陆'),
+                      Text(_country),
                       Padding(padding: EdgeInsets.only(left: dp(10)),),
                       Image.asset('images/show-area.webp',
                         height: dp(16),
@@ -173,7 +192,7 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                   children: <Widget>[
                     Expanded(
                       flex: 1,
-                      child: Text('+86',
+                      child: Text('+$_phoneNumber',
                         textAlign: TextAlign.center,
                         style: TextStyle(color: Color(0xffff7701)),
                       ),

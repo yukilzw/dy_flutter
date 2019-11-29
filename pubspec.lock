@@ -362,7 +362,7 @@ packages:
     source: hosted
     version: "2.0.3"
   rxdart:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: rxdart
       url: "https://pub.flutter-io.cn"

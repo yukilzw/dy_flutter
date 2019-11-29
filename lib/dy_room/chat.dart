@@ -32,14 +32,12 @@ class _ChatWidgets extends State<ChatWidgets> with DYBase {
       var sign = message[0];
       var data = message[1];
       if (sign == 'getChat') {
-        print(data);
         if (mounted)
         setState(() {
           msgData.add(data);
         });
         _chatController.jumpTo(_chatController.position.maxScrollExtent);
       } else if (sign == 'getGift') {
-        print(data);
         var now = DateTime.now();
         var obj = {
           'stamp': now.millisecondsSinceEpoch,

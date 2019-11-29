@@ -122,8 +122,6 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
   void _showCardOption() {
     RenderBox box = hourTitleKey.currentContext.findRenderObject();
     Offset offset = box.localToGlobal(Offset.zero);
-
-    print(offset);
   }
 
   void _starNews() {
