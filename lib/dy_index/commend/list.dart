@@ -104,14 +104,14 @@ class LiveListWidgets extends StatelessWidget with DYBase {
                   imageUrl: item['roomSrc'],
                   imageBuilder: (context, imageProvider) => Container(
                     width: dp(175),
-                    height: dp(101.25),
+                    height: dp(120),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.all(
                         Radius.circular(dp(4)),
                       ),
                       image: DecorationImage(
                         image: imageProvider,
-                        fit: BoxFit.fill,
+                        fit: BoxFit.cover,
                       ),
                     ),
                     child: Stack(
@@ -193,7 +193,7 @@ class LiveListWidgets extends StatelessWidget with DYBase {
                   placeholder: (context, url) => Image.asset(
                     'images/pic-default.jpg',
                     width: dp(175),
-                    height: dp(101.25),
+                    height: dp(120),
                   ),
                 ),
                 Container(

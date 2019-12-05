@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter/cupertino.dart';
 
 import '../base.dart';
 import 'area.dart';
@@ -79,17 +80,10 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
   }
 
   void _showAreaList() {
-    Navigator.push(context, PageRouteBuilder(
-      opaque: false,
-      pageBuilder: (context, _, __) {
+    Navigator.push(context, CupertinoPageRoute(
+      builder: (context) {
         return AreaTel();
       },
-      transitionsBuilder: (context, Animation<double> animation, _, Widget child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      }
     ));
   }
 

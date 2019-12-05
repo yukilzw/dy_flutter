@@ -1,11 +1,14 @@
 /**
  * @discripe: 鱼吧推荐帖子列表
  */
-import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'dart:async';
 
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+
 import '../../base.dart';
+import 'picView.dart';
 
 class FishBarCardList extends StatefulWidget with DYBase {
   final hourTitleKey;
@@ -20,6 +23,17 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
   _FishBarCardList(this.hourTitleKey);
 
   bool _isStar = false;
+
+  void _showPicfullPage(picUrl, { width, height }) {
+    Navigator.push(context, PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation animation, Animation secondaryAnimation) {
+        return FadeTransition(
+          opacity: animation,
+          child: PicView(picUrl, width: width, height: height,),
+        );
+      })
+    );
+  }
 
   // 根据数量动态计算图片宽高（类似微信朋友圈）
   Widget _picUnknownNum(List pic) {
@@ -66,11 +80,17 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                           imageSize['height'] = maxHeight;
                           imageSize['width'] = imgWidth < imgHeight / 2 ? maxHeight / 2 : null;
                         }
-                        return Image.network(
-                          item,
-                          height: imageSize['height'],
-                          width: imageSize['width'],
-                          fit: BoxFit.cover,
+                        return GestureDetector(
+                          onTap: () => _showPicfullPage(item, width: imageSize['width'], height: imageSize['height']),
+                          child: Hero(
+                            tag: item,
+                            child: Image.network(
+                              item,
+                              height: imageSize['height'],
+                              width: imageSize['width'],
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         );
                       } else {
                         return SizedBox();
