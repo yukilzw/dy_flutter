@@ -1,5 +1,5 @@
 ## 斗鱼APP
-![Flutter](https://img.shields.io/badge/Flutter-1.7.8%2B-5bc7f8.svg) ![Dart](https://img.shields.io/badge/Dart-2.4.0%2B-00B4AB.svg) 
+![Flutter](https://img.shields.io/badge/Flutter-1.9.1-52c6f9.svg)
 
 flutter重构的斗鱼直播APP<br/>
 首页、娱乐为Material组件开发；直播间、鱼吧为纯自定义编写。<br/>
