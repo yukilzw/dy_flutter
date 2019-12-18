@@ -31,6 +31,8 @@ class FocusPage extends StatelessWidget {
   }
 }
 
+/// [SliverPersistentHeaderDelegate]在原有Widget的基础上封装了滚动坐标，在build方法中的shrinkOffset参数
+/// 这里利用继承原生组件实现了随滚动改变header透明度的效果
 class SliverCustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double collapsedHeight;
   final double expandedHeight;

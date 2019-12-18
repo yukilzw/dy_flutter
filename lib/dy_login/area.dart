@@ -22,8 +22,8 @@ class AreaTel extends StatefulWidget {
 }
   
 class _AreaTel extends State<AreaTel> with DYBase {
-  double _letterListHeight = 0;
-  int _actLetter;
+  double _letterListHeight = 0; // 字母列表的高度
+  int _actLetter; // 当前触摸区域字母的索引
   ScrollController _scrollController = ScrollController();
   Map<String, GlobalKey> _titlekey = {};
   Map _area = {};
@@ -51,6 +51,7 @@ class _AreaTel extends State<AreaTel> with DYBase {
     print('${offset.dx},${offset.dy}'); */
   }
 
+  // 触摸右侧字母栏滑动时，滚动到对应的字母地区集
   void _onVerticalDragUpdate(details) {
     var eachHeight =_letterListHeight / 26;
     if (details.localPosition.dy <= 0) {
@@ -68,12 +69,14 @@ class _AreaTel extends State<AreaTel> with DYBase {
     }
   }
 
+  // 触摸松手置空选中字母
   void _onVerticalDragEnd(details) {
     setState(() {
       _actLetter = null;
     });
   }
 
+  // 获取地区静态配置文件
   void _getAreaList() async {
     var res = await httpClient.get(
       API.areaList,

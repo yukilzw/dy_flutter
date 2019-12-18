@@ -14,6 +14,7 @@ import 'myConcern.dart';
 
 int _headerAnimationTime = 250;
 
+// 头部动画组件
 class AnimatedLogo extends AnimatedWidget with DYBase {
   Tween<double> _opacityTween, _heightTween;
   double height, opacity, beginH, beginO, endH, endO;
@@ -173,6 +174,7 @@ class _FishBarPage extends State<FishBarPage> with DYBase {
     );
   }
 
+  // 通过监听手势触发头部动画的下拉与收起
   void _onVerticalDragUpdate(DragUpdateDetails details) {
     if (details.delta.dy >= 1.0) {
       _headerAnimated(-1);  // 向下滑动 ↓

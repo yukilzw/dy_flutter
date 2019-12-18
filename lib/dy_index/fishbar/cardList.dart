@@ -24,6 +24,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
 
   bool _isStar = false;
 
+  // 全屏预览图片
   void _showPicfullPage(picUrl, { width, height }) {
     Navigator.push(context, PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation animation, Animation secondaryAnimation) {

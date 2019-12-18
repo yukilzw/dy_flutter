@@ -28,6 +28,7 @@ class _MyConcern extends State<MyConcern> with DYBase {
   @override
   void initState() {
     super.initState();
+    /// 在[ListView]内需要重新通过[_scrollController]监听手势，因为手势会被组件捕获，不会触发外层容器的事件
     _scrollController.addListener(() {
       var scrollTop = _scrollController.position.pixels;
 

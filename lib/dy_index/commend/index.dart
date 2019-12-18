@@ -79,6 +79,7 @@ class _CommendPage extends State<CommendPage> with DYBase, AutomaticKeepAliveCli
             child: NestedScrollView(  // 嵌套式滚动视图
               controller: _scrollController,
               headerSliverBuilder: (context, innerScrolled) => <Widget>[
+                /// 使用[SliverAppBar]组件实现下拉收起头部的效果
                 SliverAppBar(
                   backgroundColor: Colors.white,
                   brightness: Brightness.light,
