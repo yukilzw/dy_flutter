@@ -70,7 +70,6 @@ class _FunnyPage extends State<FunnyPage> with DYBase, SingleTickerProviderState
   }
 
   buildBodyView() {
-    //构造 TabBarView
     Widget tabBarBodyView = TabBarView(
       controller: tabController,
       //创建Tab页
@@ -88,34 +87,34 @@ class _FunnyPage extends State<FunnyPage> with DYBase, SingleTickerProviderState
   }
 
   buildTabBar() {
-    //构造 TabBar
     Widget tabBar = TabBar(
-        //tabs 的长度超出屏幕宽度后，TabBar，是否可滚动
-        //设置为false tab 将平分宽度，为true tab 将会自适应宽度
-        isScrollable: true,
-        //设置tab文字得类型
-        unselectedLabelStyle: TextStyle(
-          fontSize: 15,
-        ),
-        labelStyle: TextStyle(
-          fontSize: 18,
-        ),
-        //设置tab选中得颜色
-        labelColor: Colors.white,
-        //设置tab未选中得颜色
-        unselectedLabelColor: Colors.white70,
-        //设置自定义tab的指示器，CustomUnderlineTabIndicator
-        //若不需要自定义，可直接通过
-        indicatorColor: Colors.white,  // 设置指示器颜色
-        indicatorWeight: 3,  // 设置指示器厚度
-        //indicatorPadding
-        //indicatorSize  设置指示器大小计算方式
-        ///指示器大小计算方式，TabBarIndicatorSize.label跟文字等宽,TabBarIndicatorSize.tab跟每个tab等宽
-        indicatorSize: TabBarIndicatorSize.label,
-        //生成Tab菜单
-        controller: tabController,
-        //构造Tab集合
-        tabs: tabs.map((e) => Tab(text: e)).toList());
+      //tabs 的长度超出屏幕宽度后，TabBar，是否可滚动
+      //设置为false tab 将平分宽度，为true tab 将会自适应宽度
+      isScrollable: true,
+      //设置tab文字得类型
+      unselectedLabelStyle: TextStyle(
+        fontSize: 15,
+      ),
+      labelStyle: TextStyle(
+        fontSize: 18,
+      ),
+      //设置tab选中得颜色
+      labelColor: Colors.white,
+      //设置tab未选中得颜色
+      unselectedLabelColor: Colors.white70,
+      //设置自定义tab的指示器，CustomUnderlineTabIndicator
+      //若不需要自定义，可直接通过
+      indicatorColor: Colors.white,  // 设置指示器颜色
+      indicatorWeight: 3,  // 设置指示器厚度
+      //indicatorPadding
+      //indicatorSize  设置指示器大小计算方式
+      ///指示器大小计算方式，TabBarIndicatorSize.label跟文字等宽,TabBarIndicatorSize.tab跟每个tab等宽
+      indicatorSize: TabBarIndicatorSize.label,
+      //生成Tab菜单
+      controller: tabController,
+      //构造Tab集合
+      tabs: tabs.map((e) => Tab(text: e)).toList(),
+    );
 
     return tabBar;
   }
