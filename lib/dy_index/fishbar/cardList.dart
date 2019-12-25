@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../base.dart';
 import 'picView.dart';
+import 'photoGallery.dart';
 
 class FishBarCardList extends StatefulWidget with DYBase {
   final hourTitleKey;
@@ -31,6 +32,37 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
         return FadeTransition(
           opacity: animation,
           child: PicView(picUrl, width: width, height: height,),
+        );
+      })
+    );
+  }
+
+  void _showPhotoGallery() {
+    Navigator.push(context, PageRouteBuilder(
+      pageBuilder: (BuildContext context, Animation animation, Animation secondaryAnimation) {
+        return FadeTransition(
+          opacity: animation,
+          child: GalleryPhotoViewWrapper(
+            galleryItems: [
+              GalleryExampleItem(
+                id: 'pic1',
+                resource: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572082173861&di=e5e040c062de8d2c56216205c4d95f9b&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201612%2F01%2F20161201234647_MPzZc.jpeg',
+              ),
+              GalleryExampleItem(
+                id: 'pic2',
+                resource: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1577283897746&di=5140ee5eb142096e2aa627c1285927e9&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201604%2F15%2F20160415144634_Avrdk.thumb.700_0.jpeg',
+              ),
+              GalleryExampleItem(
+                id: 'pic3',
+                resource: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1577283897746&di=4b6dbb65f78a7ae25849b79ca984e7fd&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201510%2F24%2F20151024193609_sHnZh.jpeg',
+              ),
+            ],
+            backgroundDecoration: BoxDecoration(
+              color: Colors.black,
+            ),
+            initialIndex: 3,
+            scrollDirection: Axis.horizontal,
+          ),
         );
       })
     );
@@ -82,7 +114,10 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                           imageSize['width'] = imgWidth < imgHeight / 2 ? maxHeight / 2 : null;
                         }
                         return GestureDetector(
-                          onTap: () => _showPicfullPage(item, width: imageSize['width'], height: imageSize['height']),
+                          onTap: () {
+                            _showPhotoGallery();
+                            // _showPicfullPage(item, width: imageSize['width'], height: imageSize['height']);
+                          },
                           child: Hero(
                             tag: item,
                             child: Image.network(
