@@ -4,11 +4,10 @@ import 'package:photo_view/photo_view_gallery.dart';
 import 'package:flutter/widgets.dart';
 
 class GalleryItem {
-  GalleryItem({this.id, this.resource, this.isSvg = false});
+  GalleryItem({this.id, this.resource });
 
   final String id;
   final String resource;
-  final bool isSvg;
 }
 
 class GalleryPhotoViewWrapper extends StatefulWidget {
