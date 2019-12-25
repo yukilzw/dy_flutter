@@ -26,7 +26,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
   bool _isStar = false;
 
   // 全屏预览图片
-  void _showPicfullPage(picUrl, { width, height }) {
+  /* void _showPicfullPage(picUrl, { width, height }) {
     Navigator.push(context, PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation animation, Animation secondaryAnimation) {
         return FadeTransition(
@@ -35,32 +35,25 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
         );
       })
     );
-  }
+  } */
 
-  void _showPhotoGallery() {
+  // 图片预览gallery
+  void _showPhotoGallery(picUrl) {
     Navigator.push(context, PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation animation, Animation secondaryAnimation) {
         return FadeTransition(
           opacity: animation,
           child: GalleryPhotoViewWrapper(
             galleryItems: [
-              GalleryExampleItem(
+              GalleryItem(
                 id: 'pic1',
-                resource: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572082173861&di=e5e040c062de8d2c56216205c4d95f9b&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201612%2F01%2F20161201234647_MPzZc.jpeg',
-              ),
-              GalleryExampleItem(
-                id: 'pic2',
-                resource: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1577283897746&di=5140ee5eb142096e2aa627c1285927e9&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201604%2F15%2F20160415144634_Avrdk.thumb.700_0.jpeg',
-              ),
-              GalleryExampleItem(
-                id: 'pic3',
-                resource: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1577283897746&di=4b6dbb65f78a7ae25849b79ca984e7fd&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201510%2F24%2F20151024193609_sHnZh.jpeg',
+                resource: picUrl,
               ),
             ],
             backgroundDecoration: BoxDecoration(
               color: Colors.black,
             ),
-            initialIndex: 3,
+            initialIndex: 0,
             scrollDirection: Axis.horizontal,
           ),
         );
@@ -115,7 +108,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                         }
                         return GestureDetector(
                           onTap: () {
-                            _showPhotoGallery();
+                            _showPhotoGallery(item);
                             // _showPicfullPage(item, width: imageSize['width'], height: imageSize['height']);
                           },
                           child: Hero(

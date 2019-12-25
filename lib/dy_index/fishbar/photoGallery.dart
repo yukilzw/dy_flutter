@@ -3,8 +3,8 @@ import 'package:photo_view/photo_view.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 import 'package:flutter/widgets.dart';
 
-class GalleryExampleItem {
-  GalleryExampleItem({this.id, this.resource, this.isSvg = false});
+class GalleryItem {
+  GalleryItem({this.id, this.resource, this.isSvg = false});
 
   final String id;
   final String resource;
@@ -28,7 +28,7 @@ class GalleryPhotoViewWrapper extends StatefulWidget {
   final dynamic maxScale;
   final int initialIndex;
   final PageController pageController;
-  final List<GalleryExampleItem> galleryItems;
+  final List<GalleryItem> galleryItems;
   final Axis scrollDirection;
 
   @override
@@ -93,7 +93,8 @@ class _GalleryPhotoViewWrapperState extends State<GalleryPhotoViewWrapper> {
   }
 
   PhotoViewGalleryPageOptions _buildItem(BuildContext context, int index) {
-    final GalleryExampleItem item = widget.galleryItems[index];
+    final GalleryItem item = widget.galleryItems[index];
+
     return PhotoViewGalleryPageOptions(
       imageProvider: NetworkImage(item.resource),
       initialScale: PhotoViewComputedScale.contained,
