@@ -6,54 +6,81 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:dy_flutter/service.dart';
 
 import '../../base.dart';
-import 'picView.dart';
 import 'photoGallery.dart';
 
 class FishBarCardList extends StatefulWidget with DYBase {
-  final hourTitleKey;
-  FishBarCardList({ this.hourTitleKey });
+  final hourTitleKey, refreshController;
+  FishBarCardList({ this.hourTitleKey, this.refreshController });
 
   @override
-  _FishBarCardList createState() => _FishBarCardList(hourTitleKey);
+  _FishBarCardList createState() => _FishBarCardList();
 }
 
 class _FishBarCardList extends State<FishBarCardList> with DYBase {
-  final hourTitleKey;
-  _FishBarCardList(this.hourTitleKey);
+  List yuba = [];
+  int pageIndex = 0;
 
-  bool _isStar = false;
+  @override
+  void initState() {
+    super.initState();
+    _getYubaList();
+    rx.subscribe('yubaList', (data) async {
+        if (data == 'refresh') {
+          pageIndex = 0;
+          await _getYubaList();
+          widget.refreshController.refreshCompleted();
+        } else if (data== 'more') {
+          pageIndex++;
+          await _getYubaList();
+          widget.refreshController..loadComplete();
+        }
+    }, name: 'FishBarCardList');
+  }
 
-  // 全屏预览图片
-  /* void _showPicfullPage(picUrl, { width, height }) {
-    Navigator.push(context, PageRouteBuilder(
-      pageBuilder: (BuildContext context, Animation animation, Animation secondaryAnimation) {
-        return FadeTransition(
-          opacity: animation,
-          child: PicView(picUrl, width: width, height: height,),
-        );
-      })
+  @override
+  void dispose() {
+    rx.unSubscribe('yubaList', name: 'FishBarCardList');
+    super.dispose();
+  }
+
+  Future _getYubaList() async {
+    var res = await httpClient.get(
+      API.yubaList,
+      queryParameters: {
+        'page': pageIndex
+      },
     );
-  } */
+    var list = res.data['data'];
+    setState(() {
+      if (pageIndex == 0) {
+        yuba = list;
+      } else {
+        yuba.addAll(list);
+      }
+    });
+  }
 
   // 图片预览gallery
-  void _showPhotoGallery(picUrl) {
+  void _showPhotoGallery(List pic, { int index = 0 }) {
+    var galleryItems = pic.asMap().map((i, item) {
+      return MapEntry(i, GalleryItem(
+        id: i.toString(),
+        resource: item,
+      ));
+    }).values.toList();
     Navigator.push(context, PageRouteBuilder(
       pageBuilder: (BuildContext context, Animation animation, Animation secondaryAnimation) {
         return FadeTransition(
           opacity: animation,
           child: GalleryPhotoViewWrapper(
-            galleryItems: [
-              GalleryItem(
-                id: 'pic1',
-                resource: picUrl,
-              ),
-            ],
+            galleryItems: galleryItems,
             backgroundDecoration: BoxDecoration(
               color: Colors.black,
             ),
-            initialIndex: 0,
+            initialIndex: index,
             scrollDirection: Axis.horizontal,
           ),
         );
@@ -108,8 +135,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                         }
                         return GestureDetector(
                           onTap: () {
-                            _showPhotoGallery(item);
-                            // _showPicfullPage(item, width: imageSize['width'], height: imageSize['height']);
+                            _showPhotoGallery(pic);
                           },
                           child: Hero(
                             tag: item,
@@ -154,11 +180,19 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                 borderRadius: BorderRadius.all(
                   Radius.circular(dp(10)),
                 ),
-                child: Image.network(
-                  item,
-                  height: imageSize['height'],
-                  width: imageSize['width'],
-                  fit: BoxFit.cover,
+                child: GestureDetector(
+                  onTap: () {
+                    _showPhotoGallery(pic, index: i);
+                  },
+                  child: Hero(
+                    tag: item,
+                    child: Image.network(
+                      item,
+                      height: imageSize['height'],
+                      width: imageSize['width'],
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -169,17 +203,17 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
   }
   
   void _showCardOption() {
-    RenderBox box = hourTitleKey.currentContext.findRenderObject();
+    RenderBox box = widget.hourTitleKey.currentContext.findRenderObject();
     Offset offset = box.localToGlobal(Offset.zero);
   }
 
-  void _starNews() {
+  void _starNews(i) {
     setState(() {
-        _isStar = !_isStar; 
+      yuba[i]['isAgree'] = !yuba[i]['isAgree'];
     });
   }
 
-   List<Widget> _creatEach() {
+  List<Widget> _creatEach(i, item) {
     return [
         Container(
           decoration: BoxDecoration(
@@ -193,7 +227,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
           child: Stack(
             alignment: AlignmentDirectional.center,
             children: <Widget>[
-              Positioned(
+              i <= 2 ? Positioned(
                 left: dp(10),
                 bottom: dp(13),
                 child: Container(
@@ -201,14 +235,14 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                   height: dp(5),
                   color: Color(0xffff5d24),
                 ),
-              ),
+              ) : SizedBox(),
               Row(
                 children: <Widget>[
                   Padding(
                     padding: EdgeInsets.only(left: dp(10)),
                   ),
                   Text(
-                    'TOP.2',
+                    i <= 2 ? 'TOP.${i + 1}' : 'NO.${i + 1}',
                     style: TextStyle(
                       color: Color(0xff333333),
                       fontSize: dp(18),
@@ -253,7 +287,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                           Radius.circular(dp(20)),
                         ),
                         child: Image.network(
-                          'http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/9iN5AqTsytMeLcWQ56xLgtYX*CfeHYPJ1eqqj4p5OTM!/r/dL8AAAAAAAAA',
+                          item['avatar'],
                           width: dp(40),
                           height: dp(40),
                           fit: BoxFit.fill,
@@ -271,7 +305,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                               child: Row(
                                 children: <Widget>[
                                   Text(
-                                    '小玉太难了丶',
+                                    item['name'],
                                     style: TextStyle(
                                       color: Color(0xff666666),
                                     ),
@@ -280,12 +314,12 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                                   ),
                                   Padding(padding: EdgeInsets.only(left: dp(4)),),
                                   Image.asset(
-                                    'images/bar/girl.webp',
+                                    item['sex'] == 0 ? 'images/bar/girl.webp' : 'images/bar/boy.webp',
                                     height: dp(17),
                                   ),
                                   Padding(padding: EdgeInsets.only(left: dp(4)),),
                                   Image.asset(
-                                    'images/lv/30.png',
+                                    'images/lv/${item['level']}.png',
                                     height: dp(14),
                                   ),
                                 ],
@@ -294,7 +328,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                             Row(
                               children: <Widget>[
                                 Text(
-                                  '昨天21:01',
+                                  DYservice.formatTime(item['time']),
                                   style: TextStyle(
                                     color: Color(0xff999999),
                                     fontSize: 12
@@ -302,7 +336,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                                 ),
                                 Padding(padding: EdgeInsets.only(left: dp(10)),),
                                 Text(
-                                  '15.0万阅读',
+                                  '${DYservice.formatNum(item['read'])}阅读',
                                   style: TextStyle(
                                     color: Color(0xff999999),
                                     fontSize: 12
@@ -320,7 +354,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
               Padding(
                 padding: EdgeInsets.only(top: dp(10)),
                 child: Text(
-                  '10月24日晚六点，我再斗鱼3168536等你！！！不见不散哦！',
+                  item['title'],
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -333,7 +367,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
               Padding(
                 padding: EdgeInsets.only(top: dp(4)),
                 child: Text(
-                  '观众姥爷们，我正方形主播玉酱回来啦！24号晚六点，斗鱼房间3168536，我再直播间等你们！还有精彩好礼，不停放送！！',
+                  item['content'],
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
@@ -344,9 +378,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
               ),
               Padding(
                 padding: EdgeInsets.only(top: dp(10)),
-                child: _picUnknownNum([
-                  'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1572082173861&di=e5e040c062de8d2c56216205c4d95f9b&imgtype=0&src=http%3A%2F%2Fb-ssl.duitang.com%2Fuploads%2Fitem%2F201612%2F01%2F20161201234647_MPzZc.jpeg',
-                ]),
+                child: _picUnknownNum(item['pic']),
               ),
               Padding(
                 padding: EdgeInsets.only(top: dp(10), bottom: dp(10)),
@@ -369,7 +401,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                             height: dp(18),
                           ),
                           Text(
-                            '82赞',
+                            '${DYservice.formatNum(item['hot'])}赞',
                             style: TextStyle(
                               color: Color(0xffcccccc),
                             ),
@@ -447,7 +479,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                               ),
                             ),
                             child: Text(
-                              '一条小团团',
+                              item['anchor'],
                               style: TextStyle(
                                 color: Color(0xff999999),
                               ),
@@ -468,9 +500,9 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                           height: dp(18),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: dp(4), right: dp(12)),
+                          padding: EdgeInsets.only(left: dp(4), right: dp(6)),
                           child: Text(
-                            '129',
+                            DYservice.formatNum(item['share']),
                             style: TextStyle(
                               color: Color(0xff999999),
                             ),
@@ -485,9 +517,9 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                           height: dp(18),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(left: dp(4), right: dp(12)),
+                          padding: EdgeInsets.only(left: dp(4), right: dp(6)),
                           child: Text(
-                            '2156',
+                            DYservice.formatNum(item['chat']),
                             style: TextStyle(
                               color: Color(0xff999999),
                             ),
@@ -497,20 +529,20 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                     ),
                     GestureDetector(
                       onTap: () {
-                        _starNews();
+                        _starNews(i);
                       },
                       child: Row(
                         children: <Widget>[
                           Image.asset(
-                            _isStar ? 'images/bar/chat-star-act.webp' : 'images/bar/chat-star.jpg',
+                            item['isAgree'] ? 'images/bar/chat-star-act.webp' : 'images/bar/chat-star.jpg',
                             height: dp(18),
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: dp(4),),
                             child: Text(
-                              '1.3万',
+                              DYservice.formatNum(item['agree']),
                               style: TextStyle(
-                                color: _isStar ? DYBase.defaultColor : Color(0xff999999),
+                                color: item['isAgree'] ? DYBase.defaultColor : Color(0xff999999),
                               ),
                             ),
                           ),
@@ -528,8 +560,14 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> yubaList = [];
+
+    yuba.asMap().forEach((i, item) {
+      yubaList.addAll(_creatEach(i, item)); 
+    });
+
     return Column(
-      children: _creatEach(),
+      children: yubaList,
     );
   }
 }

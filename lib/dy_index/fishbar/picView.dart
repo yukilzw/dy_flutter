@@ -1,5 +1,5 @@
 /**
- * @discripe: 图片全屏预览
+ * @discripe: 单图片全屏预览
  */
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';

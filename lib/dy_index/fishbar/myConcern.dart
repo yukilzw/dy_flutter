@@ -53,14 +53,12 @@ class _MyConcern extends State<MyConcern> with DYBase {
 
   // 下拉刷新
   void _onRefresh() async {
-
-    _refreshController.refreshCompleted();
+    rx.push('yubaList', data: 'refresh');
   }
 
   // 上拉加载
   void _onLoading() async {
-
-    _refreshController.loadComplete();
+    rx.push('yubaList', data: 'more');
   }
 
   // 渲染我的活动功能
@@ -167,6 +165,7 @@ class _MyConcern extends State<MyConcern> with DYBase {
                         ),
                         child: FishBarCardList(
                           hourTitleKey: _hourTitleKey,
+                          refreshController: _refreshController,
                         ),
                       ),
                     ],

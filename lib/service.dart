@@ -31,6 +31,40 @@ abstract class DYservice {
     counterBloc.dispatch(CounterEvent.increment);
     return res.data['data']['list'];
   }
+
+  // 格式化数值
+  static String formatNum(int number) {
+    if (number > 10000) {
+      var str = DYservice._formatNum(number / 10000, 1);
+      if (str.split('.')[1] == '0') {
+        str = str.split('.')[0];
+      }
+      return str + '万';
+    }
+    return number.toString();
+  }
+  static String _formatNum(double number, int postion) {
+    if((number.toString().length - number.toString().lastIndexOf(".") - 1) < postion) {
+      // 小数点后有几位小数
+      return ( number.toStringAsFixed(postion).substring(0, number.toString().lastIndexOf(".")+postion + 1).toString());
+    } else {
+      return ( number.toString().substring(0, number.toString().lastIndexOf(".") + postion + 1).toString());
+    }
+  }
+
+  // 格式化时间
+  static String formatTime(int timeSec) {
+    var date = DateTime.fromMillisecondsSinceEpoch(timeSec * 1000);
+    var now = DateTime.now();
+    var yesterday = DateTime.fromMillisecondsSinceEpoch(now.millisecondsSinceEpoch - 24 * 60 * 60 * 1000);
+
+    if (date.year == now.year && date.month == now.month && date.day == now.day) {
+      return '今天${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+    } else if (date.year == yesterday.year && date.month == yesterday.month && date.day == yesterday.day) {
+      return '昨天${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+    }
+    return '${date.year.toString()}-${date.month.toString().padLeft(2,'0')}-${date.day.toString().padLeft(2,'0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+  }
 }
 
 abstract class DYdialog {
