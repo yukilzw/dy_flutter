@@ -4,11 +4,13 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:barcode_scan/barcode_scan.dart';
+import 'package:flutter/services.dart';
 
 import '../base.dart';
 import '../service.dart';
 
-class DyHeader extends StatelessWidget with DYBase {
+class DyHeader extends StatefulWidget {
   final num height;
   final num opacity;
   final BoxDecoration decoration;
@@ -16,13 +18,36 @@ class DyHeader extends StatelessWidget with DYBase {
   DyHeader({ this.height, this.opacity = 1.0, this.decoration, this.gray = false });
 
   @override
+  _DyHeader createState() => _DyHeader();
+}
+
+class _DyHeader extends State<DyHeader> with DYBase {
+  TextEditingController _search = TextEditingController();
+
+  Future _scan() async {
+    try {
+       _search.text = await BarcodeScanner.scan();
+    } on PlatformException catch (e) {
+      if (e.code == BarcodeScanner.CameraAccessDenied) {
+        DYdialog.alert(context, text: '设备未获得权限');
+      } else {
+        DYdialog.alert(context, text: '未捕获的错误: $e');
+      }
+    } on FormatException {  // 用户手动点击设备返回
+
+    } catch (e) {
+      DYdialog.alert(context, text: '未捕获的错误: $e');
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      height: height != null ? height : DYBase.statusBarHeight + dp(55),
+      height: widget.height != null ? widget.height : DYBase.statusBarHeight + dp(55),
       width: screenWidth,
-      decoration: decoration != null ? decoration : BoxDecoration(
+      decoration: widget.decoration != null ? widget.decoration : BoxDecoration(
         gradient: LinearGradient(
           colors: <Color>[
             Color(0xffff8633),
@@ -36,7 +61,7 @@ class DyHeader extends StatelessWidget with DYBase {
           Positioned(
             bottom: dp(10),
             child: Opacity(
-              opacity: opacity,
+              opacity: widget.opacity,
               child: SizedBox(
                 width: screenWidth - dp(30),
                 height: dp(40),
@@ -81,6 +106,7 @@ class DyHeader extends StatelessWidget with DYBase {
                             Expanded(
                               flex: 1,
                               child: TextField(
+                                controller: _search,
                                 cursorColor: DYBase.defaultColor,
                                 cursorWidth: 1.5,
                                 style: TextStyle(
@@ -94,10 +120,13 @@ class DyHeader extends StatelessWidget with DYBase {
                                 ),
                               ),
                             ),
-                            Image.asset(
-                              'images/head/camera.webp',
-                              width: dp(20),
-                              height: dp(15),
+                            GestureDetector(
+                              onTap: _scan,
+                              child: Image.asset(
+                                'images/head/camera.webp',
+                                width: dp(20),
+                                height: dp(15),
+                              ),
                             ),
                           ],
                         ),
@@ -106,21 +135,21 @@ class DyHeader extends StatelessWidget with DYBase {
                     Padding(
                       padding: EdgeInsets.only(left: dp(10)),
                       child: Image.asset(
-                        gray ? 'images/head/history-gray.webp' : 'images/head/history.webp',
+                        widget.gray ? 'images/head/history-gray.webp' : 'images/head/history.webp',
                         width: dp(25),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: dp(10)),
                       child: Image.asset(
-                        gray ? 'images/head/game-gray.webp' : 'images/head/game.webp',
+                        widget.gray ? 'images/head/game-gray.webp' : 'images/head/game.webp',
                         width: dp(25),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: dp(10)),
                       child: Image.asset(
-                        gray ? 'images/head/chat-gray.webp' : 'images/head/chat.webp',
+                        widget.gray ? 'images/head/chat-gray.webp' : 'images/head/chat.webp',
                         width: dp(25),
                       ),
                     ),

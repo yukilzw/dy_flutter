@@ -22,6 +22,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "2.3.0"
+  barcode_scan:
+    dependency: "direct main"
+    description:
+      name: barcode_scan
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "1.0.0"
   bloc:
     dependency: transitive
     description:
