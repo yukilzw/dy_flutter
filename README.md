@@ -59,7 +59,7 @@ flutter重构的斗鱼直播APP<br/>
 但是在企业级APP高度UI交互定制化的场景下，仍需要根据业务场景重新实现诸如AppBar、TabView等widget，并编写手势交互<br/>
 
 #### 入门推荐：
-[Dart语法](http://dart.goodev.org/guides/language/language-tour)<br/>
+[Dart语法](https://www.dartcn.com/guides/get-started)<br/>
 [Dart SDK](https://api.dartlang.org/stable/2.4.0/index.html)<br/>
 [Flutter中文网](https://flutterchina.club/get-started/install/) - 简单易懂的入门教程<br/>
 [Flutter实战](https://book.flutterchina.club/) - 较为全面的进阶教程<br/>
