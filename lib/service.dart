@@ -2,6 +2,7 @@
  * @discripe: 业务层方法
  */
 import 'dart:io';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,6 +65,16 @@ abstract class DYservice {
       return '昨天${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
     }
     return '${date.year.toString()}-${date.month.toString().padLeft(2,'0')}-${date.day.toString().padLeft(2,'0')} ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
+  }
+  
+  // 生成随机串
+  static String randomBit(int len) {
+    String character = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+    String left = '';
+    for (var i = 0; i < len; i++) {
+      left = left + character[Random().nextInt(character.length)]; 
+    }
+    return left;
   }
 }
 

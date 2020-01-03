@@ -64,10 +64,10 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
   }
 
   // 图片预览gallery
-  void _showPhotoGallery(List pic, { int index = 0 }) {
+  void _showPhotoGallery(List pic, { int index = 0, String tag }) {
     var galleryItems = pic.asMap().map((i, item) {
       return MapEntry(i, GalleryItem(
-        id: i.toString(),
+        id: tag,
         resource: item,
       ));
     }).values.toList();
@@ -89,13 +89,14 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
   }
 
   // 根据数量动态计算图片宽高（类似微信朋友圈）
-  Widget _picUnknownNum(List pic) {
+  Widget _picUnknownNum(List pic, { String id }) {
     double screenWidth = MediaQuery.of(context).size.width;
     double boxMargin = dp(60);
     double picPadding = dp(5);
 
     return Wrap(
       children: pic.asMap().map((i, item) {
+          String tag = id + i.toString();
           Map<String, double> imageSize = {};
           // 1张图：宽高自适应
           if (pic.length == 1) {
@@ -135,10 +136,10 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                         }
                         return GestureDetector(
                           onTap: () {
-                            _showPhotoGallery(pic);
+                            _showPhotoGallery(pic, tag: tag);
                           },
                           child: Hero(
-                            tag: item,
+                            tag: tag,
                             child: Image.network(
                               item,
                               height: imageSize['height'],
@@ -182,10 +183,10 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    _showPhotoGallery(pic, index: i);
+                    _showPhotoGallery(pic, index: i, tag: tag);
                   },
                   child: Hero(
-                    tag: item,
+                    tag: tag,
                     child: Image.network(
                       item,
                       height: imageSize['height'],
@@ -257,6 +258,14 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
         ),
         Container(
           padding: EdgeInsets.all(15),
+          margin: EdgeInsets.only(bottom: dp(15)),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(dp(15)),
+              bottomRight: Radius.circular(dp(15)),
+            ),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
@@ -378,7 +387,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
               ),
               Padding(
                 padding: EdgeInsets.only(top: dp(10)),
-                child: _picUnknownNum(item['pic']),
+                child: _picUnknownNum(item['pic'], id: item['id']),
               ),
               Padding(
                 padding: EdgeInsets.only(top: dp(10), bottom: dp(10)),

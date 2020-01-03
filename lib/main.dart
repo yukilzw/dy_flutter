@@ -2,6 +2,7 @@
  * @discripe: 斗鱼APP
  */
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
@@ -84,4 +85,11 @@ class DyApp extends StatelessWidget {
   }
 }
 
-void main() => runApp(DyApp());
+void main() {
+  // 强制竖屏
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+  runApp(DyApp());
+}

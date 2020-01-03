@@ -104,7 +104,6 @@ class _MyConcern extends State<MyConcern> with DYBase {
     return Stack(
       children: <Widget>[
         Container(
-          // color: Color(0xfff3f3f3),
           child: SmartRefresher(
             enablePullDown: true,
             enablePullUp: true,
@@ -157,12 +156,6 @@ class _MyConcern extends State<MyConcern> with DYBase {
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.all(dp(15)),
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(dp(15)),
-                          ),
-                        ),
                         child: FishBarCardList(
                           hourTitleKey: _hourTitleKey,
                           refreshController: _refreshController,
