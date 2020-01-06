@@ -190,10 +190,16 @@ class LiveListWidgets extends StatelessWidget with DYBase {
                       ],
                     ),
                   ),
-                  placeholder: (context, url) => Image.asset(
-                    'images/pic-default.jpg',
-                    width: dp(175),
-                    height: dp(120),
+                  placeholder: (context, url) => ClipRRect(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(dp(4)),
+                    ),
+                    child:Image.asset(
+                      'images/pic-default.jpg',
+                      width: dp(175),
+                      height: dp(120),
+                      fit: BoxFit.fill,
+                    ),
                   ),
                 ),
                 Container(
