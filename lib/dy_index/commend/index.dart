@@ -11,6 +11,7 @@ import '../../base.dart';
 import '../../service.dart';
 import '../header.dart';
 import 'swiper.dart';
+import 'broadcast.dart';
 import 'list.dart';
 
 class CommendPage extends StatefulWidget {
@@ -141,6 +142,7 @@ class _CommendPage extends State<CommendPage> with DYBase, AutomaticKeepAliveCli
                               child: i == 0 ? Column(
                                 children: [
                                   SWwiperWidgets(),
+                                  BroadcastSwiper(),
                                   LiveListWidgets(indexState),
                                 ],
                               ) : null,
