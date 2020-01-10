@@ -150,7 +150,19 @@ class _FishBarPage extends State<FishBarPage> with DYBase {
     var color;
     switch (_navActIndex) {
       case 0:
-        return MyConcern(headerAnimated: _headerAnimated);
+        return NotificationListener(
+          onNotification: (notification) {
+            switch (notification.runtimeType){
+              case ScrollUpdateNotification:
+                if (notification?.dragDetails != null) {
+                  _onVerticalDragUpdate(notification.dragDetails);
+                }
+                break;
+            }
+            return true;
+          },
+          child: MyConcern(headerAnimated: _headerAnimated),
+        );
       case 1:
         color = Colors.lightGreen;
         break;

@@ -12,42 +12,40 @@ class MyConcern extends StatefulWidget {
   MyConcern({ this.headerAnimated });
 
   @override
-  _MyConcern createState() => _MyConcern(headerAnimated);
+  _MyConcern createState() => _MyConcern();
 }
 
 class _MyConcern extends State<MyConcern> with DYBase {
-  final headerAnimated;
-  _MyConcern(this.headerAnimated);
-
   List<String> _myActive = ['鱼吧签到', '我的车队', '狼人杀'];
   GlobalKey _hourTitleKey = GlobalKey();
-  double _scrollTop = 0;
   RefreshController _refreshController = RefreshController(initialRefresh: false);
-  ScrollController _scrollController = ScrollController();
+  // double _scrollTop = 0;
+  // ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
     super.initState();
-    /// 在[ListView]内需要重新通过[_scrollController]监听手势，因为手势会被组件捕获，不会触发外层容器的事件
-    _scrollController.addListener(() {
+    /// 原先通过[ListView]内重新对[_scrollController]监听手势来触发头部展开，因为手势会被当前组件捕获，不会触发外层容器的事件
+    /// 经过优化后已不再需要在此注释代码，将[ListView]的滚动事件利用[NotificationListener]通知到父级widget，详情请见fishbar/index.dart统一处理
+    /* _scrollController.addListener(() {
       var scrollTop = _scrollController.position.pixels;
 
       if (scrollTop < 0 || scrollTop >= _scrollController.position.maxScrollExtent) {
         return;
       }
       if (_scrollTop - scrollTop > 20) { // 向下滑动 ↓
-        headerAnimated(-1);
+        widget.headerAnimated(-1);
         _scrollTop = scrollTop;
       } else if (scrollTop - _scrollTop > 20) {  // 向上滑动 ↑
-        headerAnimated(1);
+        widget.headerAnimated(1);
         _scrollTop = scrollTop;
       }
-    });
+    }); */
   }
 
   @override
   void dispose() {
-    _scrollController?.dispose();
+    // _scrollController?.dispose();
     super.dispose();
   }
 
@@ -112,7 +110,7 @@ class _MyConcern extends State<MyConcern> with DYBase {
             onRefresh: _onRefresh,
             onLoading: _onLoading,
             child: ListView(
-              controller: _scrollController,
+              // controller: _scrollController,
               padding: EdgeInsets.all(0),
               physics: BouncingScrollPhysics(),
               children: [
