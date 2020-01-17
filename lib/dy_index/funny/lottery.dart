@@ -149,7 +149,7 @@ class _Lottery extends State<Lottery> with DYBase {
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
-      0, title, body, platformChannelSpecifics,
+      DYservice.randomBit(8, type: 'num'), title, body, platformChannelSpecifics,
       payload: body
     );
   }

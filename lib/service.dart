@@ -68,13 +68,13 @@ abstract class DYservice {
   }
   
   // 生成随机串
-  static String randomBit(int len) {
-    String character = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
+  static dynamic randomBit(int len, { String type }) {
+    String character = type == 'num' ? '0123456789' : 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM';
     String left = '';
     for (var i = 0; i < len; i++) {
       left = left + character[Random().nextInt(character.length)]; 
     }
-    return left;
+    return type == 'num' ? int.parse(left) : left;
   }
 }
 
