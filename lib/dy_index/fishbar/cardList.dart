@@ -304,7 +304,6 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
                       ),
                       Container(
                         margin: EdgeInsets.only(left: dp(10)),
-                        height: dp(40),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
