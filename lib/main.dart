@@ -86,6 +86,7 @@ class DyApp extends StatelessWidget {
 }
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   // 强制竖屏
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
