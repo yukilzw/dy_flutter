@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../base.dart';
+import '../service.dart';
 import 'area.dart';
 
 class DyLoginPage extends StatefulWidget {
@@ -77,6 +78,10 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
     setState(() {
       type = type == 0 ? 1 : 0;
     });
+  }
+
+  void _forgetPassword() {
+    DYdialog.alert(context, title: '太好了', text: '那你重新注册个号吧！');
   }
 
   void _showAreaList() {
@@ -386,11 +391,14 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                type != 0 ? Text('忘记密码？',
-                  style: TextStyle(
-                    color: Color(0xff999999),
-                  ),
-                ) : SizedBox(),
+                type != 0 ? GestureDetector(
+                  onTap: _forgetPassword,
+                  child: Text('忘记密码？',
+                    style: TextStyle(
+                      color: Color(0xff999999),
+                    ),
+                  ) 
+                ): SizedBox(),
                 type != 0 ? GestureDetector(
                   onTap: _changePhoneLogin,
                   child: Text(type == 2 ? '手机密码登录' : '手机验证码快捷登录',
