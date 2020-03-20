@@ -9,8 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
-import '../../base.dart';
-import '../../service.dart';
+import '../base.dart';
+import '../service.dart';
 
 final flutterWebviewPlugin = FlutterWebviewPlugin();
 

@@ -22,7 +22,7 @@ class DyIndexPage extends StatefulWidget {
 
 class _DyIndexPageState extends State<DyIndexPage> with DYBase {
   final _bottomNavList = ["推荐", "娱乐", "关注", "鱼吧", "发现"]; // 底部导航
-  DateTime _lastCloseApp; //上次点击时间
+  DateTime _lastCloseApp; //上次点击返回按钮时间
   int _currentIndex = 0;  // 底部导航当前页面
   ScrollController _scrollController = ScrollController();  // 首页整体滚动控制器
   PageController _pageController = PageController();
@@ -117,6 +117,10 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     );
   }
 
+  void _openTestPage() {
+    Navigator.pushNamed(context, '/develop');
+  }
+
   // 底部导航对应的页面
   Widget _currentPage() {
     var pageInDevelop = Scaffold(
@@ -149,9 +153,12 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
         ),
         preferredSize: Size.fromHeight(dp(55)),
       ),
-      body: Center(child: Text(
-          '正在建设中...',
-          style: TextStyle(fontSize: 20, color: Colors.black45),
+      body: Center(
+        child: RaisedButton(
+          textColor: Colors.white,
+          color: DYBase.defaultColor,
+          child: Text('打开测试页面'),
+          onPressed: _openTestPage,
         ),
       ),
     );

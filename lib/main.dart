@@ -11,6 +11,7 @@ import 'dy_init/index.dart';
 import 'dy_index/index.dart';
 import 'dy_room/index.dart';
 import 'dy_login/index.dart';
+import 'develop/index.dart';
 
 class DyApp extends StatelessWidget {
   // 路由路径匹配
@@ -37,7 +38,8 @@ class DyApp extends StatelessWidget {
             title: Text(arg['title']),
           ),
         );
-      }
+      },
+      '/develop': (BuildContext context) => DevelopPage(),
     };
     var widget = routes[settings.name];
 
