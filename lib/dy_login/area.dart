@@ -84,7 +84,7 @@ class _AreaTel extends State<AreaTel> with DYBase {
         Duration(days: 365),
       ),
     );
-    var data = jsonDecode(res.data);
+    var data = res.data;
     var letterScrollTopMap = {};
     double height = 0;
     data.forEach((key, value) {
