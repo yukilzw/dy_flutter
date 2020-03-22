@@ -67,13 +67,13 @@ class _LogoAppState extends State<LogoApp> with DYBase, SingleTickerProviderStat
     controller.forward();
   }
 
-  Widget build(BuildContext context) {
-    return AnimatedLogo(animation: animation, direction: direction);
-  }
-
   dispose() {
     controller.dispose();
     super.dispose();
+  }
+
+  Widget build(BuildContext context) {
+    return AnimatedLogo(animation: animation, direction: direction);
   }
 }
 

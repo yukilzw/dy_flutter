@@ -21,7 +21,7 @@ class DyIndexPage extends StatefulWidget {
 }
 
 class _DyIndexPageState extends State<DyIndexPage> with DYBase {
-  final _bottomNavList = ["推荐", "娱乐", "关注", "鱼吧", "发现"]; // 底部导航
+  final _bottomNavList = ["推荐", "娱乐", "鱼吧", "关注", "发现"]; // 底部导航
   DateTime _lastCloseApp; //上次点击返回按钮时间
   int _currentIndex = 0;  // 底部导航当前页面
   ScrollController _scrollController = ScrollController();  // 首页整体滚动控制器
@@ -82,16 +82,16 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
                 icon: _currentIndex == 1
                     ? _bottomIcon('images/nav/nav-22.jpg')
                     : _bottomIcon('images/nav/nav-21.jpg')),
-            BottomNavigationBarItem(
+              BottomNavigationBarItem(
                 title: Text(_bottomNavList[2]),
                 icon: _currentIndex == 2
-                    ? _bottomIcon('images/nav/nav-32.jpg')
-                    : _bottomIcon('images/nav/nav-31.jpg')),
+                    ? _bottomIcon('images/nav/nav-42.jpg')
+                    : _bottomIcon('images/nav/nav-41.jpg')),
             BottomNavigationBarItem(
                 title: Text(_bottomNavList[3]),
                 icon: _currentIndex == 3
-                    ? _bottomIcon('images/nav/nav-42.jpg')
-                    : _bottomIcon('images/nav/nav-41.jpg')),
+                    ? _bottomIcon('images/nav/nav-32.jpg')
+                    : _bottomIcon('images/nav/nav-31.jpg')),
             BottomNavigationBarItem(
                 title: Text(_bottomNavList[4]),
                 icon: _currentIndex == 4
@@ -165,8 +165,8 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
     var _pages = [
       CommendPage(_scrollController),
       FunnyPage(),
-      FocusPage(),
       FishBarPage(),
+      FocusPage(),
       pageInDevelop,
     ];
 
