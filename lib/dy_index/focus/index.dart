@@ -60,7 +60,7 @@ class _FocusPage extends State<FocusPage> with DYBase {
   void _onPointerMove(PointerMoveEvent e) {
     var nextHeight = _headerHeight + e.delta.dy;
 
-    if (nextHeight <= DYBase.statusBarHeight || nextHeight >= (DYBase.statusBarHeight + dp(55))) {
+    if (nextHeight <= DYBase.statusBarHeight || nextHeight >= widget.headerHeightMax) {
       return;
     }
     setState(() {
