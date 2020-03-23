@@ -7,12 +7,22 @@ import 'package:flutter/services.dart';
 import '../../base.dart';
 import '../header.dart';
 
-class FocusPage extends StatefulWidget {
+class FocusPage extends StatefulWidget with DYBase {
+  double headerHeightMax;
+  FocusPage() {
+    headerHeightMax =  DYBase.statusBarHeight + dp(55);
+  }
+
   @override
-  _FocusPage createState() => _FocusPage();
+  _FocusPage createState() => _FocusPage(headerHeightMax);
 }
 
 class _FocusPage extends State<FocusPage> with DYBase {
+  double _headerHeight;
+  double _headerOpacity = 1.0;
+
+  _FocusPage(this._headerHeight);
+
   @override
   void initState() {
     super.initState();
@@ -21,8 +31,8 @@ class _FocusPage extends State<FocusPage> with DYBase {
     ));
   }
 
-  _colorBlock() {
-    List<Widget> res = [];
+  List<Widget> _colorBlock() {
+    var res = <Widget>[];
     for (var i = 0; i < 8; i++) {
       res.add(Container(
         margin: EdgeInsets.only(top: dp(20), left: dp(20), right: dp(20)),
@@ -47,6 +57,18 @@ class _FocusPage extends State<FocusPage> with DYBase {
     return res;
   }
 
+  void _onPointerMove(PointerMoveEvent e) {
+    var nextHeight = _headerHeight + e.delta.dy;
+
+    if (nextHeight <= DYBase.statusBarHeight || nextHeight >= (DYBase.statusBarHeight + dp(55))) {
+      return;
+    }
+    setState(() {
+      _headerHeight = nextHeight;
+      _headerOpacity = (nextHeight - DYBase.statusBarHeight) / dp(55);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,23 +76,25 @@ class _FocusPage extends State<FocusPage> with DYBase {
         children: <Widget>[
           Expanded(
             flex: 1,
-            child: Container(
-              color: Colors.transparent,
-              child: Column(
-                children: <Widget>[
-                  DyHeader(),
-                  Expanded(
-                    flex: 1,
-                    child: ListView(
+            child: Listener(
+              onPointerMove: _onPointerMove,
+              child: Container(
+                color: Colors.transparent,
+                child: Stack(
+                  children: <Widget>[
+                    ListView(
+                      physics: BouncingScrollPhysics(),
                       padding: EdgeInsets.all(0),
                       children: <Widget>[
+                        Padding(padding: EdgeInsets.only(top: widget.headerHeightMax)),
                         ..._colorBlock(),
                       ],
                     ),
-                  ),
-                ],
+                    DyHeader(height: _headerHeight, opacity: _headerOpacity,),
+                  ],
+                ),
               ),
-            )
+            ),
           ),
         ],
       ),

@@ -54,6 +54,7 @@ class _FishBarCardList extends State<FishBarCardList> with DYBase {
       },
     );
     var list = res.data['data'];
+    if (mounted)
     setState(() {
       if (pageIndex == 0) {
         yuba = list;
