@@ -175,7 +175,7 @@ class NoSplash extends InteractiveInkFeature {
 }
 
 // 去除安卓滚动视图水波纹
-class DyBehavior extends ScrollBehavior {
+class DyBehaviorNull extends ScrollBehavior {
   @override
   Widget buildViewportChrome(BuildContext context, Widget child, AxisDirection axisDirection) {
     if (Platform.isAndroid || Platform.isFuchsia) {

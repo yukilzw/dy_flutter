@@ -26,10 +26,10 @@ class AnimatedLogo extends AnimatedWidget with DYBase {
     endH = direction == -1 ? DYBase.statusBarHeight + dp(55) : DYBase.statusBarHeight;
     beginO = direction == -1 ? 0 : 1;
     endO = direction == -1 ? 1 : 0;
-    _heightTween= Tween(
+    _heightTween = Tween(
       begin: beginH, end: endH,
     );
-    _opacityTween= Tween(
+    _opacityTween = Tween(
       begin: beginO, end: endO,
     );
   }
@@ -171,7 +171,7 @@ class _FishBarPage extends State<FishBarPage> with DYBase {
         break;
     }
     return ScrollConfiguration(
-      behavior: DyBehavior(),
+      behavior: DyBehaviorNull(),
       child: ListView(
         key: ObjectKey(_navActIndex),
         padding: EdgeInsets.all(0),
