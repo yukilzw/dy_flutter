@@ -19,6 +19,7 @@ flutter重构的斗鱼直播APP<br/>
 - RxDart全局消息通信封装
 - Bloc流式状态管理(启动页预加载首页数据)
 - 礼物横幅动画队列
+- 礼物全屏svga特效
 - 弹幕消息滚动
 - 静态视频流
 - 九宫格抽奖游戏
@@ -38,7 +39,7 @@ flutter重构的斗鱼直播APP<br/>
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/OFSw8qFQ6ZTt4Qry.FD5zxLEOyTxOJDRc0zUeDKvTgU!/r/dMMAAAAAAAAA" width="33%"/>
 <img src="http://r.photo.store.qq.com/psc?/V14dALyK4PrHuj/WntOtr8rW56pbv0uxxE6dYv8R*r1q3IS5y8YHO4owO29NBvZWJR3CXVLjmVHX1cv5JPgnaoF4HCJgbTfMqL3EDvwkNwgV..G9y*l40ZUS9c!/r" width="33%"/>
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/SOcvvERqiEdx92of45wZ5QROd09kd717ct9R*v*zK3U!/r/dLYAAAAAAAAA" width="33%"/>
-<img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/c4ql4M5xWstDQx.QsoTQOTZCw7UuPf9zUgCjqG23tOo!/r/dLYAAAAAAAAA" width="33%"/>
+<img src="http://r.photo.store.qq.com/psc?/V14dALyK4PrHuj/WntOtr8rW56pbv0uxxE6dcV8EXu0frrdM05fMPRCcBoFag7phHK4DO9KLQeRxCipRW8JmEPOOVhwtdEsfi9Hhgp2JrpT5U.i2XiubVY4gTc!/r" width="33%"/>
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/q08JBttKNyQCzGtnK2d6X3J.9ZT6SO7cx4ypcpg75p0!/r/dFQBAAAAAAAA" width="33%"/>
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/L23jnwqMYB9PdLQ2KUvoK3ejQY1dwrbxA7fUWybKyxs!/r/dL8AAAAAAAAA" width="33%"/>
 <img src="http://r.photo.store.qq.com/psb?/V14dALyK4PrHuj/7iQScOrnyUP*YwqZOCmDrspGoHWj3Dn3LZjh4T8xjA8!/r/dMMAAAAAAAAA" width="33%"/>

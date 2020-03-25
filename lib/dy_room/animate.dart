@@ -152,7 +152,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
                         height: dp(48),
                         width: dp(105),
                         child: Padding(
-                          padding: EdgeInsets.all(dp(5)),
+                          padding: EdgeInsets.all(dp(3)),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             crossAxisAlignment: CrossAxisAlignment.start,

@@ -2,10 +2,12 @@
  * @discripe: 直播间弹幕
  */
 import 'dart:ui';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:svgaplayer_flutter/svgaplayer_flutter.dart';
 
 import '../base.dart';
 import '../service.dart';
@@ -21,8 +23,26 @@ class DyRoomPage extends StatefulWidget {
 }
 
 class _DyRoomPageState extends State<DyRoomPage> with DYBase {
+  Timer timerCloseSVGA;
+
   final _routeProp;    // 首页路由跳转传递的参数
   _DyRoomPageState(this._routeProp);
+
+  @override
+  void initState() {
+    super.initState();
+    timerCloseSVGA = Timer(Duration(milliseconds: 7600), () {
+      setState(() {
+        timerCloseSVGA = null;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    timerCloseSVGA?.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,18 +51,29 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle.light,
       child: Scaffold(
-        body: Column(
+        body: Stack(
+          alignment: AlignmentDirectional.center,
           children: <Widget>[
-            Container(
-              height: DYBase.statusBarHeight,
-              color: Color(0xff333333),
+            Column(
+              children: <Widget>[
+                Container(
+                  height: DYBase.statusBarHeight,
+                  color: Color(0xff333333),
+                ),
+                PlayerWidgets(_routeProp),
+                _nav(),
+                ChatWidgets(),
+                _bottom(),
+              ],
             ),
-            PlayerWidgets(_routeProp),
-            _nav(),
-            ChatWidgets(),
-            _bottom(),
+            timerCloseSVGA != null ? Container(
+              height: dp(400),
+              child: SVGASimpleImage(
+                resUrl: '${DYBase.baseUrl}/static/angel.svga'
+              ),
+            ) : SizedBox(),
           ],
-        ),
+        )
       ),
     );
   }
@@ -53,7 +84,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
       children: <Widget>[
         Container(
           height: dp(40),
-          padding: EdgeInsets.only(top: dp(12)),
+          padding: EdgeInsets.only(top: dp(9)),
           width: dp(60),
           decoration: BoxDecoration(
             border: Border(bottom: BorderSide(color: DYBase.defaultColor, width: dp(3))),
@@ -70,7 +101,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
           onTap: () => DYdialog.alert(context, text: '正在建设中~'),
           child: Container(
             height: dp(40),
-            padding: EdgeInsets.only(top: dp(12)),
+            padding: EdgeInsets.only(top: dp(9)),
             width: dp(60),
             child: Text(
               '主播',
@@ -122,7 +153,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
                     child: Container(
                       width: dp(40),
                       height: dp(26),
-                      padding: EdgeInsets.only(top: dp(5)),
+                      padding: EdgeInsets.only(top: dp(2)),
                       margin: EdgeInsets.only(left: dp(10)),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.all(Radius.circular(dp(4))),
