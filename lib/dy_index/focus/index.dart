@@ -137,7 +137,7 @@ class _FocusPage extends State<FocusPage> with DYBase, TickerProviderStateMixin 
           headerOpacityNow = _headerOpacity,
           direction;  // header动画方向，1-展开；0-收起
 
-    // 快速滚动捕获，触摸离开间隔小于300ms直接根据滚动方向伸缩header
+    // 快速滚动捕获，触摸松开间隔小于300ms直接根据滚动方向伸缩header
     if (
       (_pointDownEvent != null) && 
       (e.timeStamp.inMilliseconds - _pointDownEvent.timeStamp.inMilliseconds < 300)
@@ -148,11 +148,11 @@ class _FocusPage extends State<FocusPage> with DYBase, TickerProviderStateMixin 
         direction = 0;
       }
     }
-    // 松开时头部拉到一半以内收起
+    // 滚动松开时header高度一半以下收起
     else if (_headerHeight < (widget.headerHeightMax / 2 + dp(15))) {
       direction = 0;
     }
-    // 拉过一半就完全站看
+    // 超过一半就完展开
     else {
       direction = 1;
     }
