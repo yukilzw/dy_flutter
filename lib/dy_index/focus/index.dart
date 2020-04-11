@@ -78,6 +78,7 @@ class _FocusPage extends State<FocusPage> with DYBase, TickerProviderStateMixin 
   double _headerOpacity = 1.0;
   Tween<double> _opacityTween, _heightTween;
   bool _isAnimating = false;
+  PointerDownEvent _pointDownEvent;
 
   _FocusPage(this._headerHeight);
 
@@ -127,12 +128,37 @@ class _FocusPage extends State<FocusPage> with DYBase, TickerProviderStateMixin 
     });
   }
 
+  void _onPointerDown(PointerDownEvent e) {
+    _pointDownEvent = e;
+  }
+
   void _onPointerUp(PointerUpEvent e) {
-    var headerHeightNow = _headerHeight,
-        headerOpacityNow = _headerOpacity;
+    double headerHeightNow = _headerHeight,
+          headerOpacityNow = _headerOpacity,
+          direction;  // header动画方向，1-展开；0-收起
+
+    // 快速滚动捕获，触摸离开间隔小于300ms直接根据滚动方向伸缩header
+    if (
+      (_pointDownEvent != null) && 
+      (e.timeStamp.inMilliseconds - _pointDownEvent.timeStamp.inMilliseconds < 300)
+    ) {
+      if (e.position.dy > _pointDownEvent.position.dy) {
+        direction = 1;
+      } else {
+        direction = 0;
+      }
+    }
+    // 松开时头部拉到一半以内收起
+    else if (_headerHeight < (widget.headerHeightMax / 2 + dp(15))) {
+      direction = 0;
+    }
+    // 拉过一半就完全站看
+    else {
+      direction = 1;
+    }
 
     setState(() {
-      if (_headerHeight < (widget.headerHeightMax / 2 + dp(15))) {
+      if (direction == 0) {
         _headerHeight = DYBase.statusBarHeight;
         _headerOpacity = 0;
       } else {
@@ -161,6 +187,7 @@ class _FocusPage extends State<FocusPage> with DYBase, TickerProviderStateMixin 
   Widget build(BuildContext context) {
     return Scaffold(
       body: Listener(
+        onPointerDown: _onPointerDown,
         onPointerUp: _onPointerUp,
         onPointerMove: _onPointerMove,
         child:Column(
