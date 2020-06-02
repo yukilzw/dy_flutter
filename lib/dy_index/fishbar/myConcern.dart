@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../../base.dart';
+import '../../service.dart';
 import 'cardList.dart';
 
 class MyConcern extends StatefulWidget {
@@ -105,7 +106,8 @@ class _MyConcern extends State<MyConcern> with DYBase {
           child: SmartRefresher(
             enablePullDown: true,
             enablePullUp: true,
-            header: WaterDropHeader(),
+            header: DYrefreshHeader(),
+            footer: DYrefreshFooter(),
             controller: _refreshController,
             onRefresh: _onRefresh,
             onLoading: _onLoading,

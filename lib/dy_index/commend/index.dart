@@ -130,7 +130,8 @@ class _CommendPage extends State<CommendPage> with DYBase, AutomaticKeepAliveCli
                     builder: (context) => SmartRefresher(
                       enablePullDown: true,
                       enablePullUp: true,
-                      header: WaterDropHeader(),
+                      header: DYrefreshHeader(),
+                      footer: DYrefreshFooter(),
                       controller: _refreshController,
                       onRefresh: _onRefresh,
                       onLoading: _onLoading,

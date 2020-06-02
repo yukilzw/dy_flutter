@@ -7,6 +7,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'bloc.dart';
 import 'base.dart';
@@ -183,5 +184,58 @@ class DyBehaviorNull extends ScrollBehavior {
     } else {
       return super.buildViewportChrome(context,child,axisDirection);
     }
+  }
+}
+
+// 下拉刷新头部、底部组件
+class DYrefreshHeader extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return WaterDropHeader(
+      waterDropColor: DYBase.defaultColor,
+      refresh: SizedBox(
+        width: 25.0,
+        height: 25.0,
+        child: CircularProgressIndicator(strokeWidth: 2.0),
+      ),
+      complete: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[
+          Icon(
+            Icons.insert_emoticon,
+            color: DYBase.defaultColor,
+          ),
+          Container(
+            width: 15.0,
+          ),
+          Text(
+            '更新好啦~',
+            style: TextStyle(color: DYBase.defaultColor),
+          )
+        ],
+      ),
+      idleIcon: Icon(
+        Icons.favorite,
+        size: 14.0,
+        color: Colors.white,
+      ),
+    );
+  }
+}
+
+class DYrefreshFooter extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ClassicFooter(
+      textStyle: TextStyle(color: DYBase.defaultColor),
+      loadingText: '我正在努力...',
+      failedText: '加载失败了~',
+      idleText: '上拉加载更多~',
+      canLoadingText: '释放加载更多~',
+      noDataText: '没有更多啦~',
+      failedIcon: Icon(Icons.insert_emoticon, color: DYBase.defaultColor),
+      canLoadingIcon: Icon(Icons.insert_emoticon, color: DYBase.defaultColor),
+      idleIcon: Icon(Icons.insert_emoticon, color: DYBase.defaultColor),
+    );
   }
 }
