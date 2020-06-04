@@ -196,7 +196,10 @@ class DYrefreshHeader extends StatelessWidget {
       refresh: SizedBox(
         width: 25.0,
         height: 25.0,
-        child: CircularProgressIndicator(strokeWidth: 2.0),
+        child: CircularProgressIndicator(
+          strokeWidth: 2.0,
+          valueColor: AlwaysStoppedAnimation<Color>(DYBase.defaultColor),
+        ),
       ),
       complete: Row(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -236,6 +239,14 @@ class DYrefreshFooter extends StatelessWidget {
       failedIcon: Icon(Icons.insert_emoticon, color: DYBase.defaultColor),
       canLoadingIcon: Icon(Icons.insert_emoticon, color: DYBase.defaultColor),
       idleIcon: Icon(Icons.insert_emoticon, color: DYBase.defaultColor),
+      loadingIcon: SizedBox(
+        width: 25.0,
+        height: 25.0,
+        child: CircularProgressIndicator(
+          strokeWidth: 2.0,
+          valueColor: AlwaysStoppedAnimation<Color>(DYBase.defaultColor),
+        ),
+      ),
     );
   }
 }
