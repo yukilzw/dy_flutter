@@ -56,6 +56,8 @@ flutter重构的斗鱼直播APP<br/>
 然后clone[服务端仓库](https://github.com/yukilzw/factory)，本地启动服务器<br/>
 Mock服务为python tornado，两种简单启动方式可选(1.安装py3.6与pip依赖，2.使用Docker镜像)，具体参考其README
 
+PS：**因第三方插件更新兼容性不可控，请严格按照`pubspec.lock`的版本安装依赖启动**
+
 #### 建议：
 使用Material自带的widget进行搭配使用，已经能满足绝大部分场景的开发需求<br/>
 但是在企业级APP高度UI交互定制化的场景下，仍需要根据业务场景重新实现诸如AppBar、TabView等widget，并编写手势交互<br/>
