@@ -24,22 +24,22 @@ dependencies:
   fluttertoast: ^3.1.0
   path_provider: ^1.1.2
   flutter_screenutil: ^0.5.3
-  flutter_swiper: ^1.0.6
+  flutter_swiper: 1.0.6
   flutter_bloc: ^0.20.0
   rxdart: ^0.22.0
   equatable: ^0.3.0
   dio: ^2.1.8
   dio_http_cache: ^0.1.4
-  chewie: ^0.9.7
-  image_picker: ^0.6.1
-  flutter_webview_plugin: ^0.3.7
+  chewie: 0.9.7
+  image_picker: 0.6.1
+  flutter_webview_plugin: 0.3.7
   pull_to_refresh: ^1.5.5
   web_socket_channel: ^1.0.15
   shared_preferences: ^0.5.3
   wave: ^0.0.8
-  cached_network_image: ^1.1.1
-  photo_view: ^0.9.0
-  barcode_scan: ^1.0.0
+  cached_network_image: 1.1.1
+  photo_view: 0.9.0
+  barcode_scan: 1.0.0
   flutter_local_notifications: ^0.8.0
   svgaplayer_flutter: ^0.0.1
 
