@@ -57,6 +57,7 @@ flutter重构的斗鱼直播APP<br/>
 Mock服务为python tornado，两种简单启动方式可选(1.安装py3.6与pip依赖，2.使用Docker镜像)，具体参考其README
 
 PS：**因第三方插件版本兼容性不可控，请严格按照`pubspec.lock`的版本安装依赖启动**
+PS：**请在安卓设备下运行，IOS下XCOODE编译目前需要Flutter版本为1.12+，但三方插件并未支持**
 
 #### 建议：
 使用Material自带的widget进行搭配使用，已经能满足绝大部分场景的开发需求<br/>
@@ -64,7 +65,7 @@ PS：**因第三方插件版本兼容性不可控，请严格按照`pubspec.lock
 
 #### 入门推荐：
 [Dart语法](https://www.dartcn.com/guides/get-started) - 语法中文教程<br/>
-[Dart SDK（英）](https://api.dartlang.org/stable/2.4.0/index.html)<br/> - flutter只集成了部分SDK<br/>
+[Dart SDK（英）](https://api.dartlang.org/stable/2.4.0/index.html) - flutter只集成了部分SDK<br/>
 [Flutter中文网](https://flutterchina.club/get-started/install/) - 简单易懂的入门教程<br/>
 [Flutter实战](https://book.flutterchina.club/) - 较为全面的进阶教程<br/>
 [Flutter官网（英）](https://flutter.dev/docs) - 可查阅全部的API与SDK相关<br/>
