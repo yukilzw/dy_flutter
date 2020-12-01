@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 正在直播列表
  */
 import 'package:flutter/material.dart';

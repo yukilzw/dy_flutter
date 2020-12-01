@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: webView & 拍照
  */
 import 'dart:async';
@@ -27,14 +27,15 @@ class _DevelopTest extends State<DevelopTest> with DYBase {
 
   // 点击拍照
   Future _getImage() async {
-    var image = await ImagePicker.pickImage(
+    final picker = ImagePicker();
+    var image = await picker.getImage(
       source: _getPhotoSource ? ImageSource.camera : ImageSource.gallery,
       maxHeight: dp(200),
       maxWidth: dp(350),
     );
     if (mounted)
     setState(() {
-      _image = image;
+      _image = File(image.path);
     });
   }
 

@@ -1,10 +1,10 @@
-/**
+/*
  * @discripe: app通用头部组件
  */
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:barcode_scan/barcode_scan.dart';
+// import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter/services.dart';
 
 import '../base.dart';
@@ -25,19 +25,19 @@ class _DyHeader extends State<DyHeader> with DYBase {
   TextEditingController _search = TextEditingController();
 
   Future _scan() async {
-    try {
-       _search.text = await BarcodeScanner.scan();
-    } on PlatformException catch (e) {
-      if (e.code == BarcodeScanner.CameraAccessDenied) {
-        DYdialog.alert(context, text: '设备未获得权限');
-      } else {
-        DYdialog.alert(context, text: '未捕获的错误: $e');
-      }
-    } on FormatException {  // 用户手动点击设备返回
+    // try {
+    //    _search.text = await BarcodeScanner.scan();
+    // } on PlatformException catch (e) {
+    //   if (e.code == BarcodeScanner.CameraAccessDenied) {
+    //     DYdialog.alert(context, text: '设备未获得权限');
+    //   } else {
+    //     DYdialog.alert(context, text: '未捕获的错误: $e');
+    //   }
+    // } on FormatException {  // 用户手动点击设备返回
 
-    } catch (e) {
-      DYdialog.alert(context, text: '未捕获的错误: $e');
-    }
+    // } catch (e) {
+    //   DYdialog.alert(context, text: '未捕获的错误: $e');
+    // }
   }
 
   @override
@@ -114,7 +114,9 @@ class _DyHeader extends State<DyHeader> with DYBase {
                                   fontSize: 14.0,
                                 ),
                                 decoration: InputDecoration(
-                                  border: InputBorder.none,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none
+                                  ),
                                   contentPadding: EdgeInsets.all(0),
                                   hintText: '金咕咕doinb',
                                 ),

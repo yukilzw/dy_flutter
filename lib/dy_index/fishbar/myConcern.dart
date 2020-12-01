@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 鱼吧贴子推荐页(tab - 我的)
  */
 import 'package:flutter/material.dart';

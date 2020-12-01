@@ -1,6 +1,10 @@
 name: dy_flutter
 description: A new Flutter project.
 
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
 # followed by an optional build number separated by a +.
@@ -11,11 +15,11 @@ description: A new Flutter project.
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.6
+version: 1.1.0
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
-  flutter: ">=1.9.0 <1.10.0"
+  sdk: ">=2.7.0 <3.0.0"
+  flutter: ">=1.22.0 <2.0.0"
 
 dependencies:
   flutter:
@@ -24,30 +28,29 @@ dependencies:
   fluttertoast: ^3.1.0
   path_provider: ^1.1.2
   flutter_screenutil: ^0.5.3
-  flutter_swiper: 1.0.6
-  flutter_bloc: ^0.20.0
-  rxdart: ^0.22.0
+  flutter_swiper: ^1.1.6
+  flutter_bloc: ^6.1.1
+  rxdart: ^0.24.1
   equatable: ^0.3.0
-  dio: ^2.1.8
-  dio_http_cache: ^0.1.4
-  chewie: 0.9.7
-  image_picker: 0.6.1
-  flutter_webview_plugin: 0.3.7
+  dio: ^3.0.0
+  dio_http_cache: ^0.2.11
+  video_player: ^1.0.1
+  image_picker: ^0.6.7
+  flutter_webview_plugin: ^0.3.11
   pull_to_refresh: ^1.5.5
   web_socket_channel: ^1.0.15
-  shared_preferences: ^0.5.3
-  wave: ^0.0.8
-  cached_network_image: 1.1.1
-  photo_view: 0.9.0
-  barcode_scan: 1.0.0
-  flutter_local_notifications: ^0.8.0
+  shared_preferences: ^0.5.12
+  wave: ^0.1.0
+  cached_network_image: ^2.1.0
+  photo_view: ^0.9.0
+  # barcode_scan: 1.0.03.0.1+6
+  flutter_local_notifications: ^3.0.1
   svgaplayer_flutter: ^0.0.1
 
 dev_dependencies:
   mockito: ^4.1.0
   flutter_test:
     sdk: flutter
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -60,7 +63,6 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
   assets:
     - images/pic-default.jpg
     - images/back.webp
@@ -130,6 +132,10 @@ flutter:
     - images/bar/chat-share.jpg
     - images/bar/chat-star.jpg
     - images/bar/chat-star-act.webp
+  # To add assets to your application, add an assets section, like this:
+  # assets:
+  #   - images/a_dot_burr.jpeg
+  #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

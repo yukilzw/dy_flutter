@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 底部导航
  */
 import 'package:flutter/material.dart';
@@ -73,27 +73,27 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
           },
           items: [
             BottomNavigationBarItem(
-                title: Text(_bottomNavList[0]),
+                label: _bottomNavList[0],
                 icon: _currentIndex == 0
                     ? _bottomIcon('images/nav/nav-12.jpg')
                     : _bottomIcon('images/nav/nav-11.jpg')),
             BottomNavigationBarItem(
-                title: Text(_bottomNavList[1]),
+                label: _bottomNavList[1],
                 icon: _currentIndex == 1
                     ? _bottomIcon('images/nav/nav-22.jpg')
                     : _bottomIcon('images/nav/nav-21.jpg')),
               BottomNavigationBarItem(
-                title: Text(_bottomNavList[2]),
+                label: _bottomNavList[2],
                 icon: _currentIndex == 2
                     ? _bottomIcon('images/nav/nav-42.jpg')
                     : _bottomIcon('images/nav/nav-41.jpg')),
             BottomNavigationBarItem(
-                title: Text(_bottomNavList[3]),
+                label: _bottomNavList[3],
                 icon: _currentIndex == 3
                     ? _bottomIcon('images/nav/nav-32.jpg')
                     : _bottomIcon('images/nav/nav-31.jpg')),
             BottomNavigationBarItem(
-                title: Text(_bottomNavList[4]),
+                label: _bottomNavList[4],
                 icon: _currentIndex == 4
                     ? _bottomIcon('images/nav/nav-52.jpg')
                     : _bottomIcon('images/nav/nav-51.jpg')),
@@ -130,7 +130,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
           backgroundColor: DYBase.defaultColor,
           brightness: Brightness.dark,
           textTheme: TextTheme(
-            title: TextStyle(
+            headline6: TextStyle(
               color: Colors.white,
               fontSize: 18,
             ),

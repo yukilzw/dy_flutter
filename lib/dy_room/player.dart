@@ -1,45 +1,39 @@
-/**
+/*
  * @discripe: 视频播放器
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:video_player/video_player.dart';
-import 'package:chewie/chewie.dart';
 
 import '../base.dart';
 
 class PlayerWidgets extends StatefulWidget {
-  final _routeProp;
-  PlayerWidgets(this._routeProp);
+  final routeProp;
+  PlayerWidgets(this.routeProp);
 
   @override
-  _PlayerWidgets createState() => _PlayerWidgets(_routeProp);
+  _PlayerWidgets createState() => _PlayerWidgets();
 }
 
 class _PlayerWidgets extends State<PlayerWidgets> with DYBase {
-  final _routeProp;
-  _PlayerWidgets(this._routeProp);
-
-  ChewieController _videoController;    // 播放器Controller : chewie
-  VideoPlayerController _videoPlayerController;   // 播放器Controller : video_player
+  Future _initializeVideoPlayerFuture;
+  VideoPlayerController _videoPlayerController;
 
   @override
   void initState() {
     super.initState();
-    // 初始化播放器设置
-    _videoPlayerController = VideoPlayerController.network('${DYBase.baseUrl}/static/suen.mp4');
-    _videoController = ChewieController(
-      videoPlayerController: _videoPlayerController,
-      aspectRatio: 960 / 540,
-      autoPlay: true,
-      looping: true,
-    );
+    _videoPlayerController = VideoPlayerController.network('${DYBase.baseUrl}/static/suen.mp4')
+      ..setLooping(true);
+
+    _initializeVideoPlayerFuture = _videoPlayerController.initialize().then((_) {
+      setState(() {});
+    });
+    _videoPlayerController.play();
   }
 
   @override
   void dispose() {
     _videoPlayerController.dispose();
-    _videoController.dispose();
     super.dispose();
   }
 
@@ -53,25 +47,37 @@ class _PlayerWidgets extends State<PlayerWidgets> with DYBase {
       width: screenWidth,
       height: playerHeight,
       color: Color(0xff333333),
-      child: _videoController != null ? Chewie(
-        controller: _videoController,
-      ) :
-      Stack(
-        alignment: AlignmentDirectional.center,
-        children: <Widget>[
-          Positioned(
-            child: Image.network(
-              _routeProp['roomSrc'],
-              height: playerHeight,
-            ),
-          ),
-          Positioned(
-            child: Image.asset(
-              'images/play.png',
-              height: dp(60),
-            ),
-          ),
-        ],
+      child: FutureBuilder(
+        future: _initializeVideoPlayerFuture,
+        builder: (context, snapshot) {
+          if (snapshot.hasError) {
+            print(snapshot.error);
+          }
+          if (snapshot.connectionState == ConnectionState.done) {
+            return AspectRatio(
+              aspectRatio: _videoPlayerController.value.aspectRatio,
+              child: VideoPlayer(_videoPlayerController),
+            );
+          } else {
+            return Stack(
+              alignment: AlignmentDirectional.center,
+              children: <Widget>[
+                Positioned(
+                  child: Image.network(
+                    widget.routeProp['roomSrc'],
+                    height: playerHeight,
+                  ),
+                ),
+                Positioned(
+                  child: Image.asset(
+                    'images/play.png',
+                    height: dp(60),
+                  ),
+                ),
+              ],
+            );
+          }
+        },
       ),
     );
   }

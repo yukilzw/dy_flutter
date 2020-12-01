@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 直播间弹幕
  */
 import 'dart:ui';
@@ -142,7 +142,9 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
                         fontSize: 14.0,
                       ),
                       decoration: InputDecoration(
-                        border: InputBorder.none,
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none
+                        ),
                         contentPadding: EdgeInsets.all(0),
                         hintText: '吐个槽呗~',
                       ),

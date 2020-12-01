@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 广播游戏订阅推荐
  */
 import 'package:flutter/material.dart';

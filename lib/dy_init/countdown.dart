@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 启动页右上角倒计时
  */
 import 'dart:math' as Math;
