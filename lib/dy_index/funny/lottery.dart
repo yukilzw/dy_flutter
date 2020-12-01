@@ -127,7 +127,7 @@ class _Lottery extends State<Lottery> with DYBase {
   // 系统通知栏消息推送
   void _showNotification(String title, String body) async {
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    var initializationSettingsAndroid = AndroidInitializationSettings('ic_launcher');
+    var initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
     var initializationSettingsIOS = IOSInitializationSettings(
       onDidReceiveLocalNotification: (int id, String title, String body, String payload) async => null);
     var initializationSettings = InitializationSettings(
