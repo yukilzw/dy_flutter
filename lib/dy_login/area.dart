@@ -1,7 +1,6 @@
-/**
+/*
  * @discripe: 国家首字母选择页(仿微信联系人列表)
  */
-import 'dart:convert';
 import 'dart:ui';
 import 'dart:math';
 

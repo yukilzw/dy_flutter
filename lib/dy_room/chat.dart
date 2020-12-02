@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 弹幕 & 礼物
  */
 import 'dart:convert';

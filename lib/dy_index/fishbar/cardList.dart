@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 鱼吧推荐帖子列表
  */
 import 'dart:ui' as ui;

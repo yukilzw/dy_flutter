@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 轮播图
  */
 import 'package:flutter/material.dart';

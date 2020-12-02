@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 关注
  */
 import 'package:flutter/material.dart';

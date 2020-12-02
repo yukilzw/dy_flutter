@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>斗鱼直播</string>
+	<string>斗鱼Flutter</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -40,19 +40,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
-	<key>NSAppTransportSecurity</key>
-	<dict>
-		<key>NSAllowsArbitraryLoads</key>
-		<true/>
-		<key>NSAllowsArbitraryLoadsInWebContent</key>
-		<true/>
-	</dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-    <string>image usage</string>
-    <key>NSCameraUsageDescription</key>
-    <string>camera usage</string>
-	<key>NSMicrophoneUsageDescription</key>
-    <string>microphone usage</string>
 	<false/>
 </dict>
 </plist>

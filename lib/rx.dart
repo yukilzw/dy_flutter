@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: RxDart全局消息通信封装处理
  */
 import 'package:rxdart/rxdart.dart';

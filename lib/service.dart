@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 业务层方法
  */
 import 'dart:io';
@@ -18,7 +18,7 @@ abstract class DYservice {
   // 获取直播间列表
   static Future<List> getLiveData(context, [ pageIndex ]) async {
     final counterBloc = BlocProvider.of<CounterBloc>(context);
-    int livePageIndex = BlocObj.counter.currentState;
+    int livePageIndex = BlocObj.counter.state;
 
     var res = await httpClient.get(
       API.liveData,
@@ -30,7 +30,7 @@ abstract class DYservice {
       ) : null,
     );
 
-    counterBloc.dispatch(CounterEvent.increment);
+    counterBloc.add(CounterEvent.increment);
     return res.data['data']['list'];
   }
 

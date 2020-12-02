@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 登录注册页
  */
 import 'package:flutter/material.dart';
@@ -205,7 +205,7 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                         child: TextField(
                           controller: _mobileController,
                           inputFormatters:  [
-                            WhitelistingTextInputFormatter(RegExp(r'[0-9]')),
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                           ],
                           keyboardType: TextInputType.number,
                           cursorColor: DYBase.defaultColor,
@@ -215,7 +215,9 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                             fontSize: 14.0,
                           ),
                           decoration: InputDecoration(
-                            border: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none
+                            ),
                             contentPadding: EdgeInsets.only(left: dp(15), top: dp(3), bottom: dp(3)),
                             hintText: '请输入手机号',
                           ),
@@ -245,7 +247,7 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                         child: TextField(
                           controller: _nickNameController,
                           inputFormatters:  [
-                            WhitelistingTextInputFormatter(RegExp(r'[0-9]')),
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                           ],
                           keyboardType: TextInputType.number,
                           cursorColor: DYBase.defaultColor,
@@ -255,7 +257,9 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                             fontSize: 14.0,
                           ),
                           decoration: InputDecoration(
-                            border: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none
+                            ),
                             contentPadding: EdgeInsets.only(left: dp(15), top: dp(3), bottom: dp(3)),
                             hintText: '昵称/用户名（5-30位字符）',
                           ),
@@ -286,7 +290,7 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                         child: TextField(
                           controller: _passWordController,
                           inputFormatters:  [
-                            BlacklistingTextInputFormatter(RegExp(r'[\u4e00-\u9fa5]')),
+                            FilteringTextInputFormatter.allow(RegExp(r'[\u4e00-\u9fa5]')),
                           ],
                           obscureText: true,
                           cursorColor: DYBase.defaultColor,
@@ -296,7 +300,9 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                             fontSize: 14.0,
                           ),
                           decoration: InputDecoration(
-                            border: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none
+                            ),
                             contentPadding: EdgeInsets.only(left: dp(15), top: dp(3), bottom: dp(3)),
                             hintText: '请输入密码',
                           ),
@@ -328,7 +334,7 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                           controller: _codeController,
                           inputFormatters:  [
                             LengthLimitingTextInputFormatter(6),
-                            WhitelistingTextInputFormatter(RegExp(r'[0-9]')),
+                            FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                           ],
                           cursorColor: DYBase.defaultColor,
                           cursorWidth: 1.5,
@@ -337,7 +343,9 @@ class _DyLoginPage extends State<DyLoginPage> with DYBase {
                             fontSize: 14.0,
                           ),
                           decoration: InputDecoration(
-                            border: InputBorder.none,
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none
+                            ),
                             contentPadding: EdgeInsets.only(left: dp(15), top: dp(3), bottom: dp(3)),
                             hintText: '请输入验证码',
                           ),

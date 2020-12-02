@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: bloc全局状态管理
  */
 import 'package:bloc/bloc.dart';
@@ -10,10 +10,8 @@ abstract class BlocObj {
 
 // 直播列表页码
 enum CounterEvent { increment, reset }
-
 class CounterBloc extends Bloc<CounterEvent, int> {
-  @override
-  int get initialState => 1;
+  CounterBloc() : super(1);
 
   @override
   Stream<int> mapEventToState(CounterEvent event) async* {
@@ -22,7 +20,7 @@ class CounterBloc extends Bloc<CounterEvent, int> {
         yield 1;
         break;
       case CounterEvent.increment:
-        yield currentState + 1;
+        yield state + 1;
         break;
     }
   }
@@ -47,21 +45,20 @@ class UpdateSwiper implements IndexEvent {
 }
 
 class IndexBloc extends Bloc<IndexEvent, Map> {
-  @override
-  Map get initialState => {
+  IndexBloc() : super({
     'nav': [],
     'liveData': [],
     'swiper': []
-  };
+  });
 
   @override
   Stream<Map> mapEventToState(IndexEvent event) async* {
     if (event is UpdateTab) {
-      yield { ...currentState, 'nav': event.tab };
+      yield { ...state, 'nav': event.tab };
     } else if (event is UpdateLiveData) {
-      yield { ...currentState, 'liveData': event.liveData };
+      yield { ...state, 'liveData': event.liveData };
     } else if (event is UpdateSwiper) {
-      yield { ...currentState, 'swiper': event.swiper };
+      yield { ...state, 'swiper': event.swiper };
     }
   }
 }

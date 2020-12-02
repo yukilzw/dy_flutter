@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 启动页底部水波纹
  */
 import 'package:flutter/material.dart';

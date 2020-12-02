@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 载入APP启动页
  */
 import 'package:flutter/material.dart';
@@ -46,7 +46,7 @@ class _SplashPageState extends State<SplashPage> with DYBase {
       API.nav,
     ).then((res) {
       var navList = res.data['data'];
-      indexBloc.dispatch(UpdateTab(navList));
+      indexBloc.add(UpdateTab(navList));
     });
   }
 
@@ -56,7 +56,7 @@ class _SplashPageState extends State<SplashPage> with DYBase {
 
     httpClient.post(
       API.swiper,
-      data: FormData.from({
+      data: FormData.fromMap({
         'num': 4
       }),
       options: buildCacheOptions(
@@ -65,9 +65,9 @@ class _SplashPageState extends State<SplashPage> with DYBase {
       ),
     ).then((res) {
       var swiper = res.data['data'];
-      indexBloc.dispatch(UpdateSwiper(swiper));
+      indexBloc.add(UpdateSwiper(swiper));
     }).catchError((err) {
-      indexBloc.dispatch(UpdateSwiper(null));
+      indexBloc.add(UpdateSwiper(null));
     });
   }
 
@@ -75,7 +75,7 @@ class _SplashPageState extends State<SplashPage> with DYBase {
     final indexBloc = BlocProvider.of<IndexBloc>(context);
 
     var liveList = await DYservice.getLiveData(context);
-    indexBloc.dispatch(UpdateLiveData(liveList));
+    indexBloc.add(UpdateLiveData(liveList));
   }
 
   @override

@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 斗鱼APP
  */
 import 'package:flutter/material.dart';
@@ -30,7 +30,7 @@ class DyApp extends StatelessWidget {
             backgroundColor: DYBase.defaultColor,
             brightness: Brightness.dark,
             textTheme: TextTheme(
-              title: TextStyle(
+              headline6: TextStyle(
                 color: Colors.white,
                 fontSize: 18,
               ),
@@ -58,10 +58,10 @@ class DyApp extends StatelessWidget {
     return MultiBlocProvider(     // 多个Bloc注册
       providers: [
         BlocProvider<CounterBloc>(
-          builder: (context) => BlocObj.counter,
+          create: (context) => BlocObj.counter,
         ),
         BlocProvider<IndexBloc>(
-          builder: (context) => BlocObj.index,
+          create: (context) => BlocObj.index,
         ),
       ],
       child: MaterialApp(
@@ -69,14 +69,14 @@ class DyApp extends StatelessWidget {
           theme: ThemeData(
             scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
             primarySwatch: Colors.orange,
-            textTheme: TextTheme(body1: TextStyle(color: Colors.black)),
+            textTheme: TextTheme(bodyText1: TextStyle(color: Colors.black)),
             appBarTheme: AppBarTheme(
               textTheme: TextTheme(
-                title: TextStyle(
+                headline6: TextStyle(
                   color: Colors.black,
                   fontSize: 18,
                 ),
-                body1: TextStyle(color: Colors.black),
+                bodyText1: TextStyle(color: Colors.black),
               ),
             )
             // splashFactory: NoSplashFactory()
@@ -94,5 +94,6 @@ void main() {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
   ]);
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(statusBarColor: Colors.transparent));
   runApp(DyApp());
 }

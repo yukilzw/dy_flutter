@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 单图片全屏预览
  */
 import 'package:flutter/material.dart';

@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 娱乐
  */
 import 'package:flutter/material.dart';
@@ -52,7 +52,7 @@ class _FunnyPage extends State<FunnyPage> with DYBase, SingleTickerProviderState
           ),
           brightness: Brightness.dark,
           textTheme: TextTheme(
-            title: TextStyle(
+            headline6: TextStyle(
               color: Colors.white,
             ),
           )

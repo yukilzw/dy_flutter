@@ -1,4 +1,4 @@
-/**
+/*
  * @discripe: 九宫格抽奖
  */
 import 'dart:async';
@@ -127,27 +127,32 @@ class _Lottery extends State<Lottery> with DYBase {
   // 系统通知栏消息推送
   void _showNotification(String title, String body) async {
     flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-    var initializationSettingsAndroid = AndroidInitializationSettings('ic_launcher');
-    var initializationSettingsIOS = IOSInitializationSettings(onDidReceiveLocalNotification: (int id, String title, String body, String payload) async => null);
-    var initializationSettings = InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
+    var initializationSettingsAndroid = AndroidInitializationSettings('@mipmap/dy');
+    var initializationSettingsIOS = IOSInitializationSettings(
+      onDidReceiveLocalNotification: (int id, String title, String body, String payload) async => null);
+    var initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS);
 
     flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: (String payload) async {
       if (payload != null) {
         print('notification payload: ' + payload);
       }
       // 点击通知栏跳转的页面(暂为空白)
-      await Navigator.push(
-        context,
-        new MaterialPageRoute(builder: (context) => Container(color: Colors.white,)),
-      );
+      // await Navigator.push(
+      //   context,
+      //   new MaterialPageRoute(builder: (context) => Container(color: Colors.white,)),
+      // );
     });
 
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       '0', title, body,
-      importance: Importance.Max, priority: Priority.High, ticker: 'ticker',
+      importance: Importance.max, priority: Priority.high, ticker: 'ticker',
     );
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
+    var platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
       DYservice.randomBit(8, type: 'num'), title, body, platformChannelSpecifics,
       payload: body
