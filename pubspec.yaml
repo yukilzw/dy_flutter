@@ -24,6 +24,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+    
+  flutter_localizations:
+    sdk: flutter
 
   fluttertoast: ^3.1.0
   path_provider: ^1.1.2
@@ -83,6 +86,8 @@ flutter:
     - images/init_icon.png
     - images/show-area.webp
     - images/broadcast.webp
+    - images/dg.webp
+    - images/dg0.webp
 
     - images/login/syn.webp
     - images/login/qq.webp

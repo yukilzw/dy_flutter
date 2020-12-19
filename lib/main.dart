@@ -4,6 +4,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 import 'base.dart';
@@ -65,24 +66,32 @@ class DyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
-          title: 'DYFlutter',
-          theme: ThemeData(
-            scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
-            primarySwatch: Colors.orange,
-            textTheme: TextTheme(bodyText1: TextStyle(color: Colors.black)),
-            appBarTheme: AppBarTheme(
-              textTheme: TextTheme(
-                headline6: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                ),
-                bodyText1: TextStyle(color: Colors.black),
+        title: '斗鱼',
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+        ],
+        supportedLocales: [
+          Locale('zh', 'CN'),
+          Locale('en', 'US'),
+        ],
+        theme: ThemeData(
+          scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
+          primarySwatch: Colors.orange,
+          textTheme: TextTheme(bodyText1: TextStyle(color: Colors.black)),
+          appBarTheme: AppBarTheme(
+            textTheme: TextTheme(
+              headline6: TextStyle(
+                color: Colors.black,
+                fontSize: 18,
               ),
-            )
-            // splashFactory: NoSplashFactory()
-          ),
-          onGenerateRoute: _getRoute,
+              bodyText1: TextStyle(color: Colors.black),
+            ),
+          )
+          // splashFactory: NoSplashFactory()
         ),
+        onGenerateRoute: _getRoute,
+      ),
     );
   }
 }
