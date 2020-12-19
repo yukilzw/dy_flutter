@@ -98,9 +98,6 @@ flutter:
     - images/head/chat.webp
     - images/head/game.webp
     - images/head/history.webp
-    - images/head/chat-gray.webp
-    - images/head/game-gray.webp
-    - images/head/history-gray.webp
 
     - images/lv/3.png
     - images/lv/30.png

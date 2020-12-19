@@ -21,11 +21,14 @@ class LiveListWidgets extends StatelessWidget with DYBase {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
     List liveData = indexState['liveData'];
 
-    return Column(
-      children: <Widget>[
-        _listTableHeader(),
-        _listTableInfo(context, liveData),
-      ]
+    return Container(
+      color: Color(0xfff1f5f6),
+      child: Column(
+        children: <Widget>[
+          _listTableHeader(),
+          _listTableInfo(context, liveData),
+        ]
+      ),
     );
   }
 

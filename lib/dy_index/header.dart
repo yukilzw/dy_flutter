@@ -14,8 +14,7 @@ class DyHeader extends StatefulWidget {
   final num height;
   final num opacity;
   final BoxDecoration decoration;
-  final bool gray;
-  DyHeader({ this.height, this.opacity = 1.0, this.decoration, this.gray = false });
+  DyHeader({ this.height, this.opacity = 1.0, this.decoration });
 
   @override
   _DyHeader createState() => _DyHeader();
@@ -137,21 +136,21 @@ class _DyHeader extends State<DyHeader> with DYBase {
                     Padding(
                       padding: EdgeInsets.only(left: dp(10)),
                       child: Image.asset(
-                        widget.gray ? 'images/head/history-gray.webp' : 'images/head/history.webp',
+                        'images/head/history.webp',
                         width: dp(25),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: dp(10)),
                       child: Image.asset(
-                        widget.gray ? 'images/head/game-gray.webp' : 'images/head/game.webp',
+                        'images/head/game.webp',
                         width: dp(25),
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: dp(10)),
                       child: Image.asset(
-                        widget.gray ? 'images/head/chat-gray.webp' : 'images/head/chat.webp',
+                        'images/head/chat.webp',
                         width: dp(25),
                       ),
                     ),
