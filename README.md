@@ -13,33 +13,6 @@ flutter重构的斗鱼直播APP<br/>
 另外整合各类优质的第三方开源库，打造出原生APP丝滑的用户体验<br/>
 尽可能接入更多功能，方法附带注释，帮助你在使用flutter进行开发新的应用提供实用的借鉴案例<br/>
 
-#### 包含功能：
-- 启动页广告位
-- 开播列表上拉加载、下拉刷新、返回顶部
-- 列表图片缓存加载优化
-- 渐进式头部动画
-- 底部导航切换保存页面状态
-- HTTP缓存、IO缓存
-- 直播间webSocket消息弹幕、礼物
-- 页面路由传值
-- RxDart全局消息通信封装
-- Bloc流式状态管理(启动页预加载首页数据)
-- 礼物横幅动画队列
-- 礼物全屏svga特效
-- 弹幕消息滚动
-- 静态视频流
-- 九宫格抽奖游戏
-- 照片选择器
-- 全屏、半屏webView
-- 鱼吧头部手势动画
-- 仿微信朋友圈图片控件
-- 登录注册弹窗
-- 国家区号列表(仿微信通讯录滑动首字母定位)
-- 二维码扫码
-- 本地通知推送
-- ...
-- 持续增加中
-
 #### APP截图：
 <table>
     <tr>
@@ -47,7 +20,7 @@ flutter重构的斗鱼直播APP<br/>
           <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/bqQfVz5yrrGYSXMvKr.cqaBgyoLMU7RqFQMjF1E5rBSN69..NZhiO89.yrgXkS6mTUwd*cb3ZSTIIiw5.iYRqBJZNdmErVng83zgFyZw3fA!/b&bo=gAIkBaAFkAsBCbM!&rf=viewer_4&t=5" width="100%">
         </td>
         <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/bqQfVz5yrrGYSXMvKr.cqVFeX6Rrv2zKYYNN8GWIEYFmItU97KGDSzNqeuYYIEnRDhIrDg97.ZEyBUH.IwFgYauRW*F5yZZ3UZWQ9NS.OLo!/b&bo=gAIkBaAFkAsBCbM!&rf=viewer_4&t=5" width="100%">
+          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/bqQfVz5yrrGYSXMvKr.cqQirBkfWyIK8muKxCTZYyKbAPO1OILgIQouFJ49EDLJc*MycL9zxBHc5V0poAtLN8YmgPVm1PL.bgupIetIHPsQ!/b&bo=gAIkBaAFkAsBCbM!&rf=viewer_4&t=5" width="100%">
         </td>
         <td >
           <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/TmEUgtj9EK6.7V8ajmQrEDgA9vZ7QDn0Z4A2UuurWPLUtfa*coYrz5.XqvVIN*2xhGPABxQH9luRO7wMdrede03zdHg6I8pHybxNEU.YgWM!/b&bo=gAIkBaAFkAsBGaM!&rf=viewer_4&t=5" width="100%">
@@ -55,7 +28,7 @@ flutter重构的斗鱼直播APP<br/>
     </tr>
     <tr>
        <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/TmEUgtj9EK6.7V8ajmQrEKiIdL3F4nPeWEXz1pzd0CDRSOb8dcz79IkIWSJnIoMDQEy1pAxJ8e5dkfpQ6VAodlWHtS3eT4bpeMw9cn6g980!/b&bo=gAIkBaAFkAsBGaM!&rf=viewer_4&t=5" width="100%">
+          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/TmEUgtj9EK6.7V8ajmQrEOvC0G7LISePrnNLoqQSUuaYu.SVglWZIwgBZh9XvpcBKYPZIRiz7fs7QdLuyL9DcL5vqsM8ZSNIeSPslYdnh*4!/b&bo=gAIkBaAFkAsBGaM!&rf=viewer_4&t=5" width="100%">
         </td>
         <td >
           <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/TmEUgtj9EK6.7V8ajmQrEH6IpnXld6FGQQHdyvv0dLAOgZN7.9jzMpMWHejoGTEWbMkYbRrkaNVCXPTTnsi*4.lOPqKEZadxwy1njSC.bKk!/b&bo=gAIkBaAFkAsBKZM!&rf=viewer_4&t=5" width="100%">
@@ -87,6 +60,33 @@ flutter重构的斗鱼直播APP<br/>
         </td>
     </tr>
 </table>
+
+#### 包含功能：
+- 启动页广告位
+- 开播列表上拉加载、下拉刷新、返回顶部
+- 列表图片缓存加载优化
+- 渐进式头部动画
+- 底部导航切换保存页面状态
+- HTTP缓存、IO缓存
+- 直播间webSocket消息弹幕、礼物
+- 页面路由传值
+- RxDart全局消息通信封装
+- Bloc流式状态管理(启动页预加载首页数据)
+- 礼物横幅动画队列
+- 礼物全屏svga特效
+- 弹幕消息滚动
+- 静态视频流
+- 九宫格抽奖游戏
+- 照片选择器
+- 全屏、半屏webView
+- 鱼吧头部手势动画
+- 仿微信朋友圈图片控件
+- 登录注册弹窗
+- 国家区号列表(仿微信通讯录滑动首字母定位)
+- 二维码扫码
+- 本地通知推送
+- ...
+- 持续增加中
 
 #### 本地调试：
 `flutter run --release`打包发布版本预览<br/>

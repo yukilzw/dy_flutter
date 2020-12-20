@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.1.0
+version: 1.1.1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -23,9 +23,6 @@ environment:
 
 dependencies:
   flutter:
-    sdk: flutter
-    
-  flutter_localizations:
     sdk: flutter
 
   fluttertoast: ^3.1.0
@@ -72,8 +69,7 @@ flutter:
     - images/default-avatar.webp
     - images/shayuniang.png
     - images/search.webp
-    - images/isLive.png
-    - images/next.png
+    - images/cfk.webp
     - images/hot.png
     - images/member.png
     - images/play.png
@@ -86,8 +82,31 @@ flutter:
     - images/init_icon.png
     - images/show-area.webp
     - images/broadcast.webp
+    - images/cjf.webp
     - images/dg.webp
     - images/dg0.webp
+    - images/cqe.webp
+    - images/num/0.webp
+    - images/num/1.webp
+    - images/num/2.webp
+    - images/num/3.webp
+    - images/num/4.webp
+    - images/num/5.webp
+    - images/num/6.webp
+    - images/num/7.webp
+    - images/num/8.webp
+    - images/num/9.webp
+    - images/cate/tab-0.webp
+    - images/cate/tab-1.webp
+    - images/cate/tab-2.webp
+    - images/cate/tab-3.webp
+    - images/cate/tab-4.webp
+    - images/cate/tab-5.webp
+    - images/cate/tab-6.webp
+    - images/cate/tab-7.webp
+    - images/cate/tab-8.webp
+    - images/cate/tab-9.webp
+    - images/cate/tab-10.webp
 
     - images/login/syn.webp
     - images/login/qq.webp

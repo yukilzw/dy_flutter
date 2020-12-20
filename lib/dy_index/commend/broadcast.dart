@@ -38,9 +38,16 @@ class _BroadcastSwiper extends State<BroadcastSwiper> with DYBase {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
 
     return Container(
-      padding: EdgeInsets.only(left: dp(10), right: dp(10)),
-      color: Color(0xfffff0e2),
-      height: dp(30),
+      padding: EdgeInsets.only(left: dp(15), right: dp(15)),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+            color: Color(0xfffbfbfb),
+            width: 1,
+          )
+        )
+      ),
+      height: dp(40),
       child: _waitBroadcastSwiperData(),
     );
   }
@@ -70,7 +77,7 @@ class _BroadcastSwiper extends State<BroadcastSwiper> with DYBase {
         itemBuilder: (BuildContext context, int index) => Container(
           child: Row(
             children: <Widget>[
-              Image.asset('images/broadcast.webp',
+              Image.asset(index % 2 == 0 ? 'images/cjf.webp' : 'images/broadcast.webp',
                 height: dp(20),
               ),
               Padding(padding: EdgeInsets.only(right: dp(5)),),
@@ -79,17 +86,19 @@ class _BroadcastSwiper extends State<BroadcastSwiper> with DYBase {
                 child: Text(
                   _broadcastList[index]['title'],
                   style: TextStyle(
-                    fontSize: 12,
+                    color: Color(0xff333333),
+                    fontSize: dp(12.5),
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
+              Padding(padding: EdgeInsets.only(right: dp(5)),),
               RichText(
                 text: TextSpan(
                   style: TextStyle(
                     color: Color(0xff999999),
-                    fontSize: 12,
+                    fontSize: dp(12.5),
                   ),
                   children: [
                     TextSpan(

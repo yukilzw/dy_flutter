@@ -49,7 +49,10 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.light,
+      value: SystemUiOverlayStyle(
+        statusBarBrightness: Brightness.light,
+        statusBarIconBrightness: Brightness.light,
+      ),
       child: Scaffold(
         body: Stack(
           alignment: AlignmentDirectional.center,

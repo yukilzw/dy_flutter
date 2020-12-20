@@ -13,6 +13,7 @@ import '../header.dart';
 import 'swiper.dart';
 import 'broadcast.dart';
 import 'list.dart';
+import 'cate.dart';
 
 class CommendPage extends StatefulWidget {
   final _scrollController;
@@ -154,8 +155,9 @@ class _CommendPage extends State<CommendPage> with DYBase, AutomaticKeepAliveCli
                               child: i == 0 ? Column(
                                 children: [
                                   SWwiperWidgets(),
+                                  CateList(),
                                   BroadcastSwiper(),
-                                  LiveListWidgets(indexState),
+                                  LiveListWidgets(),
                                 ],
                               ) : null,
                             ),

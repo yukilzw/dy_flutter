@@ -1,16 +1,20 @@
 /*
  * @discripe: 正在直播列表
  */
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import '../../base.dart';
 
-class LiveListWidgets extends StatelessWidget with DYBase {
-  final indexState;
-  LiveListWidgets(this.indexState);
+final _random = Random();
+int next(int min, int max) => min + _random.nextInt(max - min);
+final int _baseLiveNum = next(1e3.round() + 1, 1e4.round());
 
+class LiveListWidgets extends StatelessWidget with DYBase {
   // 跳转直播间
   void _goToLiveRoom(context, item) {
     Navigator.pushNamed(context, '/room', arguments: item);
@@ -19,63 +23,92 @@ class LiveListWidgets extends StatelessWidget with DYBase {
   @override
   Widget build(BuildContext context) {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
-    List liveData = indexState['liveData'];
 
-    return Container(
-      color: Color(0xfff1f5f6),
-      child: Column(
-        children: <Widget>[
-          _listTableHeader(),
-          _listTableInfo(context, liveData),
-        ]
-      ),
+    return BlocBuilder<IndexBloc, Map>(
+      builder: (ctx, indexState) {
+        return Container(
+          color: Color(0xfff1f5f6),
+          child: Column(
+            children: <Widget>[
+              _listTableHeader(),
+              _listTableInfo(context),
+            ]
+          ),
+        );
+      }
     );
+  }
+
+  Iterable<Widget> _numberList() {
+    int liveDataLen = BlocObj.index.state['liveData'].length + _baseLiveNum;
+    String liveDataLenStr = liveDataLen.toString();
+    return liveDataLenStr.split('').map((number) => Image.asset(
+      'images/num/$number.webp',
+      height: dp(13),
+    ));
   }
 
   // 直播列表头部
   Widget _listTableHeader() {
-    return Padding(
-      padding: EdgeInsets.only(left: dp(6), right: dp(6)),
+    var numberList = _numberList();
+    return Container(
+      height: dp(52),
+      margin: EdgeInsets.only(
+        left: dp(15),
+        right: dp(15),
+      ),
       child: Row(
         children: <Widget>[
           Container(
-            width: dp(20),
-            height: dp(30),
+            width: dp(25),
             margin: EdgeInsets.only(right: dp(5)),
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('images/isLive.png'),
+                image: AssetImage('images/cqe.webp'),
                 fit: BoxFit.fitWidth,
               ),
             ),
           ),
           Expanded(
-            child: Text('正在直播'),
+            child: Text(
+              '猜你喜欢',
+              style: TextStyle(
+                color: Color(0xff333333),
+                fontSize: dp(18),
+                fontWeight: FontWeight.bold
+              ),
+            ),
           ),
           Row(
             children: <Widget>[
-              Text('当前',
-                style: TextStyle(
-                  color: Color(0xff999999),
+              Padding(
+                padding: EdgeInsets.only(right: dp(1.5)),
+                child:  Text(
+                  '当前',
+                  style: TextStyle(
+                    color: Color(0xfff8632e),
+                    fontSize: dp(13),
+                  ),
                 ),
               ),
-              Text('12345',
-                style: TextStyle(
-                  color: Color(0xffff7700),
-                ),
-              ),
-              Text('个直播',
-                style: TextStyle(
-                  color: Color(0xff999999),
+              ...numberList,
+              Padding(
+                padding: EdgeInsets.only(left: dp(1.5)),
+                child: Text(
+                  '位主播',
+                  style: TextStyle(
+                    color: Color(0xfff8632e),
+                    fontSize: dp(13),
+                  ),
                 ),
               ),
               Padding(
                 padding: EdgeInsets.only(left: dp(5)),
                 child: Image.asset(
-                  'images/next.png',
+                  'images/cfk.webp',
                   height: dp(14),
                 ),
-              )
+              ),
             ],
           ),
         ],
@@ -133,7 +166,8 @@ class LiveListWidgets extends StatelessWidget with DYBase {
   }
 
   // 直播列表详情
-  Widget _listTableInfo(context, liveData) {
+  Widget _listTableInfo(context) {
+    List liveData = BlocObj.index.state['liveData'];
     final liveList = List<Widget>();
     var fontStyle = TextStyle(
       color: Colors.white,
@@ -153,7 +187,11 @@ class LiveListWidgets extends StatelessWidget with DYBase {
           },
           child: Padding(
           key: ObjectKey(item['rid']),
-          padding: EdgeInsets.all(boxMargin),
+          padding: EdgeInsets.only(
+            left: boxMargin,
+            right: boxMargin,
+            bottom: boxMargin * 2
+          ),
             child: ClipRRect(
               borderRadius: BorderRadius.all(
                 Radius.circular(dp(10)),
@@ -308,7 +346,7 @@ class LiveListWidgets extends StatelessWidget with DYBase {
               ),
             ),
           ),
-        )
+        ),
       );
     });
 

@@ -17,17 +17,16 @@ class SWwiperWidgets extends StatelessWidget with DYBase {
     ScreenUtil.instance = ScreenUtil(width: DYBase.dessignWidth)..init(context);
 
     return BlocBuilder<IndexBloc, Map>(
-      builder: (context, indexState) {
+      builder: (ctx, indexState) {
         List swiperPic = indexState['swiper'];
         return Padding(
-          padding: EdgeInsets.all(dp(10)),
+          padding: EdgeInsets.all(dp(16)),
           child: ClipRRect(
             borderRadius: BorderRadius.all(
               Radius.circular(dp(10)),
             ),
             child: Container(
-              width: dp(340),
-              height: dp(330) / 1.7686,
+              height: dp(130),
               child: _waitSwiperData(swiperPic),
             ),
           ),
@@ -44,22 +43,26 @@ class SWwiperWidgets extends StatelessWidget with DYBase {
     } else if (swiperPic.length > 0) {
       return Swiper(
         itemBuilder: (BuildContext context, int index) => CachedNetworkImage(
-            imageUrl: swiperPic[index],
-            placeholder: (context, url) => Image.asset(
-              'images/pic-default.jpg',
-              fit: BoxFit.fill,
-            ),
-            fit: BoxFit.fill,
+          imageUrl: swiperPic[index],
+          placeholder: (context, url) => Image.asset(
+            'images/pic-default.jpg',
+            fit: BoxFit.cover,
+          ),
+          fit: BoxFit.cover,
         ),
         itemCount: swiperPic.length,
         pagination: SwiperPagination(
-            builder: DotSwiperPaginationBuilder(
-          color: Color.fromRGBO(0, 0, 0, .2),
-          activeColor: DYBase.defaultColor,
-        )),
-        control: SwiperControl(
-          size: dp(20),
-          color: DYBase.defaultColor,
+          builder: DotSwiperPaginationBuilder(
+            color: Colors.white,
+            size: dp(6),
+            activeSize: dp(9),
+            activeColor: DYBase.defaultColor,
+          ),
+          margin: EdgeInsets.only(
+            right: dp(10),
+            bottom: dp(5),
+          ),
+          alignment: Alignment.bottomRight
         ),
         scrollDirection: Axis.horizontal,
         autoplay: true,
