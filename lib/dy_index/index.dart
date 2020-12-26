@@ -49,7 +49,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
       onWillPop: () async {
         if (_lastCloseApp == null || DateTime.now().difference(_lastCloseApp) > Duration(seconds: 1)) {
           _lastCloseApp = DateTime.now();
-          Fluttertoast.showToast(msg: '再次返回退出斗鱼');
+          Fluttertoast.showToast(msg: '再按一次退出斗鱼');
           return false;
         }
         return true;

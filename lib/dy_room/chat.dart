@@ -97,11 +97,11 @@ class _ChatWidgets extends State<ChatWidgets> with DYBase {
       var msgBoart = RichText(
         strutStyle: StrutStyle(
           leading: 3.5 / 15,
+          height: 1
         ),
         text: TextSpan(
           style: TextStyle(
             color: Color(0xff666666),
-            height: 1,
             fontSize: dp(15),
           ),
           children: [

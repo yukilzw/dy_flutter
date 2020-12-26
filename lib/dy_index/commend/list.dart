@@ -146,17 +146,20 @@ class LiveList extends StatelessWidget with DYBase {
       ];
     }
     return [
-      Container(
-        height: dp(18),
-        margin: EdgeInsets.only(right: dp(2)),
-        child: Text(
+      Text(
           '颜值',
           textAlign: TextAlign.start,
           style: TextStyle(
             fontSize: dp(12),
             color: Color(0xffa2a2a2),
+            height: 1
+          ),
+          strutStyle: StrutStyle(
+            height: 1,
           ),
         ),
+      Padding(
+        padding: EdgeInsets.only(right:dp(2)),
       ),
       Image.asset(
         'images/dg.webp',
@@ -323,9 +326,7 @@ class LiveList extends StatelessWidget with DYBase {
                                 padding: EdgeInsets.only(left: dp(6)),
                                 height: dp(18),
                                 child: Row(
-                                  children: [
-                                    ..._renderTag(showKingTag),
-                                  ],
+                                  children: _renderTag(showKingTag),
                                 ),
                               ),
                               Positioned(

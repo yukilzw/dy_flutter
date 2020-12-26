@@ -29,7 +29,7 @@ dependencies:
   wave: ^0.1.0
   cached_network_image: ^2.1.0
   photo_view: ^0.9.0
-  # barcode_scan: 1.0.03.0.1+6
+  barcode_scan: ^3.0.1
   flutter_local_notifications: ^3.0.1
   lottie: ^0.7.0
 
