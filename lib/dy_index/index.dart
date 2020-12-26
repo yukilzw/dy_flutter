@@ -62,8 +62,8 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
           type: BottomNavigationBarType.fixed,
           selectedItemColor: DYBase.defaultColor,
           unselectedItemColor: Color(0xff333333),
-          selectedFontSize: 11,
-          unselectedFontSize: 11,
+          selectedFontSize: dp(12),
+          unselectedFontSize: dp(12),
           onTap: (index) {
             if (mounted)
             setState(() {

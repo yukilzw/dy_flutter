@@ -152,9 +152,10 @@ class LiveList extends StatelessWidget with DYBase {
           style: TextStyle(
             fontSize: dp(12),
             color: Color(0xffa2a2a2),
-            height: 1
           ),
           strutStyle: StrutStyle(
+            forceStrutHeight: true,
+            fontSize: dp(13),
             height: 1,
           ),
         ),
