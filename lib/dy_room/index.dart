@@ -7,7 +7,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:svgaplayer_flutter/svgaplayer_flutter.dart';
+import 'package:lottie/lottie.dart';
 
 import '../base.dart';
 import '../service.dart';
@@ -23,7 +23,7 @@ class DyRoomPage extends StatefulWidget {
 }
 
 class _DyRoomPageState extends State<DyRoomPage> with DYBase {
-  Timer timerCloseSVGA;
+  Timer timerCloseLottlie;
 
   final _routeProp;    // 首页路由跳转传递的参数
   _DyRoomPageState(this._routeProp);
@@ -31,16 +31,16 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
   @override
   void initState() {
     super.initState();
-    timerCloseSVGA = Timer(Duration(milliseconds: 7600), () {
+    timerCloseLottlie = Timer(Duration(seconds: 15), () {
       setState(() {
-        timerCloseSVGA = null;
+        timerCloseLottlie = null;
       });
     });
   }
 
   @override
   void dispose() {
-    timerCloseSVGA?.cancel();
+    timerCloseLottlie?.cancel();
     super.dispose();
   }
 
@@ -55,7 +55,7 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
       ),
       child: Scaffold(
         body: Stack(
-          alignment: AlignmentDirectional.center,
+          alignment: AlignmentDirectional.bottomCenter,
           children: <Widget>[
             Column(
               children: <Widget>[
@@ -69,10 +69,11 @@ class _DyRoomPageState extends State<DyRoomPage> with DYBase {
                 _bottom(),
               ],
             ),
-            timerCloseSVGA != null ? Container(
-              height: dp(400),
-              child: SVGASimpleImage(
-                resUrl: '${DYBase.baseUrl}/static/angel.svga'
+            timerCloseLottlie != null ? Container(
+              child: Lottie.network(
+                '${DYBase.baseUrl}/static/fire.json',
+                width: dp(200),
+                fit: BoxFit.cover
               ),
             ) : SizedBox(),
           ],

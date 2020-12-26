@@ -45,8 +45,8 @@ class SwiperList extends StatelessWidget with DYBase {
         itemBuilder: (BuildContext context, int index) => CachedNetworkImage(
           imageUrl: swiperPic[index],
           placeholder: (context, url) => Image.asset(
-            'images/pic-default.jpg',
-            fit: BoxFit.cover,
+            'images/shayuniang.png',
+            fit: BoxFit.contain,
           ),
           fit: BoxFit.cover,
         ),

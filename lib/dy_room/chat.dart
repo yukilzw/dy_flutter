@@ -94,38 +94,41 @@ class _ChatWidgets extends State<ChatWidgets> with DYBase {
 
     msgData.forEach((item) {
       var isAdmin = item['lv'] > 0;
-      var msgBoart = <Widget>[
-        RichText(
-          text: TextSpan(
-            style: TextStyle(color: Color(0xff666666), fontSize: 16.0),
-            children: [
-              TextSpan(
-                text: '''${isAdmin ? '''          ''' : ''}${item['name']}: ''',
-                style: TextStyle(
-                  color: !isAdmin ? Colors.red : Color(0xff999999)
-                ),
-              ),
-              TextSpan(
-                text: item['text'],
-              ),
-            ]
-          ),       
+      var msgBoart = RichText(
+        strutStyle: StrutStyle(
+          leading: 3.5 / 15,
         ),
-      ];
-
-      if (item['lv'] > 0) {
-        msgBoart.insert(0, Positioned(
-          child: Image.asset(
-            'images/lv/${item['lv']}.png',
-            height: dp(18),
+        text: TextSpan(
+          style: TextStyle(
+            color: Color(0xff666666),
+            height: 1,
+            fontSize: dp(15),
           ),
-        ));
-      }
+          children: [
+            WidgetSpan(
+              child: isAdmin ? Padding(
+                padding: EdgeInsets.only(right: dp(5)),
+                child: Image.asset(
+                  'images/lv/${item['lv']}.png',
+                  height: dp(18),
+                ),
+              ) : SizedBox()
+            ),
+            TextSpan(
+              text: '${item['name']}: ',
+              style: TextStyle(
+                color: !isAdmin ? Colors.red : Color(0xff999999)
+              ),
+            ),
+            TextSpan(
+              text: item['text'],
+            ),
+          ]
+        ),       
+      );
 
       msgList.addAll([
-        Stack(
-          children: msgBoart,
-        ),
+        msgBoart,
         Padding(padding: EdgeInsets.only(bottom: dp(5)))
       ]);
     });
