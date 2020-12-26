@@ -14,7 +14,7 @@ final _random = Random();
 int next(int min, int max) => min + _random.nextInt(max - min);
 final int _baseLiveNum = next(1e3.round() + 1, 1e4.round());
 
-class LiveListWidgets extends StatelessWidget with DYBase {
+class LiveList extends StatelessWidget with DYBase {
   // 跳转直播间
   void _goToLiveRoom(context, item) {
     Navigator.pushNamed(context, '/room', arguments: item);
@@ -171,7 +171,7 @@ class LiveListWidgets extends StatelessWidget with DYBase {
     final liveList = List<Widget>();
     var fontStyle = TextStyle(
       color: Colors.white,
-      fontSize: 12.0
+      fontSize: dp(12),
     );
     var boxWidth = dp(164);
     var imageHeight = dp(98);

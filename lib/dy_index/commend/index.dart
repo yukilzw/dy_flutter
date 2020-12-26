@@ -139,30 +139,43 @@ class _CommendPage extends State<CommendPage> with DYBase, AutomaticKeepAliveCli
               ],
               body: TabBarView(
                 children: navList.asMap().map((i, tab) => MapEntry(i, Builder(
-                    builder: (context) => SmartRefresher(
-                      enablePullDown: true,
-                      enablePullUp: true,
-                      header: DYrefreshHeader(),
-                      footer: DYrefreshFooter(),
-                      controller: _refreshController,
-                      onRefresh: _onRefresh,
-                      onLoading: _onLoading,
-                      child: CustomScrollView(
-                        // physics: BouncingScrollPhysics(),
-                        slivers: <Widget>[
-                          SliverToBoxAdapter(
-                            child: Container(
-                              child: i == 0 ? Column(
-                                children: [
-                                  SWwiperWidgets(),
-                                  CateList(),
-                                  BroadcastSwiper(),
-                                  LiveListWidgets(),
-                                ],
-                              ) : null,
+                    builder: (context) => Container(
+                      color: Colors.white,
+                      child: ScrollConfiguration(
+                        behavior: DyBehaviorNull(),
+                        child: RefreshConfiguration(
+                          headerTriggerDistance: dp(80),
+                          maxOverScrollExtent : dp(100),
+                          footerTriggerDistance: dp(50),
+                          maxUnderScrollExtent: 0,
+                          headerBuilder: () => DYrefreshHeader(),
+                          footerBuilder: () => DYrefreshFooter(),
+                          child: SmartRefresher(
+                            enablePullDown: true,
+                            enablePullUp: true,
+                            footer: DYrefreshFooter(bgColor: Color(0xfff1f5f6),),
+                            controller: _refreshController,
+                            onRefresh: _onRefresh,
+                            onLoading: _onLoading,
+                            child: CustomScrollView(
+                              // physics: BouncingScrollPhysics(),
+                              slivers: <Widget>[
+                                SliverToBoxAdapter(
+                                  child: Container(
+                                    child: i == 0 ? Column(
+                                      children: [
+                                        SwiperList(),
+                                        CateList(),
+                                        BroadcastSwiper(),
+                                        LiveList(),
+                                      ],
+                                    ) : null,
+                                  ),
+                                )
+                              ],
                             ),
-                          )
-                        ],
+                          ),
+                        ),
                       ),
                     ),
                   ),),

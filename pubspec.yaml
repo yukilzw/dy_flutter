@@ -46,6 +46,7 @@ dependencies:
   # barcode_scan: 1.0.03.0.1+6
   flutter_local_notifications: ^3.0.1
   svgaplayer_flutter: ^0.0.1
+  lottie: ^0.7.0
 
 dev_dependencies:
   mockito: ^4.1.0
@@ -82,6 +83,7 @@ flutter:
     - images/init_icon.png
     - images/show-area.webp
     - images/broadcast.webp
+    - images/fun_home_pull_down.png
     - images/cjf.webp
     - images/dg.webp
     - images/dg0.webp

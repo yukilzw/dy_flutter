@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:lottie/lottie.dart';
 
 import 'bloc.dart';
 import 'base.dart';
@@ -187,66 +188,96 @@ class DyBehaviorNull extends ScrollBehavior {
   }
 }
 
-// 下拉刷新头部、底部组件
-class DYrefreshHeader extends StatelessWidget {
+// 下拉刷新头部、底部组件                                                            
+class DYrefreshHeader extends StatelessWidget with DYBase {
   @override
   Widget build(BuildContext context) {
-    return WaterDropHeader(
-      waterDropColor: DYBase.defaultColor,
-      refresh: SizedBox(
-        width: 25.0,
-        height: 25.0,
-        child: CircularProgressIndicator(
-          strokeWidth: 2.0,
-          valueColor: AlwaysStoppedAnimation<Color>(DYBase.defaultColor),
-        ),
-      ),
-      complete: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
-            Icons.insert_emoticon,
-            color: DYBase.defaultColor,
-          ),
-          Container(
-            width: 15.0,
-          ),
-          Text(
-            '更新好啦~',
-            style: TextStyle(color: DYBase.defaultColor),
+    final refreshing = Lottie.network(
+      '${DYBase.baseUrl}/static/if_refresh.json',
+      height: dp(50)
+    );
+
+    return CustomHeader(
+      refreshStyle: RefreshStyle.Follow,
+      builder: (BuildContext context,RefreshStatus status) {
+        bool swimming = (status == RefreshStatus.refreshing || status == RefreshStatus.completed);
+        return Container(
+          height: dp(50),
+          child: Stack(
+            alignment: AlignmentDirectional.center,
+            children: [
+              swimming ? SizedBox() : Image.asset(
+                'images/fun_home_pull_down.png',
+                height: dp(50),
+              ),
+              Offstage(
+                offstage: !swimming,
+                child: refreshing,
+              ),
+            ]
           )
-        ],
-      ),
-      idleIcon: Icon(
-        Icons.favorite,
-        size: 14.0,
-        color: Colors.white,
-      ),
+        );
+      }
     );
   }
 }
 
-class DYrefreshFooter extends StatelessWidget {
+class DYrefreshFooter extends StatelessWidget with DYBase {
+  final bgColor;
+  DYrefreshFooter({this.bgColor});
+
   @override
   Widget build(BuildContext context) {
-    return ClassicFooter(
-      textStyle: TextStyle(color: DYBase.defaultColor),
-      loadingText: '我正在努力...',
-      failedText: '加载失败了~',
-      idleText: '上拉加载更多~',
-      canLoadingText: '释放加载更多~',
-      noDataText: '没有更多啦~',
-      failedIcon: Icon(Icons.insert_emoticon, color: DYBase.defaultColor),
-      canLoadingIcon: Icon(Icons.insert_emoticon, color: DYBase.defaultColor),
-      idleIcon: Icon(Icons.insert_emoticon, color: DYBase.defaultColor),
-      loadingIcon: SizedBox(
-        width: 25.0,
-        height: 25.0,
-        child: CircularProgressIndicator(
-          strokeWidth: 2.0,
-          valueColor: AlwaysStoppedAnimation<Color>(DYBase.defaultColor),
-        ),
-      ),
+    final height = dp(50);
+
+    return CustomFooter(
+      height: height,
+      builder: (BuildContext context,LoadStatus mode){
+        final textStyle = TextStyle(
+          color: Color(0xffA7A7A7),
+          fontSize: dp(13),
+        );
+        Widget body;
+        Widget loading = Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Lottie.network(
+              '${DYBase.baseUrl}/static/loading.json',
+              height: dp(34)
+            ),
+            Text(
+              '用力加载中...',
+              style: textStyle,
+            ),
+          ],
+        );
+        if(mode==LoadStatus.idle){
+          body = loading;
+        }
+        else if(mode==LoadStatus.loading){
+          body = loading;
+        }
+        else if(mode == LoadStatus.failed){
+          body = Text(
+            '网络出错啦 😭',
+            style: textStyle,
+          );
+        }
+        else if(mode == LoadStatus.canLoading){
+          body = loading;
+        }
+        else{
+          body = Text(
+            '我是有底线的 😭',
+            style: textStyle,
+          );
+        }
+        return Container(
+          color: bgColor,
+          height: height,
+          child: Center(child:body),
+        );
+      },
     );
   }
 }

@@ -10,7 +10,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import '../../bloc.dart';
 import '../../base.dart';
 
-class SWwiperWidgets extends StatelessWidget with DYBase {
+class SwiperList extends StatelessWidget with DYBase {
 
   @override
   Widget build(BuildContext context) {
