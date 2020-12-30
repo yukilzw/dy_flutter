@@ -33,7 +33,6 @@ class _CountdownInit extends State<CountdownInit> with DYBase, SingleTickerProvi
     _controller = AnimationController(duration: Duration(seconds: _time), vsync: this,);  // 倒计时动画控制器
     _animation = Tween(begin: 0.0, end: 360.0).animate(_controller);
     _controller.addListener(() {
-      if (mounted)
       setState(() {});
     });
     _controller.addStatusListener((AnimationStatus a) {
@@ -93,19 +92,19 @@ class _CountdownInit extends State<CountdownInit> with DYBase, SingleTickerProvi
 
 }
 
-// canvas画布绘制加载倒计时
+// 画布绘制加载倒计时
 class CircleProgressBarPainter extends CustomPainter {
-  Paint _paintBackground;
+  // Paint _paintBackground;
   Paint _paintFore;
   final rate;
 
   CircleProgressBarPainter(this.rate) {
-    _paintBackground = Paint()  
-      ..color = Colors.white
-      ..strokeCap = StrokeCap.round
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0
-      ..isAntiAlias = true;
+    // _paintBackground = Paint()  
+    //   ..color = Colors.white
+    //   ..strokeCap = StrokeCap.round
+    //   ..style = PaintingStyle.stroke
+    //   ..strokeWidth = 2.0
+    //   ..isAntiAlias = true;
     _paintFore = Paint()
       ..color = Colors.white
       ..strokeCap = StrokeCap.round
@@ -126,6 +125,6 @@ class CircleProgressBarPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
+    return true;
   }
 }

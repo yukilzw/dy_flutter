@@ -20,35 +20,6 @@ class _MyConcern extends State<MyConcern> with DYBase {
   List<String> _myActive = ['鱼吧签到', '我的车队', '狼人杀'];
   GlobalKey _hourTitleKey = GlobalKey();
   RefreshController _refreshController = RefreshController(initialRefresh: false);
-  // double _scrollTop = 0;
-  // ScrollController _scrollController = ScrollController();
-
-  @override
-  void initState() {
-    super.initState();
-    /// 原先通过[ListView]内重新对[_scrollController]监听手势来触发头部展开，因为手势会被当前组件捕获，不会触发外层容器的事件
-    /// 经过优化后已不再需要在此注释代码，将[ListView]的滚动事件利用[NotificationListener]通知到父级widget，详情请见fishbar/index.dart统一处理
-    /* _scrollController.addListener(() {
-      var scrollTop = _scrollController.position.pixels;
-
-      if (scrollTop < 0 || scrollTop >= _scrollController.position.maxScrollExtent) {
-        return;
-      }
-      if (_scrollTop - scrollTop > 20) { // 向下滑动 ↓
-        widget.headerAnimated(-1);
-        _scrollTop = scrollTop;
-      } else if (scrollTop - _scrollTop > 20) {  // 向上滑动 ↑
-        widget.headerAnimated(1);
-        _scrollTop = scrollTop;
-      }
-    }); */
-  }
-
-  @override
-  void dispose() {
-    // _scrollController?.dispose();
-    super.dispose();
-  }
 
   // 下拉刷新
   void _onRefresh() async {
