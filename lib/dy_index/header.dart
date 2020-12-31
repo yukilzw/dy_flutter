@@ -2,6 +2,7 @@
  * @discripe: app通用头部组件
  */
 import 'dart:ui';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:barcode_scan/barcode_scan.dart';
@@ -121,14 +122,14 @@ class _DyHeader extends State<DyHeader> with DYBase {
                                 ),
                               ),
                             ),
-                            GestureDetector(
+                            Platform.isAndroid ? GestureDetector(
                               onTap: _scan,
                               child: Image.asset(
                                 'images/head/camera.webp',
                                 width: dp(20),
                                 height: dp(15),
                               ),
-                            ),
+                            ) : SizedBox(),
                           ],
                         ),
                       ),
