@@ -18,8 +18,6 @@ PODS:
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
-  - svgaplayer_flutter (0.0.1):
-    - Flutter
   - video_player (0.0.1):
     - Flutter
 
@@ -32,7 +30,6 @@ DEPENDENCIES:
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
-  - svgaplayer_flutter (from `.symlinks/plugins/svgaplayer_flutter/ios`)
   - video_player (from `.symlinks/plugins/video_player/ios`)
 
 SPEC REPOS:
@@ -56,8 +53,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
-  svgaplayer_flutter:
-    :path: ".symlinks/plugins/svgaplayer_flutter/ios"
   video_player:
     :path: ".symlinks/plugins/video_player/ios"
 
@@ -71,7 +66,6 @@ SPEC CHECKSUMS:
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
-  svgaplayer_flutter: 54a6973be40a849244ba02fdffcba9094f10f68f
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c

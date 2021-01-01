@@ -11,13 +11,9 @@ import '../base.dart';
 class Gift extends DYBase {
   // 在礼物横幅队列中增加
   Gift.add(giftBannerView, json, removeTime, cb) {
-    json['widget'] = Positioned(
-      left: dp(0),
-      top: dp(45) + dp(80) * giftBannerView.length,
-      child: GiftBanner(
-        giftInfo: json['config'],
-        queueLength: giftBannerView.length,
-      ),
+    json['widget'] = GiftBanner(
+      giftInfo: json['config'],
+      queueLength: giftBannerView.length,
     );
     giftBannerView.add(json);
     cb(giftBannerView); // 将重新生成的礼物横幅队列Widget返回给直播间setState
@@ -36,14 +32,11 @@ class Gift extends DYBase {
 
 class GiftBanner extends StatefulWidget with DYBase {
   final Map giftInfo;
-  final Widget child;
   final int queueLength;
-  GiftBanner({this.giftInfo, this.child, this.queueLength});
+  GiftBanner({this.giftInfo, this.queueLength});
 
   @override
-  _GiftBannerState createState() => _GiftBannerState(
-    giftInfo: giftInfo, queueLength: queueLength
-  );
+  _GiftBannerState createState() => _GiftBannerState();
 }
 
 // 单个礼物横幅的动画Widget
@@ -51,14 +44,10 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
   Animation<double> animationGiftNum_1, animationGiftNum_2, animationGiftNum_3;
   AnimationController controller;
 
-  final Map giftInfo;
-  final int queueLength;
-
-  _GiftBannerState({
-    @required this.giftInfo,
-    @required this.queueLength,
-  }) {
-    if (queueLength >= 4) return;
+  @override
+  void initState() {
+    super.initState();
+    if (widget.queueLength >= 4) return;
 
     controller = AnimationController(
         duration: Duration(milliseconds: 1800),
@@ -116,12 +105,12 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: AnimatedBuilder(
+    return AnimatedBuilder(
         animation: controller,
         builder: (BuildContext context, Widget child) {
-          return Transform.translate(
-            offset: Offset(animationGiftNum_3.value, 0),
+          return Positioned(
+            left: dp(animationGiftNum_3.value),
+            top: dp(45) + dp(80) * widget.queueLength,
             child: Stack(
               overflow: Overflow.visible,
               children: <Widget>[
@@ -143,7 +132,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           image: DecorationImage(
-                            image: NetworkImage(giftInfo['avatar']),
+                            image: NetworkImage(widget.giftInfo['avatar']),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -158,7 +147,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                giftInfo['nickName'],
+                                widget.giftInfo['nickName'],
                                 overflow: TextOverflow.ellipsis,
                                 style: TextStyle(
                                   color: Colors.white
@@ -173,7 +162,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
                                       text: '送出',
                                     ),
                                     TextSpan(
-                                      text: giftInfo['giftName'],
+                                      text: widget.giftInfo['giftName'],
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontStyle: FontStyle.italic
@@ -211,7 +200,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
                   left: dp(145),
                   top: dp(-15),
                   child: Image.network(
-                    giftInfo['giftImg'],
+                    widget.giftInfo['giftImg'],
                     height: dp(50),
                   ),
                 ),
@@ -219,8 +208,7 @@ class _GiftBannerState extends State<GiftBanner> with DYBase, SingleTickerProvid
             ),
           );
         },
-        child: widget.child,
-      ),
-    );
+        child: null,
+      );
   }
 }
