@@ -91,8 +91,15 @@ flutter重构的斗鱼直播APP<br/>
 #### 本地调试：
 `flutter run --release`打包发布版本预览<br/>
 APP所有数据均来源Mock网络请求，服务端接口没有上云，可修改`lib/base.dart`中`DYBase.baseHost`为你的电脑IP，并确保手机与电脑在同一局域网且能访问内网`1236`端口<br/>
-然后clone[服务端仓库](https://github.com/yukilzw/factory)，本地启动服务器<br/>
-Mock服务为`python tornado`，两种简单启动方式可选(1.在py3.6+环境下pip依赖，2.使用Docker镜像)，具体参考其README
+然后clone[服务端仓库](https://github.com/yukilzw/factory)，Mock服务为`python tornado`，两种简单启动方式可选：<br/>
+1. 在py 3.6~3.8下启动服务
+  - 安装`python3.6`环境;
+  - cmd切换运行环境`cd ./tornado`;
+  - 加载依赖包 `pip install -r requirements.txt`;
+  - 启动服务`python main.py`
+2. 使用Docker镜像，具体方式参考该项目说明。
+
+安卓打包可能因为国内无法加载gradle的问题，就算配了镜像也很慢，建议手动下载`grdle-6.4.1-all.zip`版本再构建，下载安装可见[此文章](https://www.cnblogs.com/yehuabin/p/10344713.html)
 
 #### 入门推荐：
 [Dart语法](https://www.dartcn.com/guides/get-started) - 语法中文教程<br/>

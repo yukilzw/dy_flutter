@@ -69,7 +69,9 @@ class DyApp extends StatelessWidget {
         theme: ThemeData(
           scaffoldBackgroundColor: Color.fromARGB(255, 255, 255, 255),
           primarySwatch: Colors.orange,
-          textTheme: TextTheme(bodyText1: TextStyle(color: Colors.black)),
+          textTheme: TextTheme(
+            bodyText1: TextStyle(color: Colors.black),
+          ),
           appBarTheme: AppBarTheme(
             textTheme: TextTheme(
               headline6: TextStyle(
