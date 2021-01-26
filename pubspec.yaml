@@ -1,7 +1,6 @@
 name: dy_flutter
-description: A new Flutter project.
-publish_to: 'none'
-version: 1.1.1
+description: Douyu App of flutter.
+version: 1.2.0
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
