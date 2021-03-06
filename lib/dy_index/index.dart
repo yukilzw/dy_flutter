@@ -112,7 +112,7 @@ class _DyIndexPageState extends State<DyIndexPage> with DYBase {
             fit: BoxFit.contain,
           )
         ),
-        resizeToAvoidBottomPadding: false,
+        resizeToAvoidBottomInset: false,
       ),
     );
   }

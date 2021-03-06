@@ -1,7 +1,7 @@
 <p align="center"><img width="95" src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/TmEUgtj9EK6.7V8ajmQrEE6*Uxu7pEUvrF6buDAC1qQBtOPo9FXPTzYdO3pyFiogvuA4HNDBer8u1KJY71acYTXx1pnl2uCYv*E1JIoixbA!/b&bo=AAEAAQABAAEDGTw!&rf=viewer_4&t=5" alt="斗鱼APP"></p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/flutter-1.22-52c6f9.svg?sanitize=true" alt="flutter-1.22">
+  <img src="https://img.shields.io/badge/flutter-2.0.0-52c6f9.svg?sanitize=true" alt="flutter-1.22">
   <img src="https://img.shields.io/badge/android✔-brightgreen.svg?sanitize=true" alt="android✔">
   <img src="https://img.shields.io/badge/ios✔-green.svg?sanitize=true" alt="ios✔">
 </p>
