@@ -118,7 +118,7 @@ class _DyHeader extends State<DyHeader> with DYBase {
                                     borderSide: BorderSide.none
                                   ),
                                   contentPadding: EdgeInsets.all(0),
-                                  hintText: '金咕咕doinb',
+                                  hintText: '搜你喜欢的主播吧～',
                                 ),
                               ),
                             ),
