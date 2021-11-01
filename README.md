@@ -1,4 +1,3 @@
-<p align="center"><img width="95" src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/TmEUgtj9EK6.7V8ajmQrEE6*Uxu7pEUvrF6buDAC1qQBtOPo9FXPTzYdO3pyFiogvuA4HNDBer8u1KJY71acYTXx1pnl2uCYv*E1JIoixbA!/b&bo=AAEAAQABAAEDGTw!&rf=viewer_4&t=5" alt="斗鱼APP"></p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/flutter-2.0.0-52c6f9.svg?sanitize=true" alt="flutter-1.22">
@@ -14,52 +13,6 @@ flutter重构的斗鱼直播APP<br/>
 尽可能接入更多功能，方法附带注释，帮助你在使用flutter进行开发新的应用提供实用的借鉴案例<br/>
 
 #### APP截图：
-<table>
-    <tr>
-        <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/bqQfVz5yrrGYSXMvKr.cqaBgyoLMU7RqFQMjF1E5rBSN69..NZhiO89.yrgXkS6mTUwd*cb3ZSTIIiw5.iYRqBJZNdmErVng83zgFyZw3fA!/b&bo=gAIkBaAFkAsBCbM!&rf=viewer_4&t=5" width="100%">
-        </td>
-        <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/bqQfVz5yrrGYSXMvKr.cqXLF*aVasp07p*Gto1g39y8aZOuyCwiCZ7OE4qg0HlHdSGC23z.kMOk6TRSl.Vz42C*KqGEkKzgahqZfA2ioU*I!/b&bo=gAIkBaAFkAsBCbM!&rf=viewer_4&t=5" width="100%">
-        </td>
-        <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/bqQfVz5yrrGYSXMvKr.cqQlzJYlZpjmaYqbMmmVlIfygeiYM7LMzpr7UEBdem9TURt*pkPlyK3fFvGk2eY.I1BtAX74KahT368qwSMIKP1U!/b&bo=gAIkBaAFkAsBCbM!&rf=viewer_4&t=5" width="100%">
-        </td>
-    </tr>
-    <tr>
-       <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/bqQfVz5yrrGYSXMvKr.cqThM.g*uqbv34APs2xUD795zzub.0Dc8*QFXGyRSc7aopK1TUkZnVFCO5cqvOO1r6O2UtjD0Pki0Gzza5R4dz*M!/b&bo=gAIkBaAFkAsBCbM!&rf=viewer_4&t=5" width="100%">
-        </td>
-        <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/TmEUgtj9EK6.7V8ajmQrEH6IpnXld6FGQQHdyvv0dLAOgZN7.9jzMpMWHejoGTEWbMkYbRrkaNVCXPTTnsi*4.lOPqKEZadxwy1njSC.bKk!/b&bo=gAIkBaAFkAsBKZM!&rf=viewer_4&t=5" width="100%">
-        </td>
-        <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/TmEUgtj9EK6.7V8ajmQrED*reHLmlDRzT43e6kiwzMNhOMGjGzslRl.TYS3MkfnDKtzoxbNkkju8Iw9N2ow5hMWNsTJCTxQaeREAlNtHwFI!/b&bo=gAIkBaAFkAsBGaM!&rf=viewer_4&t=5" width="100%">
-        </td>
-    </tr>
-    <tr>
-       <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/TmEUgtj9EK6.7V8ajmQrEB*oC0jYr45N4XNhdrM1yAK99Mcrs92abHL8zMWGarZ3xk7c*crdD2eEW1ssMDQZEsH16hosf0rnp7PDRpI5ZnM!/b&bo=gAIkBaAFkAsBKZM!&rf=viewer_4&t=5" width="100%">
-        </td>
-        <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/TmEUgtj9EK6.7V8ajmQrEEpYPJsokdhxS8ZJPdpyd4h7j0uwUEiyDXHhRSKB1aE9k0hf6Xmlq59g.MpMZfuojsn1UTeWD.8PwerbFzTpbPc!/b&bo=gAIkBaAFkAsBKZM!&rf=viewer_4&t=5" width="100%">
-        </td>
-        <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/TmEUgtj9EK6.7V8ajmQrEOh8XZsi9bmSt55Q14bJBlbYyAzKf5RbGbeUGWmFAxFhVdq67Knce623EQWtUn42Oa9qXI3YMTEZcWtuvQsK4f4!/b&bo=gAIkBaAFkAsBGaM!&rf=viewer_4&t=5" width="100%">
-        </td>
-    </tr>
-    <tr>
-       <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/TmEUgtj9EK6.7V8ajmQrEDZiySLBOghulMLa1J1SlA4yTA36ua0sJUKydayYdoQZuD11ksRfY5qQmZ6btw4U*rnYx2PjZh96GWn.8kmAkJk!/b&bo=gAIkBaAFkAsBGaM!&rf=viewer_4&t=5" width="100%">
-        </td>
-        <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/TmEUgtj9EK6.7V8ajmQrECX7UhQoMNbn.zaa1QTctnsdRMEaz9AHVMnQkhVJAIXK1OsjW9SCcVyZM5jo5MF*rrrS4wwdM3w*U7wO8wtfc3U!/b&bo=gAIkBaAFkAsBKZM!&rf=viewer_4&t=5" width="100%">
-        </td>
-        <td >
-          <img src="http://m.qpic.cn/psc?/V14dALyK4PrHuj/bqQfVz5yrrGYSXMvKr.cqRGurtWW.dwJkBUlUai8n4M4RsCOUjgHRB61DR8473rvOz45Cgd2lDota9bBNfr1E*ViYKY6mDz7ssJG6bBiOqU!/b&bo=gAIkBaAFkAsBCbM!&rf=viewer_4&t=5" width="100%">
-        </td>
-    </tr>
-</table>
 
 #### 包含功能：
 - 启动页广告位
